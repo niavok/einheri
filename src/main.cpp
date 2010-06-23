@@ -45,6 +45,10 @@ Engine header files so we can include it now in our code.
 #include <irrlicht/irrlicht.h>
 #include <cstdlib>
 #include <string>
+#include <stdlib.h>
+#include <stdio.h>
+#include <SDL/SDL.h>
+
 
 
 /*
@@ -95,7 +99,7 @@ std::string GetEnv(const std::string & name, const std::string &default_value)
 /*
 This is the main method. We can now use main() on every platform.
 */
-int main()
+int main(int argc, char *argv[])
 {
     std::string data_dir = GetEnv("EINHERI_DATA_DIR", "../data/");
 	/*
@@ -207,6 +211,31 @@ int main()
 	approximately the place where our md2 model is.
 	*/
 	smgr->addCameraSceneNode(0, vector3df(0,30,-40), vector3df(0,5,0));
+
+
+
+        //SDL
+
+        SDL_Surface *screen;
+        if( SDL_Init( SDL_INIT_VIDEO ) == -1 )
+        {
+            printf( "Can't init SDL:  %s\n", SDL_GetError( ) );
+            return EXIT_FAILURE;
+        }
+
+        atexit( SDL_Quit );
+        screen = SDL_SetVideoMode( 640, 480, 16, SDL_HWSURFACE );
+
+        if( screen == NULL )
+        {
+            printf( "Can't set video mode: %s\n", SDL_GetError( ) );
+            return EXIT_FAILURE;
+        }
+
+
+        SDL_Delay( 3000 );
+
+
 
 	/*
 	Ok, now we have set up the scene, lets draw everything: We run the
