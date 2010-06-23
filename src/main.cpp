@@ -43,6 +43,13 @@ After we have set up the IDE, the compiler will know where to find the Irrlicht
 Engine header files so we can include it now in our code.
 */
 #include <irrlicht.h>
+#include <cstdlib>
+#include <string>
+#include <stdlib.h>
+#include <stdio.h>
+#include <SDL/SDL.h>
+
+
 
 /*
 In the Irrlicht Engine, everything can be found in the namespace 'irr'. So if
@@ -83,11 +90,18 @@ losing platform independence then.
 #endif
 
 
+std::string GetEnv(const std::string & name, const std::string &default_value)
+{
+  const char *env = std::getenv(name.c_str());
+  return (env) ? env : default_value;
+}
+
 /*
 This is the main method. We can now use main() on every platform.
 */
-int main()
+int main(int argc, char *argv[])
 {
+    std::string data_dir = GetEnv("EINHERI_DATA_DIR", "../data/");
 	/*
 	The most important function of the engine is the createDevice()
 	function. The IrrlichtDevice is created by it, which is the root
@@ -165,7 +179,9 @@ int main()
 	other supported file format. By the way, that cool Quake 2 model
 	called sydney was modelled by Brian Collins.
 	*/
-	IAnimatedMesh* mesh = smgr->getMesh("../media/sydney.md2");
+        std::string modelPath = data_dir+"/sydney.md2";
+
+        IAnimatedMesh* mesh = smgr->getMesh(modelPath.c_str());
 	if (!mesh)
 	{
 		device->drop();
@@ -185,7 +201,8 @@ int main()
 	{
 		node->setMaterialFlag(EMF_LIGHTING, false);
 		node->setMD2Animation(scene::EMAT_STAND);
-		node->setMaterialTexture( 0, driver->getTexture("../media/sydney.bmp") );
+                std::string texturePath = data_dir+"/sydney.bmp";
+                node->setMaterialTexture( 0, driver->getTexture(texturePath.c_str()) );
 	}
 
 	/*
@@ -194,6 +211,31 @@ int main()
 	approximately the place where our md2 model is.
 	*/
 	smgr->addCameraSceneNode(0, vector3df(0,30,-40), vector3df(0,5,0));
+
+
+
+        //SDL
+
+        SDL_Surface *screen;
+        if( SDL_Init( SDL_INIT_VIDEO ) == -1 )
+        {
+            printf( "Can't init SDL:  %s\n", SDL_GetError( ) );
+            return EXIT_FAILURE;
+        }
+
+        atexit( SDL_Quit );
+        screen = SDL_SetVideoMode( 640, 480, 16, SDL_HWSURFACE );
+
+        if( screen == NULL )
+        {
+            printf( "Can't set video mode: %s\n", SDL_GetError( ) );
+            return EXIT_FAILURE;
+        }
+
+
+        SDL_Delay( 3000 );
+
+
 
 	/*
 	Ok, now we have set up the scene, lets draw everything: We run the
@@ -230,6 +272,8 @@ int main()
 
 	return 0;
 }
+
+
 
 /*
 That's it. Compile and run.
