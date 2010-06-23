@@ -42,7 +42,7 @@ Lets start!
 After we have set up the IDE, the compiler will know where to find the Irrlicht
 Engine header files so we can include it now in our code.
 */
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include <cstdlib>
 #include <string>
 #include <stdlib.h>
