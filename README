@@ -1,0 +1,15 @@
+Utilisation sous windows avecf qtcreator :
+
+- Télécharger et installer QtCreator
+- Télécharger et installer Mingw
+- Télécharger et installer Cmake avec ajout dans le Path
+
+- Définir le dossier bin de Mingw dans le path
+
+- Définir le dossier build/bin de Einheri dans le path
+- Une variable d'environnement : EINHERI_DATA_DIR vers le dossier data de einheri
+
+- Ouvrir qt creator et faire File > Open sur le fichier CMakeLists.txt à la racine de einheri.
+- Choisir Cmake si nécessaire et executer CMake
+- Run
+
