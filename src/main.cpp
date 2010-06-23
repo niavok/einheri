@@ -42,7 +42,7 @@ Lets start!
 After we have set up the IDE, the compiler will know where to find the Irrlicht
 Engine header files so we can include it now in our code.
 */
-#include <irrlicht/irrlicht.h>
+#include <irrlicht.h>
 
 /*
 In the Irrlicht Engine, everything can be found in the namespace 'irr'. So if
@@ -143,7 +143,7 @@ int main()
 	*/
 	IVideoDriver* driver = device->getVideoDriver();
 	ISceneManager* smgr = device->getSceneManager();
-	IGUIEnvironment* guienv = device->getGUIEnvironment();
+	gui::IGUIEnvironment* guienv = device->getGUIEnvironment();
         
 	/*
 	We add a hello world label to the window, using the GUI environment.
