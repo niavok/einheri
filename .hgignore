@@ -2,3 +2,13 @@ syntax: glob
 *.pyc
 nbproject
 build
+CMakeFiles/
+cmake_install.cmake
+Makefile
+.project
+CMakeCache.txt
+.cproject
+.settings
+src/client/einheri
+src/server/einheri-server
+
