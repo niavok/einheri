@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "GraphicEngine.h"
+#include "InputEngine.h"
 #include <iostream>
 #include <sstream>
 
@@ -18,6 +19,8 @@
     einheri::GraphicEngine graphicEngine;
 
     graphicEngine.Init();
+
+    einheri::InputEngine inputEngine;
 
 
      // Load a sprite to display
@@ -50,20 +53,27 @@
      sf::Clock framerateClock;
      int fpsCount = 0;
 
+     inputEngine.Start();
+
      // Start the game loop
      while (app.IsOpened())
      {
          // Process events
-         sf::Event Event;
-         while (app.GetEvent(Event))
+         sf::Event event;
+         while (app.GetEvent(event))
          {
 
              // Close window : exit
-             if (Event.Type == sf::Event::Closed)
+             if (event.Type == sf::Event::Closed)
                  app.Close();
 
-             if (Event.Type == sf::Event::Resized)
-                 graphicEngine.Resize(Event.Size.Width, Event.Size.Height);
+             if (event.Type == sf::Event::Resized)
+                 graphicEngine.Resize(event.Size.Width, event.Size.Height);
+
+             if (event.Type == sf::Event::KeyPressed ||
+                 event.Type == sf::Event::MouseMoved) {
+                 inputEngine.PushEvent(event);
+             }
 
          }
 
@@ -92,7 +102,9 @@
 
      }
 
+     inputEngine.Stop();
      std::cout<<"main loop exit"<<std::endl;
+
 
 
 

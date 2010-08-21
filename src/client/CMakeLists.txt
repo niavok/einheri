@@ -1,4 +1,11 @@
-add_executable (einheri main.cpp GraphicEngine.cpp)
+add_executable (
+einheri main.cpp
+GraphicEngine.cpp
+InputEngine.cpp
+Semaphore.cpp
+Heroes.cpp
+ClientWorldModel.cpp
+)
 
 
 
