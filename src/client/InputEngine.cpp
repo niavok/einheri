@@ -7,10 +7,13 @@
 
 #include <iostream>
 #include "InputEngine.h"
+#include "Application.h"
+
 
 namespace einheri {
 
-InputEngine::InputEngine() {
+InputEngine::InputEngine(Application *application) {
+    app = application;
 
 }
 
@@ -38,10 +41,30 @@ void InputEngine::PushEvent(sf::Event event){
     eventQueue.PushMessage(event);
 }
 
+bool InputEngine::IsMoveLeft() {
+    input->IsKeyDown(sf::Key::Q);
+}
+
+bool InputEngine::IsMoveRight() {
+    input->IsKeyDown(sf::Key::D);
+}
+
+bool InputEngine::IsMoveUp() {
+    input->IsKeyDown(sf::Key::Z);
+}
+
+bool InputEngine::IsMoveDown() {
+    input->IsKeyDown(sf::Key::S);
+}
+
 //Private
 
 void InputEngine::Run(){
     std::cout<<"InputEngine started"<<std::endl;
+
+    input = &(app->app->GetInput());
+
+
     while(running) {
         sf::Event event = eventQueue.PopMessage();
 

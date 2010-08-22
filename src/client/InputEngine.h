@@ -13,21 +13,31 @@
 
 namespace einheri {
 
+class Application;
+
 class InputEngine : private sf::Thread
 {
 public:
-    InputEngine();
+    InputEngine(Application *application);
     virtual ~InputEngine();
 
     void PushEvent(sf::Event event);
     void Start();
     void Stop();
 
+    bool IsMoveLeft();
+    bool IsMoveRight();
+    bool IsMoveUp();
+    bool IsMoveDown();
+
 private:
     MessageQueue<sf::Event> eventQueue;
 
+    Application *app;
+
     virtual void Run();
     bool running;
+    const sf::Input *input;
 
 };
 

@@ -12,6 +12,10 @@ class Heroes {
 public:
     Heroes();
     virtual ~Heroes();
+
+    double positionX;
+    double positionY;
+    double angle;
 };
 
 #endif /* HEROES_H_ */

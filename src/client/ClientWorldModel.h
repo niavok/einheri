@@ -8,14 +8,28 @@
 #ifndef CLIENTWORLDMODEL_H_
 #define CLIENTWORLDMODEL_H_
 
+#include <SFML/System.hpp>
+#include "Heroes.h"
+
+namespace einheri {
+
 class ClientWorldModel {
 public:
     ClientWorldModel();
     virtual ~ClientWorldModel();
 
-    double x;
-    double y;
+    void Lock();
+    void Unlock();
+
+    void Copy(ClientWorldModel *sourceModel);
+
+    Heroes heroes;
+
+private:
+    sf::Mutex lock;
 
 };
+
+}
 
 #endif /* CLIENTWORLDMODEL_H_ */

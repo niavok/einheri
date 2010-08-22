@@ -11,31 +11,53 @@
 #include <SFML/Window.hpp>
 #include "ClientWorldModel.h"
 
+#include <queue>
+#include <map>
+
+
+namespace einheri {
+
+class Application;
+
+
 class ClientWorldEngine : private sf::Thread {
 public:
-    ClientWorldEngine();
+    ClientWorldEngine(Application *application);
     virtual ~ClientWorldEngine();
-
-    void SwapModel();
 
     void Start();
     void Stop();
 
-
+    ClientWorldModel *GetLastCompletedModel();
+    void DisposeModel(ClientWorldModel *model);
 private:
-
-    Clock clock;
+    Application *app;
+    float frameDuration;
+    float lastFrameClock;
+    sf::Clock clock;
     virtual void Run();
     bool running;
+    void frame();
 
 
-    ClientWorldModel *editedModel;
-    ClientWorldModel *viewedModel;
+    void syncModel();
+    void clearModel();
 
 
-    ClientWorldModel model1;
-    ClientWorldModel model2;
+    ClientWorldModel * getNewModel();
+
+
+    ClientWorldModel *completedModel;
+    ClientWorldModel *editModel;
+
+
+
+    std::queue<ClientWorldModel *> availableModelQueue;
+    std::queue<ClientWorldModel *> modelQueue;
+    std::map<ClientWorldModel *, int> modelUserCount;
 
 };
+
+}
 
 #endif /* CLIENTWORLDENGINE_H_ */

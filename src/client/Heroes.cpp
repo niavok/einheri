@@ -8,8 +8,9 @@
 #include "Heroes.h"
 
 Heroes::Heroes() {
-    // TODO Auto-generated constructor stub
-
+    positionX = 0;
+    positionY = 0;
+    angle = 0;
 }
 
 Heroes::~Heroes() {
