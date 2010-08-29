@@ -69,6 +69,7 @@ void ClientWorldEngine::Run(){
             lastFrameClock+=frameDuration;
             frame();
         }else {
+            //std::cout<<"ClientWorldEngine sleep "<<frameDuration - (currentTime - lastFrameClock)<<std::endl;
             sf::Sleep(frameDuration - (currentTime - lastFrameClock));
         }
 
@@ -109,9 +110,9 @@ void ClientWorldEngine::clearModel() {
 }
 
 void ClientWorldEngine::frame() {
-    std::cout<<"ClientWorldEngine frame"<<std::endl;
+    //std::cout<<"ClientWorldEngine frame"<<std::endl;
 
-    InputEngine * inputEngine = &(app->inputEngine);
+    /*InputEngine * inputEngine = &(app->inputEngine);
 
 
     bool left = inputEngine->IsMoveLeft();
@@ -160,12 +161,21 @@ void ClientWorldEngine::frame() {
     if(left || right || up || down) {
         editModel->heroes.positionX+= cos(editModel->heroes.angle)*speed;
         editModel->heroes.positionY+= sin(editModel->heroes.angle)*speed;
-    }
+    }*/
 
+
+
+    syncLock.Lock();
+
+    //std::cout<<"modelToEdit"<<editModel<<std::endl;
+    computeMonsterSpeed();
+    computeMonsterPosition();
     syncModel();
+    syncLock.Unlock();
 }
 
 void ClientWorldEngine::syncModel() {
+
     ClientWorldModel *nextModel = getNewModel();
     ClientWorldModel *oldModel = completedModel;
 
@@ -174,8 +184,37 @@ void ClientWorldEngine::syncModel() {
     editModel = nextModel;
     DisposeModel(oldModel);
 
+
 }
 
+
+void ClientWorldEngine::computeMonsterSpeed(){
+    std::map<int, Monster *>::const_iterator it;
+
+    /*for(it = editModel->monsters.begin(); it != editModel->monsters.end(); it ++) {
+        Monster *monster = it->second;
+        monster->speedX = 1;
+        monster->speedY = 0.5;
+    }*/
+}
+
+void ClientWorldEngine::computeMonsterPosition(){
+    std::map<int, Monster *>::const_iterator it;
+
+    //std::cout<<"ClientWorldEngine computeMonsterPosition "<<editModel->GetMonsters().size()<<std::endl;
+
+    editModel->GetMonsters().size();
+
+    for(it = editModel->GetMonsters().begin(); it != editModel->GetMonsters().end(); ++it) {
+
+
+        Monster *monster = it->second;
+        monster->positionX = monster->positionX + monster->speedX * frameDuration;
+        monster->positionY = monster->positionY + monster->speedY * frameDuration;
+        //std::cout<<"ClientWorldEngine monster "<<monster->id<<" speed is "<<monster->speedX<<" and new pos is "<<monster->positionX<<std::endl;
+    }
+    //std::cout<<"ClientWorldEngine computeMonsterPosition end"<<editModel->GetMonsters().size()<<std::endl;
+}
 
 
 }

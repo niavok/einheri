@@ -47,7 +47,6 @@ void GraphicEngine::Init() {
         h = (double) application->app->GetWidth()/(double) application->app->GetHeight();
     }
 
-    std::cout<<"h "<<h<<std::endl;
     gluPerspective(45.f, h, 0.1f, 500.f);
 
     lastFrameClock = clock.GetElapsedTime();
@@ -68,7 +67,7 @@ void GraphicEngine::Resize(int width, int height){
 
     gluPerspective(45.f, h, 0.1f, 500.f);
 
-    std::cout<<"h "<<h<<std::endl;
+
 }
 
 bool GraphicEngine::Paint() {
@@ -80,7 +79,7 @@ bool GraphicEngine::Paint() {
 
 
         modelToDraw = application->clientWorldEngine.GetLastCompletedModel();
-
+        //std::cout<<"GraphicEngine modelToDraw"<<modelToDraw<<std::endl;
         if(modelToDraw) {
             modelToDraw->Lock();
             clearView();
@@ -88,8 +87,10 @@ bool GraphicEngine::Paint() {
             configureCamera();
 
             paintGround();
+
             paintCorpses();
             paintDecorations();
+            paintMonsters();
             paintHeroes();
             paintProjectiles();
             paintEffects();
@@ -99,6 +100,7 @@ bool GraphicEngine::Paint() {
             application->clientWorldEngine.DisposeModel(modelToDraw);
 
         }
+        //std::cout<<"end draw"<<modelToDraw<<std::endl;
 
         return true;
     } else {
@@ -120,12 +122,23 @@ void GraphicEngine::configureCamera(){
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef(0.f, 0.f, -10.f);
+    glTranslatef(0.f, 0.f, -25.f);
 
 }
 
 void GraphicEngine::paintGround(){
+    glBegin(GL_LINES);
+                glColor3f(1,0,0);
+                glVertex3f(-10.f, -10.f, 0.f);
+                glVertex3f(10.f, -10.f, 0.f);
+                glVertex3f(10.f, -10.f, 0.f);
+                glVertex3f(10.f, 10.f, 0.f);
+                glVertex3f(10.f, 10.f, 0.f);
+                glVertex3f(-10.f, 10.f, 0.f);
+                glVertex3f(-10.f, 10.f, 0.f);
+                glVertex3f(-10.f, -10.f, 0.f);
 
+    glEnd();
 }
 void GraphicEngine::paintCorpses(){
 
@@ -133,19 +146,58 @@ void GraphicEngine::paintCorpses(){
 void GraphicEngine::paintDecorations(){
 
 }
+
+void GraphicEngine::paintMonsters(){
+
+    //std::cout<<"paint monsters "<<modelToDraw->GetMonsters().size()<<std::endl;
+
+    std::map<int, Monster *>::const_iterator it;
+
+    for(it = modelToDraw->GetMonsters().begin(); it != modelToDraw->GetMonsters().end(); ++it) {
+
+        glPushMatrix();
+        Monster *monster = it->second;
+        glTranslatef( monster->positionX, monster->positionY, 0);
+        //std::cout<<"paint monster "<<monster->id<<" "<<monster->positionX<<" "<<monster->positionY<<std::endl;
+
+        glRotatef(monster->angle*180/PI,0,0,1);
+        glBegin(GL_TRIANGLES);
+            glColor3f(0,1,1);
+            glVertex3f(0.05f, 0.f, 0.f);
+            glColor3f(0,1,0);
+            glVertex3f(-0.025f,  0.043f, 0.f);
+            glVertex3f(-0.025f,  -0.043f, 0.f);
+        glEnd();
+        glPopMatrix();
+    }
+
+
+
+}
+
 void GraphicEngine::paintHeroes(){
 
-    std::cout<<"paint heroes"<<std::endl;
-    glPushMatrix();
-    glTranslatef( modelToDraw->heroes.positionX, modelToDraw->heroes.positionY, 0);
-    glRotatef(modelToDraw->heroes.angle*180/PI,0,0,1);
-    glBegin(GL_TRIANGLES);
-        glColor3f(1,0,1);
-        glVertex3f(1.0f, 0.f, 0.f);
-        glColor3f(1,0,0);
-        glVertex3f(-0.5f,  0.86f, 0.f);
-        glVertex3f(-0.5f,  -0.86f, 0.f);
-    glEnd();
+    //std::cout<<"paint heroes"<<std::endl;
+
+
+    std::map<int, Hero *>::const_iterator it;
+
+    for(it = modelToDraw->GetHeroes().begin(); it != modelToDraw->GetHeroes().end(); it ++) {
+        glPushMatrix();
+        Hero *hero = it->second;
+        glTranslatef( hero->positionX, hero->positionY, 0);
+        glRotatef(hero->angle*180/PI,0,0,1);
+        glBegin(GL_TRIANGLES);
+            glColor3f(1,0,1);
+            glVertex3f(1.0f, 0.f, 0.f);
+            glColor3f(1,0,0);
+            glVertex3f(-0.5f,  0.86f, 0.f);
+            glVertex3f(-0.5f,  -0.86f, 0.f);
+        glEnd();
+        glPopMatrix();
+    }
+
+
 
 }
 void GraphicEngine::paintProjectiles(){

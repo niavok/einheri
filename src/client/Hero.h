@@ -5,13 +5,13 @@
  *      Author: fred
  */
 
-#ifndef HEROES_H_
-#define HEROES_H_
+#ifndef HERO_H_
+#define HERO_H_
 
-class Heroes {
+class Hero {
 public:
-    Heroes();
-    virtual ~Heroes();
+    Hero();
+    virtual ~Hero();
 
     double positionX;
     double positionY;

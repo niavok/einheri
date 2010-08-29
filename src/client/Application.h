@@ -10,7 +10,9 @@
 
 #include "GraphicEngine.h"
 #include "InputEngine.h"
+#include "NetworkEngine.h"
 #include "ClientWorldEngine.h"
+#include "GameEngine.h"
 #include <SFML/Graphics.hpp>
 
 namespace einheri {
@@ -23,6 +25,9 @@ public:
     einheri::GraphicEngine graphicEngine;
     einheri::InputEngine inputEngine;
     einheri::ClientWorldEngine clientWorldEngine;
+    einheri::NetworkEngine networkEngine;
+    einheri::GameEngine gameEngine;
+
 
     void Run();
 

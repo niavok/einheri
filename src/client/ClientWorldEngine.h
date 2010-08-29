@@ -30,6 +30,11 @@ public:
 
     ClientWorldModel *GetLastCompletedModel();
     void DisposeModel(ClientWorldModel *model);
+
+    ClientWorldModel *editModel;
+
+    sf::Mutex syncLock;
+
 private:
     Application *app;
     float frameDuration;
@@ -43,12 +48,14 @@ private:
     void syncModel();
     void clearModel();
 
+    void computeMonsterSpeed();
+    void computeMonsterPosition();
 
     ClientWorldModel * getNewModel();
 
 
     ClientWorldModel *completedModel;
-    ClientWorldModel *editModel;
+
 
 
 

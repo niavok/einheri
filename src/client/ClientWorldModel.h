@@ -9,7 +9,9 @@
 #define CLIENTWORLDMODEL_H_
 
 #include <SFML/System.hpp>
-#include "Heroes.h"
+#include <map>
+#include "Hero.h"
+#include "Monster.h"
 
 namespace einheri {
 
@@ -23,10 +25,17 @@ public:
 
     void Copy(ClientWorldModel *sourceModel);
 
-    Heroes heroes;
+    void AddMonster(Monster *monster);
+    const std::map<int, Monster *> &GetMonsters();
+
+    const std::map<int, Hero *> &GetHeroes();
 
 private:
     sf::Mutex lock;
+
+    std::map<int, Hero *> heroes;
+    std::map<int, Monster *> monsters;
+
 
 };
 

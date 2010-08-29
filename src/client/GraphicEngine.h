@@ -41,6 +41,7 @@ private:
     void paintGround();
     void paintCorpses();
     void paintDecorations();
+    void paintMonsters();
     void paintHeroes();
     void paintProjectiles();
     void paintEffects();

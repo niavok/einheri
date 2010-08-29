@@ -69,7 +69,7 @@ void InputEngine::Run(){
         sf::Event event = eventQueue.PopMessage();
 
         if(event.Type == sf::Event::MouseMoved) {
-            std::cout<<"Mouse moved "<<event.MouseMove.X<<" "<<event.MouseMove.Y<<std::endl;
+            //std::cout<<"Mouse moved "<<event.MouseMove.X<<" "<<event.MouseMove.Y<<std::endl;
         }
 
         if(event.Type == sf::Event::KeyPressed) {

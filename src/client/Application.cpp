@@ -17,7 +17,10 @@ namespace einheri {
 Application::Application():
 clientWorldEngine(this),
 inputEngine(this),
-graphicEngine(this) {
+graphicEngine(this),
+networkEngine(this),
+gameEngine(this) {
+    app = NULL;
 
 }
 
@@ -52,6 +55,7 @@ void Application::Run() {
      sf::String fps("0 fps", Arial, 16);
      fps.SetPosition(0,20);
 
+
      // Load a music to play
      sf::Music Music;
      if (!Music.OpenFromFile("data/Olivier_Militon.-.Apnee.ogg"))
@@ -69,7 +73,10 @@ void Application::Run() {
      int fpsCount = 0;
 
      clientWorldEngine.Start();
+     gameEngine.Start();
+
      inputEngine.Start();
+     networkEngine.Start();
 
      // Start the game loop
      while (app->IsOpened())
@@ -78,7 +85,7 @@ void Application::Run() {
          sf::Event event;
          while (app->GetEvent(event))
          {
-
+             //std::cout<<"main event loop"<<std::endl;
              // Close window : exit
              if (event.Type == sf::Event::Closed)
                  app->Close();
@@ -108,7 +115,7 @@ void Application::Run() {
                   oss << framerate;
                   fps.SetText(oss.str() + " fps");
                   fps.SetPosition(0,20);
-          }
+              }
 
              app->Draw(fps);
 
@@ -129,8 +136,13 @@ void Application::Run() {
 
      }
 
+     networkEngine.Stop();
+
      inputEngine.Stop();
+     gameEngine.Stop();
+
      clientWorldEngine.Stop();
+
      std::cout<<"main loop exit"<<std::endl;
 
 

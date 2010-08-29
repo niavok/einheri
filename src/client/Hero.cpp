@@ -5,14 +5,14 @@
  *      Author: fred
  */
 
-#include "Heroes.h"
+#include "Hero.h"
 
-Heroes::Heroes() {
+Hero::Hero() {
     positionX = 0;
     positionY = 0;
     angle = 0;
 }
 
-Heroes::~Heroes() {
+Hero::~Hero() {
     // TODO Auto-generated destructor stub
 }

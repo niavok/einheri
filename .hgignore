@@ -11,4 +11,4 @@ CMakeCache.txt
 .settings
 src/client/einheri
 src/server/einheri-server
-
+log*
