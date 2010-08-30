@@ -13,7 +13,7 @@ namespace einheri {
 
 WorldEngine::WorldEngine(Application *application) {
     this->app = application;
-    frameDuration = 1./80.;
+    frameDuration = 1./60.;
 
 
 }
@@ -80,7 +80,7 @@ void WorldEngine::frame() {
     computeMonsterSpeed();
     computeMonsterPosition();
     computeMonsterTarget();
-
+    app->networkNotifier.Flush();
     model.Unlock();
 
 }
@@ -128,7 +128,7 @@ void WorldEngine::computeMonsterTarget(){
 
         if(monsterChanged) {
              //std::cout<<"WorldEngine monster "<<monster->id<<" change"<<std::endl;
-            app->networkNotifier.UpdateMonster(monster);
+            app->networkNotifier.StackUpdateMonster(monster);
         }
     }
 

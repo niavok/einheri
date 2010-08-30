@@ -8,10 +8,12 @@
 #ifndef NETWORKNOTIFIER_H_
 #define NETWORKNOTIFIER_H_
 
-#include "SFML/Network.hpp"
+#include <vector>
+#include <SFML/Network.hpp>
 #include "NetworkEngine.h"
 #include "MessageQueue.h"
 #include "Monster.h"
+
 
 namespace einheri {
 
@@ -27,14 +29,19 @@ public:
     void AddMonster(Monster *monster);
     void AddMonsters(std::vector<Monster *>);
     void UpdateMonster(Monster *monster);
+    void StackUpdateMonster(Monster *monster);
+    void UpdateMonsters(std::vector<Monster *>);
+    void Flush();
     void Start();
     void Stop();
 
 private:
+    sf::Mutex flushMutext;
     Application *app;
     virtual void Run();
     bool running;
     MessageQueue<sf::Packet *> packetQueue;
+    std::vector<Monster *> monstersToUpdate;
 };
 
 }

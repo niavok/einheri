@@ -35,13 +35,63 @@ void NetworkNotifier::AddMonster(Monster * monster) {
 
 
 
-void NetworkNotifier::UpdateMonster(Monster * monster) {
+void NetworkNotifier::StackUpdateMonster(Monster * monster) {
 
+    flushMutext.Lock();
+    monstersToUpdate.push_back(monster);
+    flushMutext.Unlock();
+}
+
+void NetworkNotifier::UpdateMonster(Monster * monster) {
     sf::Packet *packetUpdateMonster = new sf::Packet();
     *packetUpdateMonster << EinheriProtocol::CLIENT_UPDATE_MONSTER
             << monster->id << monster->speedX << monster->speedY
             << monster->positionX << monster->positionY << monster->angle;
     packetQueue.PushMessage(packetUpdateMonster);
+
+}
+
+void NetworkNotifier::UpdateMonsters(std::vector<Monster *> monsters) {
+
+    std::cout << "NetworkNotifier UpdateMonsters "<< monsters.size()<< std::endl;
+        int id;
+        double speedX;
+        double speedY;
+        double posX;
+        double posY;
+        double angle;
+        sf::Packet *packet = new sf::Packet();;
+
+       *packet << EinheriProtocol::CLIENT_UPDATE_MONSTERS << (int) monsters.size();
+        for(int i = 0; i < monsters.size(); i++) {
+
+            Monster *monster = monsters[i];
+
+            id = monster->id;
+            speedX = monster->speedX;
+            speedY = monster->speedY;
+            posX = monster->positionX;
+            posY = monster->positionY;
+            angle = monster->angle;
+
+            *packet<<id<<speedX<<speedY<<posX<<posY<<angle;
+        }
+        packetQueue.PushMessage(packet);
+
+}
+
+void NetworkNotifier::Flush() {
+    flushMutext.Lock();
+
+    std::cout << "NetworkNotifier Flush" << std::endl;
+    if(monstersToUpdate.size() == 1) {
+        UpdateMonster(monstersToUpdate.front());
+    } else if (monstersToUpdate.size() > 1) {
+        UpdateMonsters(monstersToUpdate);
+    }
+
+    monstersToUpdate.clear();
+    flushMutext.Unlock();
 
 }
 

@@ -31,8 +31,27 @@ void ClientWorldModel::Unlock() {
 }
 
 void ClientWorldModel::Copy(ClientWorldModel *sourceModel) {
-    heroes = sourceModel->heroes;
-    monsters = sourceModel->monsters;
+
+    //Copy monsters
+    {
+        std::map<int, Monster *>::const_iterator it;
+
+        for(it = sourceModel->GetMonsters().begin(); it != sourceModel->GetMonsters().end(); ++it) {
+            monsters[it->first] = it->second;
+        }
+    }
+
+    //Copy heroes
+    {
+        std::map<int, Hero *>::const_iterator it;
+
+        for(it = sourceModel->GetHeroes().begin(); it != sourceModel->GetHeroes().end(); ++it) {
+            heroes[it->first] = it->second;
+        }
+    }
+
+    //heroes = sourceModel->heroes;
+    //monsters = sourceModel->monsters;
 
 }
 

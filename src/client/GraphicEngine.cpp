@@ -78,10 +78,11 @@ bool GraphicEngine::Paint() {
         lastFrameClock=currentTime;
 
 
+        //std::cout<<"GraphicEngine get modelToDraw"<<std::endl;
         modelToDraw = application->clientWorldEngine.GetLastCompletedModel();
         //std::cout<<"GraphicEngine modelToDraw"<<modelToDraw<<std::endl;
         if(modelToDraw) {
-            modelToDraw->Lock();
+            modelToDraw->Lock(); // Lock to prevent the model to be delete
             clearView();
 
             configureCamera();
@@ -95,9 +96,11 @@ bool GraphicEngine::Paint() {
             paintProjectiles();
             paintEffects();
 
-            modelToDraw->Unlock();
+            modelToDraw->Unlock(); // Unlock to allow the model to be delete
 
+            //std::cout<<"GraphicEngine dispose modelToDraw"<<std::endl;
             application->clientWorldEngine.DisposeModel(modelToDraw);
+            //std::cout<<"GraphicEngine disposed modelToDraw"<<std::endl;
 
         }
         //std::cout<<"end draw"<<modelToDraw<<std::endl;
@@ -170,6 +173,8 @@ void GraphicEngine::paintMonsters(){
         glEnd();
         glPopMatrix();
     }
+
+    //std::cout<<"paint monsters end"<<modelToDraw->GetMonsters().size()<<std::endl;
 
 
 

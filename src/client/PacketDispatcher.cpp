@@ -174,6 +174,7 @@ void PacketDispatcher::dispatchClientUpdateMonsters(sf::Packet *packet) {
     (*packet) >> count;
     std::cout << "Update monsters " << count << std::endl;
 
+    std::cout << "Edit model " << app->clientWorldEngine.editModel << std::endl;
     app->clientWorldEngine.syncLock.Lock();
     for (int i = 0; i < count; i++) {
         int id;
