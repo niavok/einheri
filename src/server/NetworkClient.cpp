@@ -21,4 +21,11 @@ void NetworkClient::SetSocket(sf::SocketTCP socket) {
     this->socket = socket;
 }
 
+void NetworkClient::Send(sf::Packet &packet) {
+    sendLock.Lock();
+    socket.Send(packet);
+    sendLock.Unlock();
+
+}
+
 }

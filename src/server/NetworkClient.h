@@ -19,10 +19,13 @@ public:
     NetworkClient();
     virtual ~NetworkClient();
 
-    void SetSocket(sf::SocketTCP socket);
-    sf::SocketTCP socket;
-private:
 
+    void Send(sf::Packet &packet);
+    void SetSocket(sf::SocketTCP socket);
+
+private:
+    sf::Mutex sendLock;
+    sf::SocketTCP socket;
 };
 
 }

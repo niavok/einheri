@@ -46,7 +46,7 @@ void NetworkEngine::Hello(NetworkClient * client) {
 
         packet<<command<<majorProtocolVersion<<minorProtocolVersion<<description;
         std::cout<<"command "<<command<<std::endl;
-        client->socket.Send(packet);
+        client->Send(packet);
 }
 
 void NetworkEngine::AddMonster(NetworkClient * client, Monster * monster) {
@@ -55,7 +55,7 @@ void NetworkEngine::AddMonster(NetworkClient * client, Monster * monster) {
        int command = EinheriProtocol::CLIENT_ADD_MONSTER;
        packet<<command<<id;
        std::cout<<"Send AddMonster command. id="<<id<<std::endl;
-       client->socket.Send(packet);
+       client->Send(packet);
 }
 
 void NetworkEngine::AddMonsters(NetworkClient * client, std::vector<Monster *> monsters) {
@@ -65,7 +65,7 @@ void NetworkEngine::AddMonsters(NetworkClient * client, std::vector<Monster *> m
     for(int i = 0; i < monsters.size(); i++) {
         packet << monsters[i]->id;
     }
-    client->socket.Send(packet);
+    client->Send(packet);
 
 
 }
@@ -82,7 +82,35 @@ void NetworkEngine::UpdateMonster(NetworkClient * client, Monster * monster) {
        int command = EinheriProtocol::CLIENT_UPDATE_MONSTER;
        packet<<command<<id<<speedX<<speedY<<posX<<posY<<angle;
        //std::cout<<"Send UpdateMonster command. id="<<id<<std::endl;
-       client->socket.Send(packet);
+       client->Send(packet);
+}
+
+void NetworkEngine::UpdateMonsters(NetworkClient * client, std::vector<Monster *> monsters) {
+
+        int id;
+        double speedX;
+        double speedY;
+        double posX;
+        double posY;
+        double angle;
+        sf::Packet packet;
+
+        packet << EinheriProtocol::CLIENT_UPDATE_MONSTERS << (int) monsters.size();
+        for(int i = 0; i < monsters.size(); i++) {
+
+            Monster *monster = monsters[i];
+
+            id = monster->id;
+            speedX = monster->speedX;
+            speedY = monster->speedY;
+            posX = monster->positionX;
+            posY = monster->positionY;
+            angle = monster->angle;
+
+            packet<<id<<speedX<<speedY<<posX<<posY<<angle;
+        }
+        client->Send(packet);
+
 }
 
 //Private

@@ -70,6 +70,7 @@ void NetworkEngine::Run(){
 
     packetDispatcher.Start();
 
+    //if (clientSocket.Connect(5959, "192.168.0.12") != sf::Socket::Done)
     if (clientSocket.Connect(5959, "127.0.0.1") != sf::Socket::Done)
     {
         std::cout<<"NetworkEngine failed to connect to 127.0.0.1 port 5959"<<std::endl;

@@ -27,7 +27,7 @@ public:
     void AddMonster(NetworkClient * client, Monster * monster);
     void UpdateMonster(NetworkClient * client, Monster * monster);
     void AddMonsters(NetworkClient * client, std::vector<Monster *> monsters);
-    //void UpdateMonsters(NetworkClient * client, Monster * monster);
+    void UpdateMonsters(NetworkClient * client, std::vector<Monster *> monsters);
 
     std::map<sf::SocketTCP, NetworkClient *> clients;
 

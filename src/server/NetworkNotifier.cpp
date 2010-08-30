@@ -70,7 +70,7 @@ void NetworkNotifier::Run() {
         for (it = app->networkEngine.clients.begin(); it
                 != app->networkEngine.clients.end(); it++) {
             NetworkClient * client = it->second;
-            client->socket.Send(*packet);
+            client->Send(*packet);
         }
         delete packet;
         packet = packetQueue.PopMessage();

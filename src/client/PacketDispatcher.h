@@ -36,6 +36,7 @@ private:
     void dispatchClientAddMonster(sf::Packet *packet);
     void dispatchClientAddMonsters(sf::Packet *packet);
     void dispatchClientUpdateMonster(sf::Packet *packet);
+    void dispatchClientUpdateMonsters(sf::Packet *packet);
 
 
     MessageQueue<sf::Packet> packetQueue;

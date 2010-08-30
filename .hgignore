@@ -1,5 +1,4 @@
 syntax: glob
-*.pyc
 nbproject
 build
 CMakeFiles/
