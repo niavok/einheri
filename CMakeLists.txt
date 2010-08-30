@@ -4,6 +4,14 @@
 cmake_minimum_required (VERSION 2.6)
 project (EINHERI)
 
+SET(EINHERI_CFLAGS "-Wall") # additional compile flags for einheri
+SET(EINHERI_LDFLAGS "")		# additional linking flags for einheri
+
+IF(PROFILE)
+	add_definitions(-pg)
+    SET(CMAKE_EXE_LINKER_FLAGS "-pg ${CMAKE_EXE_LINKER_FLAGS}")
+ENDIF(PROFILE)
+
 # Recurse into the "Hello" and "Demo" subdirectories. This does not actually
 # cause another cmake executable to run. The same process will walk through
 # the project's entire directory structure.
