@@ -53,7 +53,7 @@ void NetworkNotifier::UpdateMonster(Monster * monster) {
 
 void NetworkNotifier::UpdateMonsters(std::vector<Monster *> monsters) {
 
-    std::cout << "NetworkNotifier UpdateMonsters "<< monsters.size()<< std::endl;
+    //std::cout << "NetworkNotifier UpdateMonsters "<< monsters.size()<< std::endl;
         int id;
         double speedX;
         double speedY;
@@ -83,7 +83,7 @@ void NetworkNotifier::UpdateMonsters(std::vector<Monster *> monsters) {
 void NetworkNotifier::Flush() {
     flushMutext.Lock();
 
-    std::cout << "NetworkNotifier Flush" << std::endl;
+    //std::cout << "NetworkNotifier Flush" << std::endl;
     if(monstersToUpdate.size() == 1) {
         UpdateMonster(monstersToUpdate.front());
     } else if (monstersToUpdate.size() > 1) {

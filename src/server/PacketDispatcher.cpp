@@ -99,12 +99,6 @@ void PacketDispatcher::dispatchServerGetWorld(sf::Packet *packet, NetworkClient 
     app->networkEngine.AddMonsters(client, monsters);
     app->networkEngine.UpdateMonsters(client, monsters);
 
-    for(int i = 0; i < monsters.size(); i++) {
-        app->networkEngine.UpdateMonster(client, monsters[i]);
-    }
-
-
-
 }
 
 }

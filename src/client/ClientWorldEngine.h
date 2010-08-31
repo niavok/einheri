@@ -28,12 +28,9 @@ public:
     void Start();
     void Stop();
 
-    ClientWorldModel *GetLastCompletedModel();
-    void DisposeModel(ClientWorldModel *model);
 
-    ClientWorldModel *editModel;
 
-    sf::Mutex syncLock;
+    ClientWorldModel *worldModel;
 
 private:
     Application *app;
@@ -44,24 +41,8 @@ private:
     bool running;
     void frame();
 
-
-    void syncModel();
-    void clearModel();
-
     void computeMonsterSpeed();
     void computeMonsterPosition();
-
-    ClientWorldModel * getNewModel();
-
-
-    ClientWorldModel *completedModel;
-
-
-
-
-    std::queue<ClientWorldModel *> availableModelQueue;
-    std::queue<ClientWorldModel *> modelQueue;
-    std::map<ClientWorldModel *, int> modelUserCount;
 
 };
 

@@ -30,6 +30,10 @@ public:
 
     const std::map<int, Hero *> &GetHeroes();
 
+    sf::Mutex mutexMonsters;
+    sf::Mutex mutexHeroes;
+
+
 private:
     sf::Mutex lock;
 

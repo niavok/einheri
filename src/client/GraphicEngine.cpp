@@ -26,6 +26,8 @@ GraphicEngine::~GraphicEngine() {
     // TODO Auto-generated destructor stub
 }
 
+static GLuint index;
+
 void GraphicEngine::Init() {
 
 
@@ -48,6 +50,20 @@ void GraphicEngine::Init() {
     }
 
     gluPerspective(45.f, h, 0.1f, 500.f);
+
+    index = glGenLists(1);
+
+    // compile the display list, store a triangle in it
+    glNewList(index, GL_COMPILE);
+    glBegin(GL_TRIANGLES);
+                glColor3f(0,1,1);
+                glVertex3f(0.05f, 0.f, 0.f);
+                glColor3f(0,1,0);
+                glVertex3f(-0.025f,  0.043f, 0.f);
+                glVertex3f(-0.025f,  -0.043f, 0.f);
+            glEnd();
+    glEndList();
+
 
     lastFrameClock = clock.GetElapsedTime();
 }
@@ -79,10 +95,9 @@ bool GraphicEngine::Paint() {
 
 
         //std::cout<<"GraphicEngine get modelToDraw"<<std::endl;
-        modelToDraw = application->clientWorldEngine.GetLastCompletedModel();
+        modelToDraw = application->clientWorldEngine.worldModel;
         //std::cout<<"GraphicEngine modelToDraw"<<modelToDraw<<std::endl;
         if(modelToDraw) {
-            modelToDraw->Lock(); // Lock to prevent the model to be delete
             clearView();
 
             configureCamera();
@@ -95,12 +110,6 @@ bool GraphicEngine::Paint() {
             paintHeroes();
             paintProjectiles();
             paintEffects();
-
-            modelToDraw->Unlock(); // Unlock to allow the model to be delete
-
-            //std::cout<<"GraphicEngine dispose modelToDraw"<<std::endl;
-            application->clientWorldEngine.DisposeModel(modelToDraw);
-            //std::cout<<"GraphicEngine disposed modelToDraw"<<std::endl;
 
         }
         //std::cout<<"end draw"<<modelToDraw<<std::endl;
@@ -152,7 +161,7 @@ void GraphicEngine::paintDecorations(){
 
 void GraphicEngine::paintMonsters(){
 
-    //std::cout<<"paint monsters "<<modelToDraw->GetMonsters().size()<<std::endl;
+    application->clientWorldEngine.worldModel->mutexMonsters.Lock();
 
     std::map<int, Monster *>::const_iterator it;
 
@@ -164,18 +173,16 @@ void GraphicEngine::paintMonsters(){
         //std::cout<<"paint monster "<<monster->id<<" "<<monster->positionX<<" "<<monster->positionY<<std::endl;
 
         glRotatef(monster->angle*180/PI,0,0,1);
-        glBegin(GL_TRIANGLES);
-            glColor3f(0,1,1);
-            glVertex3f(0.05f, 0.f, 0.f);
-            glColor3f(0,1,0);
-            glVertex3f(-0.025f,  0.043f, 0.f);
-            glVertex3f(-0.025f,  -0.043f, 0.f);
-        glEnd();
+
+        glCallList(index);
+
+
         glPopMatrix();
     }
 
     //std::cout<<"paint monsters end"<<modelToDraw->GetMonsters().size()<<std::endl;
 
+    application->clientWorldEngine.worldModel->mutexMonsters.Unlock();
 
 
 }

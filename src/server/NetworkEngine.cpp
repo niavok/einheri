@@ -81,7 +81,7 @@ void NetworkEngine::UpdateMonster(NetworkClient * client, Monster * monster) {
 
        int command = EinheriProtocol::CLIENT_UPDATE_MONSTER;
        packet<<command<<id<<speedX<<speedY<<posX<<posY<<angle;
-       //std::cout<<"Send UpdateMonster command. id="<<id<<std::endl;
+       std::cout<<"Send UpdateMonster command. id="<<id<<std::endl;
        client->Send(packet);
 }
 
@@ -109,6 +109,8 @@ void NetworkEngine::UpdateMonsters(NetworkClient * client, std::vector<Monster *
 
             packet<<id<<speedX<<speedY<<posX<<posY<<angle;
         }
+
+        std::cout<<"Send UpdateMonsters command. size="<<monsters.size()<<std::endl;
         client->Send(packet);
 
 }

@@ -109,32 +109,32 @@ void PacketDispatcher::dispatchClientAddMonsters(sf::Packet *packet) {
     (*packet) >> count;
     std::cout << "Add monsters " << count << std::endl;
 
-    app->clientWorldEngine.syncLock.Lock();
+    app->clientWorldEngine.worldModel->mutexMonsters.Lock();
     for (int i = 0; i < count; i++) {
         int id;
         (*packet) >> id;
         //std::cout<<"Add monster "<<id<<std::endl;
         Monster *monster = new Monster();
         monster->id = id;
-        app->clientWorldEngine.editModel->AddMonster(monster);
+        app->clientWorldEngine.worldModel->AddMonster(monster);
     }
-    app->clientWorldEngine.syncLock.Unlock();
+    app->clientWorldEngine.worldModel->mutexMonsters.Unlock();
 }
 
 void PacketDispatcher::dispatchClientAddMonster(sf::Packet *packet) {
     int id;
 
     (*packet) >> id;
-    std::cout << "Add monster " << id << std::endl;
+    //std::cout << "Add monster " << id << std::endl;
 
     Monster *monster = new Monster();
     monster->id = id;
 
-    app->clientWorldEngine.syncLock.Lock();
+    app->clientWorldEngine.worldModel->mutexMonsters.Lock();
 
-    app->clientWorldEngine.editModel->AddMonster(monster);
+    app->clientWorldEngine.worldModel->AddMonster(monster);
 
-    app->clientWorldEngine.syncLock.Unlock();
+    app->clientWorldEngine.worldModel->mutexMonsters.Unlock();
 }
 
 void PacketDispatcher::dispatchClientUpdateMonster(sf::Packet *packet) {
@@ -148,10 +148,10 @@ void PacketDispatcher::dispatchClientUpdateMonster(sf::Packet *packet) {
     (*packet) >> id >> speedX >> speedY >> posX >> posY >> angle;
     //std::cout<<"Update monster "<<id<<" sx"<<speedX<<" sy"<<speedY<<" px"<<posX<<" py"<<posY<<" a"<<angle<<" "<<std::endl;
 
-    app->clientWorldEngine.syncLock.Lock();
+    app->clientWorldEngine.worldModel->mutexMonsters.Lock();
 
-    if (app->clientWorldEngine.editModel->GetMonsters().count(id) > 0) {
-        Monster *monster = app->clientWorldEngine.editModel->GetMonsters().at(
+    if (app->clientWorldEngine.worldModel->GetMonsters().count(id) > 0) {
+        Monster *monster = app->clientWorldEngine.worldModel->GetMonsters().at(
                 id);
         monster->angle = angle;
         monster->speedX = speedX;
@@ -164,7 +164,7 @@ void PacketDispatcher::dispatchClientUpdateMonster(sf::Packet *packet) {
                 << " a" << angle << " " << std::endl;
     }
 
-    app->clientWorldEngine.syncLock.Unlock();
+    app->clientWorldEngine.worldModel->mutexMonsters.Unlock();
 }
 
 void PacketDispatcher::dispatchClientUpdateMonsters(sf::Packet *packet) {
@@ -172,10 +172,9 @@ void PacketDispatcher::dispatchClientUpdateMonsters(sf::Packet *packet) {
     int count;
 
     (*packet) >> count;
-    std::cout << "Update monsters " << count << std::endl;
+    //std::cout << "Update monsters " << count << std::endl;
 
-    std::cout << "Edit model " << app->clientWorldEngine.editModel << std::endl;
-    app->clientWorldEngine.syncLock.Lock();
+    app->clientWorldEngine.worldModel->mutexMonsters.Lock();
     for (int i = 0; i < count; i++) {
         int id;
         double speedX;
@@ -187,9 +186,9 @@ void PacketDispatcher::dispatchClientUpdateMonsters(sf::Packet *packet) {
         (*packet) >> id >> speedX >> speedY >> posX >> posY >> angle;
         //std::cout<<"Update monster "<<id<<" sx"<<speedX<<" sy"<<speedY<<" px"<<posX<<" py"<<posY<<" a"<<angle<<" "<<std::endl;
 
-        if (app->clientWorldEngine.editModel->GetMonsters().count(id) > 0) {
+        if (app->clientWorldEngine.worldModel->GetMonsters().count(id) > 0) {
             Monster *monster =
-                    app->clientWorldEngine.editModel->GetMonsters().at(id);
+                    app->clientWorldEngine.worldModel->GetMonsters().at(id);
             monster->angle = angle;
             monster->speedX = speedX;
             monster->speedY = speedY;
@@ -202,7 +201,7 @@ void PacketDispatcher::dispatchClientUpdateMonsters(sf::Packet *packet) {
         }
 
     }
-    app->clientWorldEngine.syncLock.Unlock();
+    app->clientWorldEngine.worldModel->mutexMonsters.Unlock();
 }
 
 }

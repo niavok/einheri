@@ -26,10 +26,12 @@ void GameEngine::Start(){
 }
 
 void GameEngine::Stop(){
-    running = false;
-    GameEvent endEvent;
-    events.PushMessage(endEvent);
-    Wait();
+    if(running) {
+        running = false;
+        GameEvent endEvent;
+        events.PushMessage(endEvent);
+        Wait();
+    }
 }
 
 void GameEngine::SendEvent(GameEvent event) {
@@ -52,6 +54,9 @@ void GameEngine::Run(){
 
 void GameEngine::processEvent(){
     GameEvent event = events.PopMessage();
+
+    std::cout<<"GameEngine process event"<<std::endl;
+
 
     if(event.type == GameEvent::CONNECTED_TO_SERVER) {
         std::cout<<"GameEngine process event CONNECTED_TO_SERVER"<<std::endl;
