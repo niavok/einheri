@@ -9,6 +9,7 @@
 
 #include "GameEngine.h"
 
+
 #include <iostream>
 
 namespace einheri {
@@ -66,8 +67,22 @@ void GameEngine::processEvent(){
     if(event.type == GameEvent::REGISTERED_TO_SERVER) {
             std::cout<<"GameEngine process event REGISTERED_TO_SERVER"<<std::endl;
             application->networkEngine.GetWorld();
+            application->networkEngine.AddPlayer();
     }
 
+    if(event.type == GameEvent::PLAYER_ADDED) {
+            std::cout<<"GameEngine process event ADD_PLAYER"<<std::endl;
+            localPlayer.id = event.intValues[GameEvent::PLAYER_ID];
+            application->networkEngine.SetPlayerName(localPlayer.id, "fred");
+            application->networkEngine.AddHero(localPlayer.id);
+    }
+
+    if(event.type == GameEvent::HERO_ADDED) {
+                std::cout<<"GameEngine process event ADD_HERO"<<std::endl;
+                if(event.intValues[GameEvent::PLAYER_ID ] == localPlayer.id) {
+                    localPlayer.heroId =  event.intValues[GameEvent::HERO_ID];
+                }
+        }
 
 
 

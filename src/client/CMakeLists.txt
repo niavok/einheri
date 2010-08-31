@@ -12,6 +12,7 @@ Map.cpp
 Monster.cpp
 NetworkEngine.cpp
 PacketDispatcher.cpp
+Player.cpp
 ${EINHERI_SOURCE_DIR}/src/common/EinheriProtocol.cpp
 ${EINHERI_SOURCE_DIR}/src/common/Semaphore.cpp
 )

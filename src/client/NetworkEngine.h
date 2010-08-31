@@ -26,6 +26,10 @@ public:
 
     void GetWorld();
     void Hello();
+    void AddPlayer();
+    void AddHero(int playerId);
+    void SetPlayerName(int playerId, std::string name);
+    void UpdateHeroMovement(int heroId, bool move, double angle, double speed);
 
    private:
        Application *app;

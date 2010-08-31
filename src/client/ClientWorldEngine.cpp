@@ -19,6 +19,9 @@ ClientWorldEngine::ClientWorldEngine(Application *application) {
 
     worldModel = new ClientWorldModel();
 
+    previousAngle  = -1;
+    previousMove = false;
+    previousSpeed = -1;
 }
 
 ClientWorldEngine::~ClientWorldEngine() {
@@ -64,57 +67,8 @@ void ClientWorldEngine::Run(){
 void ClientWorldEngine::frame() {
     //std::cout<<"ClientWorldEngine frame"<<std::endl;
 
-    /*InputEngine * inputEngine = &(app->inputEngine);
 
-
-    bool left = inputEngine->IsMoveLeft();
-    bool right = inputEngine->IsMoveRight();
-    bool up = inputEngine->IsMoveUp();
-    bool down = inputEngine->IsMoveDown();
-
-    double PI = 3.14159265;
-
-    std::cout<<"ClientWorldEngine key state "<<left<<" "<<right<<" "<<up<<" "<<down<<" "<<std::endl;
-
-    if(left && !right && !up && !down) {
-        editModel->heroes.angle = PI;
-    }
-
-    if(left && !right && up && !down) {
-        editModel->heroes.angle = 3*PI/4;
-    }
-
-    if(!left && !right && up && !down) {
-        editModel->heroes.angle = PI/2;
-    }
-
-    if(!left && right && up && !down) {
-        editModel->heroes.angle = PI/4;
-    }
-
-    if(!left && right && !up && !down) {
-        editModel->heroes.angle = 0;
-    }
-
-    if(!left && right && !up && down) {
-        editModel->heroes.angle = -PI/4;
-    }
-
-    if(!left && !right && !up && down) {
-        editModel->heroes.angle = -PI/2;
-    }
-
-    if(left && !right && !up && down) {
-        editModel->heroes.angle = -3*PI/4;
-    }
-
-    double speed = 0.01;
-
-    if(left || right || up || down) {
-        editModel->heroes.positionX+= cos(editModel->heroes.angle)*speed;
-        editModel->heroes.positionY+= sin(editModel->heroes.angle)*speed;
-    }*/
-
+    updateHeroMovement();
 
 
     worldModel->mutexMonsters.Lock();
@@ -150,5 +104,60 @@ void ClientWorldEngine::computeMonsterPosition(){
     //std::cout<<"ClientWorldEngine computeMonsterPosition end"<<editModel->GetMonsters().size()<<std::endl;
 }
 
+void ClientWorldEngine::updateHeroMovement(){
+
+    if(app->gameEngine.localPlayer.heroId == -1) {
+        return;
+    }
+
+    InputEngine * inputEngine = &(app->inputEngine);
+
+
+    bool left = inputEngine->IsMoveLeft();
+    bool right = inputEngine->IsMoveRight();
+    bool up = inputEngine->IsMoveUp();
+    bool down = inputEngine->IsMoveDown();
+
+    double PI = 3.14159265;
+
+    std::cout<<"ClientWorldEngine key state "<<left<<" "<<right<<" "<<up<<" "<<down<<" "<<std::endl;
+    double angle = 0;
+    bool move = left || right || up || down;
+    double speed = 100; //With keyboard, speed is always 0% or 100%
+
+    if(left && !right && !up && !down) {
+        angle = PI;
+    }
+
+    if(left && !right && up && !down) {
+        angle = 3*PI/4;
+    }
+
+    if(!left && !right && up && !down) {
+        angle = PI/2;
+    }
+
+    if(!left && right && up && !down) {
+        angle = PI/4;
+    }
+
+    if(!left && right && !up && !down) {
+        angle = 0;
+    }
+
+    if(!left && right && !up && down) {
+        angle = -PI/4;
+    }
+
+    if(!left && !right && !up && down) {
+        angle = -PI/2;
+    }
+
+    if(left && !right && !up && down) {
+        angle = -3*PI/4;
+    }
+
+    app->networkEngine.UpdateHeroMovement(app->gameEngine.localPlayer.heroId, move, angle, speed);
+}
 
 }

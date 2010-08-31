@@ -18,10 +18,13 @@ public:
         SERVER_HELLO = 0, // int major protocol version, int minor protocol version, string infos (os, stats...)
         SERVER_GOODBYE, // string reason
 
-        SERVER_ADD_PLAYER, // string name
-        SERVER_ADD_HERO, // string name
+        SERVER_ADD_PLAYER, //
+        SERVER_ADD_HERO, // int playerId
+        SERVER_SET_PLAYER_NAME, // int playerId, string name
 
         SERVER_GET_WORLD, //
+
+        SERVER_UPDATE_HERO_MOVEMENT, // int heroId, bool move, double angle, double speed
 
         SERVER_QUIT,
     };

@@ -8,6 +8,8 @@
 #ifndef GAMEEVENT_H_
 #define GAMEEVENT_H_
 
+#include <map>
+
 namespace einheri {
 
 class GameEvent {
@@ -17,12 +19,20 @@ public:
         NONE,
         CONNECTED_TO_SERVER,
         REGISTERED_TO_SERVER,
+        PLAYER_ADDED,
+        HERO_ADDED,
+    };
+
+    enum EventField {
+        PLAYER_ID,
+        HERO_ID,
     };
 
     GameEvent();
     virtual ~GameEvent();
 
     EventType type;
+    std::map<EventField, int> intValues;
 
 };
 

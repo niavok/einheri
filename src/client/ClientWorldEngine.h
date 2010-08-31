@@ -44,6 +44,11 @@ private:
     void computeMonsterSpeed();
     void computeMonsterPosition();
 
+    void updateHeroMovement();
+
+    double previousAngle;
+    bool previousMove;
+    double previousSpeed;
 };
 
 }

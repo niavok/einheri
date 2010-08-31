@@ -9,6 +9,7 @@
 #define GAMEENGINE_H_
 
 #include "GameEvent.h"
+#include "Player.h"
 
 namespace einheri {
 
@@ -26,6 +27,8 @@ public:
 
     void SendEvent(GameEvent event);
 
+    Player localPlayer;
+
 private:
     bool running;
     Application *application;
@@ -33,6 +36,7 @@ private:
     virtual void Run();
 
     virtual void processEvent();
+
 
     MessageQueue<GameEvent> events;
 };
