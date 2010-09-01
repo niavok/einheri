@@ -7,7 +7,7 @@
 
 #include "IdGenerator.h"
 
-namespace einheri {
+namespace einheriServer {
 
 int IdGenerator::nextId = 1;
 

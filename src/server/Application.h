@@ -5,8 +5,8 @@
  *      Author: fred
  */
 
-#ifndef APPLICATION_H_
-#define APPLICATION_H_
+#ifndef SERVER_APPLICATION_H_
+#define SERVER_APPLICATION_H_
 
 #include "NetworkEngine.h"
 #include "NetworkNotifier.h"
@@ -14,15 +14,15 @@
 #include "GameEngine.h"
 
 
-namespace einheri {
+namespace einheriServer {
 
 class Application {
 public:
     Application();
     virtual ~Application();
 
-    NetworkEngine networkEngine;
     GameEngine gameEngine;
+    NetworkEngine networkEngine;
     NetworkNotifier networkNotifier;
     WorldEngine worldEngine;
 

@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-namespace einheri {
+namespace einheriServer {
 
 GameEngine::GameEngine(Application *application){
     this->application = application;

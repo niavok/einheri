@@ -33,7 +33,7 @@ public:
         CLIENT_HELLO = 0, // int major protocol version, int minor protocol version, string infos (os, stats...)
         CLIENT_GOODBYE, // string reason
 
-        CLIENT_SET_WORLD, // double sizeX, double size Y
+        //CLIENT_SET_WORLD, // double sizeX, double size Y
         CLIENT_ADD_HERO, // int id
         CLIENT_ADD_MONSTER, // int id
         CLIENT_ADD_HEROES, // int count, int id, int id ...

@@ -5,13 +5,13 @@
  *      Author: fred
  */
 
-#ifndef GAMEENGINE_H_
-#define GAMEENGINE_H_
+#ifndef SERVER_GAMEENGINE_H_
+#define SERVER_GAMEENGINE_H_
 
 #include "GameEvent.h"
 #include "MessageQueue.h"
 
-namespace einheri {
+namespace einheriServer {
 
 class Application;
 

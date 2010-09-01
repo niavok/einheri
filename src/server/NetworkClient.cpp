@@ -7,7 +7,7 @@
 
 #include "NetworkClient.h"
 
-namespace einheri {
+namespace einheriServer {
 
 NetworkClient::NetworkClient() {
 

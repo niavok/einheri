@@ -16,10 +16,10 @@ namespace einheri {
 
 Application::Application():
 clientWorldEngine(this),
-inputEngine(this),
+gameEngine(this),
 graphicEngine(this),
-networkEngine(this),
-gameEngine(this) {
+inputEngine(this),
+networkEngine(this){
     app = NULL;
 
 }

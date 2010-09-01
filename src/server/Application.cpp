@@ -14,11 +14,11 @@
 
 #include <iostream>
 
-namespace einheri {
+namespace einheriServer {
 
 Application::Application():
- networkEngine(this),
  gameEngine(this),
+ networkEngine(this),
  networkNotifier(this),
  worldEngine(this){
 
@@ -37,7 +37,7 @@ void Application::Run() {
     networkNotifier.Start();
 
     for(int i = 0; i < 10000; i++) {
-        einheri::Monster monster;
+        Monster monster;
         monster.positionX = sf::Randomizer::Random(-1.f, 1.f);
         monster.positionY = sf::Randomizer::Random(-1.f, 1.f);
 

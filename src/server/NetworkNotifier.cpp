@@ -9,7 +9,7 @@
 #include "EinheriProtocol.h"
 #include "Application.h"
 
-namespace einheri {
+namespace einheriServer {
 
 NetworkNotifier::NetworkNotifier(Application *application) {
     this->app = application;
@@ -22,11 +22,11 @@ NetworkNotifier::~NetworkNotifier() {
 void NetworkNotifier::AddMonster(Monster * monster) {
 
     sf::Packet *packetAddMonster = new sf::Packet();
-    *packetAddMonster << EinheriProtocol::CLIENT_ADD_MONSTER << monster->id;
+    *packetAddMonster << einheri::EinheriProtocol::CLIENT_ADD_MONSTER << monster->id;
     packetQueue.PushMessage(packetAddMonster);
 
     sf::Packet *packetUpdateMonster = new sf::Packet();
-    *packetUpdateMonster << EinheriProtocol::CLIENT_UPDATE_MONSTER
+    *packetUpdateMonster << einheri::EinheriProtocol::CLIENT_UPDATE_MONSTER
             << monster->id << monster->speedX << monster->speedY
             << monster->positionX << monster->positionY << monster->angle;
     packetQueue.PushMessage(packetUpdateMonster);
@@ -44,7 +44,7 @@ void NetworkNotifier::StackUpdateMonster(Monster * monster) {
 
 void NetworkNotifier::UpdateMonster(Monster * monster) {
     sf::Packet *packetUpdateMonster = new sf::Packet();
-    *packetUpdateMonster << EinheriProtocol::CLIENT_UPDATE_MONSTER
+    *packetUpdateMonster << einheri::EinheriProtocol::CLIENT_UPDATE_MONSTER
             << monster->id << monster->speedX << monster->speedY
             << monster->positionX << monster->positionY << monster->angle;
     packetQueue.PushMessage(packetUpdateMonster);
@@ -62,8 +62,8 @@ void NetworkNotifier::UpdateMonsters(std::vector<Monster *> monsters) {
         double angle;
         sf::Packet *packet = new sf::Packet();;
 
-       *packet << EinheriProtocol::CLIENT_UPDATE_MONSTERS << (int) monsters.size();
-        for(int i = 0; i < monsters.size(); i++) {
+       *packet << einheri::EinheriProtocol::CLIENT_UPDATE_MONSTERS << (int) monsters.size();
+        for(int i = 0; i < (int)monsters.size(); i++) {
 
             Monster *monster = monsters[i];
 

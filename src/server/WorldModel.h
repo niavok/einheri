@@ -5,8 +5,8 @@
  *      Author: fred
  */
 
-#ifndef WORLDMODEL_H_
-#define WORLDMODEL_H_
+#ifndef SERVER_WORLDMODEL_H_
+#define SERVER_WORLDMODEL_H_
 
 #include <vector>
 #include <SFML/System.hpp>
@@ -14,7 +14,7 @@
 #include "Monster.h"
 #include "Map.h"
 
-namespace einheri {
+namespace einheriServer {
 
 class WorldModel {
 public:

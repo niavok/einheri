@@ -22,11 +22,11 @@ public:
     Application();
     virtual ~Application();
 
+    einheri::ClientWorldEngine clientWorldEngine;
+    einheri::GameEngine gameEngine;
     einheri::GraphicEngine graphicEngine;
     einheri::InputEngine inputEngine;
-    einheri::ClientWorldEngine clientWorldEngine;
     einheri::NetworkEngine networkEngine;
-    einheri::GameEngine gameEngine;
 
 
     void Run();

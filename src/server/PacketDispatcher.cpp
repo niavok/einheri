@@ -10,7 +10,7 @@
 #include "EinheriProtocol.h"
 #include "Application.h"
 
-namespace einheri {
+namespace einheriServer {
 
 PacketDispatcher::PacketDispatcher(Application * application) {
     app = application;
@@ -20,12 +20,12 @@ PacketDispatcher::~PacketDispatcher() {
     // TODO Auto-generated destructor stub
 }
 
-void PacketDispatcher::Start(){
+void PacketDispatcher::Start() {
     running = true;
     Launch();
 }
 
-void PacketDispatcher::Stop(){
+void PacketDispatcher::Stop() {
     running = false;
     sf::Packet packet;
     socketQueue.PushMessage(NULL);
@@ -38,66 +38,102 @@ void PacketDispatcher::Dispatch(sf::Packet packet, NetworkClient *client) {
     packetQueue.PushMessage(packet);
 }
 
-
 //Private
 
-void PacketDispatcher::Run(){
-    std::cout<<"PacketDispatcher started"<<std::endl;
+void PacketDispatcher::Run() {
+    std::cout << "PacketDispatcher started" << std::endl;
 
     sf::Packet packet = packetQueue.PopMessage();
     NetworkClient *client = socketQueue.PopMessage();
 
-
-    while(running) {
-        EinheriProtocol::ServerCommandType commandType;
+    while (running) {
+        einheri::EinheriProtocol::ServerCommandType commandType;
         int commandTypeInt;
         packet >> commandTypeInt;
 
-        commandType = (EinheriProtocol::ServerCommandType) commandTypeInt;
+        commandType = (einheri::EinheriProtocol::ServerCommandType) commandTypeInt;
 
-        std::cout<<"PacketDispatcher command "<<EinheriProtocol::getCommandName(commandType)<<std::endl;
+        std::cout << "PacketDispatcher command " << einheri::EinheriProtocol::getCommandName(commandType) << std::endl;
 
         switch (commandType) {
-            case EinheriProtocol::SERVER_HELLO:
-                dispatchServerHello(&packet, client);
-                break;
-            case EinheriProtocol::SERVER_GET_WORLD:
-                dispatchServerGetWorld(&packet, client);
-                break;
+        case einheri::EinheriProtocol::SERVER_HELLO:
+            dispatchServerHello(&packet, client);
+            break;
+        case einheri::EinheriProtocol::SERVER_GET_WORLD:
+            dispatchServerGetWorld(&packet, client);
+            break;
+        case einheri::EinheriProtocol::SERVER_ADD_PLAYER:
+            dispatchServerGetAddPlayer(&packet, client);
+            break;
+        case einheri::EinheriProtocol::SERVER_ADD_HERO:
+            dispatchServerGetAddHero(&packet, client);
+            break;
+        case einheri::EinheriProtocol::SERVER_SET_PLAYER_NAME:
+            dispatchServerSetPlayerName(&packet, client);
+            break;
+        case einheri::EinheriProtocol::SERVER_GOODBYE:
+            //TODO
+            break;
+        case einheri::EinheriProtocol::SERVER_UPDATE_HERO_MOVEMENT:
+            //TODO
+            break;
+        case einheri::EinheriProtocol::SERVER_QUIT:
+            //TODO
+            break;
         }
 
-        if(!packet){
-            std::cout<<"PacketDispatcher bad format"<<std::endl;
+        if (!packet) {
+            std::cout << "PacketDispatcher bad format" << std::endl;
         }
 
         packet = packetQueue.PopMessage();
         client = socketQueue.PopMessage();
     }
 
-    std::cout<<"PacketDispatcher stopped"<<std::endl;
+    std::cout << "PacketDispatcher stopped" << std::endl;
 }
 
-void PacketDispatcher::dispatchServerHello(sf::Packet *packet, NetworkClient *client){
-    int command;
+void PacketDispatcher::dispatchServerHello(sf::Packet *packet, NetworkClient *client) {
     int majorProtocolVersion;
     int minorProtocolVersion;
     std::string description;
 
-    (*packet)>>majorProtocolVersion>>minorProtocolVersion>>description;
-    std::cout<<"Client connected. Protocol version : "<<majorProtocolVersion<<"."<<minorProtocolVersion<<". Description : " <<description<<std::endl;
+    (*packet) >> majorProtocolVersion >> minorProtocolVersion >> description;
+    std::cout << "Client connected. Protocol version : " << majorProtocolVersion << "." << minorProtocolVersion << ". Description : " << description << std::endl;
 
     app->networkEngine.Hello(client);
 
 }
 
-void PacketDispatcher::dispatchServerGetWorld(sf::Packet *packet, NetworkClient *client){
-    std::cout<<"Client want world. Send it."<<std::endl;
-
+void PacketDispatcher::dispatchServerGetWorld(sf::Packet *packet, NetworkClient *client) {
+    std::cout << "Client want world. Send it." << std::endl;
 
     std::vector<Monster *> monsters = app->worldEngine.model.monsters;
 
     app->networkEngine.AddMonsters(client, monsters);
     app->networkEngine.UpdateMonsters(client, monsters);
+
+}
+
+void PacketDispatcher::dispatchServerGetAddPlayer(sf::Packet *packet, NetworkClient *client) {
+    GameEvent newPlayerEvent(GameEvent::ADD_PLAYER);
+    app->gameEngine.SendEvent(newPlayerEvent);
+
+}
+
+void PacketDispatcher::dispatchServerGetAddHero(sf::Packet *packet, NetworkClient *client) {
+    GameEvent newHeroEvent(GameEvent::ADD_HERO);
+
+    int playerId;
+    *packet >>playerId;
+    newHeroEvent.intValues[GameEvent::PLAYER_ID] = playerId;
+    app->gameEngine.SendEvent(newHeroEvent);
+
+}
+
+void PacketDispatcher::dispatchServerSetPlayerName(sf::Packet *packet, NetworkClient *client) {
+    GameEvent newHeroEvent(GameEvent::ADD_HERO);
+    app->gameEngine.SendEvent(newHeroEvent);
 
 }
 

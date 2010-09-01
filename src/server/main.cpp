@@ -13,7 +13,7 @@ int main()
         std::cerr<<"Fail to handler SIGPIPE"<<std::endl;
     }
 
-    einheri::Application application;
+    einheriServer::Application application;
 
     application.Run();
 

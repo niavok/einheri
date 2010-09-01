@@ -5,8 +5,8 @@
  *      Author: fred
  */
 
-#ifndef NETWORKNOTIFIER_H_
-#define NETWORKNOTIFIER_H_
+#ifndef SERVER_NETWORKNOTIFIER_H_
+#define SERVER_NETWORKNOTIFIER_H_
 
 #include <vector>
 #include <SFML/Network.hpp>
@@ -15,7 +15,7 @@
 #include "Monster.h"
 
 
-namespace einheri {
+namespace einheriServer {
 
 class NetworkNotifier : private sf::Thread {
 public:

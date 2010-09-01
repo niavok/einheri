@@ -5,10 +5,10 @@
  *      Author: fred
  */
 
-#ifndef IDGENERATOR_H_
-#define IDGENERATOR_H_
+#ifndef SERVER_IDGENERATOR_H_
+#define SERVER_IDGENERATOR_H_
 
-namespace einheri {
+namespace einheriServer {
 
 class IdGenerator {
 public:

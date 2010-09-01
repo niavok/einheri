@@ -13,7 +13,7 @@
 #include "WorldModel.h"
 #include "NetworkNotifier.h"
 
-namespace einheri {
+namespace einheriServer {
 
 
 class WorldEngine : private sf::Thread {

@@ -9,7 +9,7 @@
 #include "Application.h"
 #include <math.h>
 
-namespace einheri {
+namespace einheriServer {
 
 WorldEngine::WorldEngine(Application *application) {
     this->app = application;
@@ -102,7 +102,7 @@ void WorldEngine::addNewElements(){
 
 
 void WorldEngine::computeMonsterTarget(){
-    for(int i = 0; i< model.monsters.size(); i++){
+    for(int i = 0; i< (int)model.monsters.size(); i++){
         bool monsterChanged = false;
 
         Monster *monster = model.monsters[i];
@@ -139,7 +139,7 @@ void WorldEngine::computeMonsterSpeed(){
 }
 
 void WorldEngine::computeMonsterPosition(){
-    for(int i = 0; i< model.monsters.size(); i++){
+    for(int i = 0; i< (int)model.monsters.size(); i++){
         Monster *monster = model.monsters[i];
         monster->positionX = monster->positionX + monster->speedX * frameDuration;
         monster->positionY = monster->positionY + monster->speedY * frameDuration;

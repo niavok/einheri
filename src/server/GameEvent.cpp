@@ -7,14 +7,19 @@
 
 #include "GameEvent.h"
 
-namespace einheri {
+namespace einheriServer {
 
 GameEvent::GameEvent():
         type(GameEvent::NONE){
 }
 
+GameEvent::GameEvent(EventType type):
+type(type){
+
+}
+
 GameEvent::~GameEvent() {
-    // TODO Auto-generated destructor stub
+
 }
 
 }

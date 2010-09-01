@@ -8,7 +8,7 @@
 #include "WorldModel.h"
 
 
-namespace einheri {
+namespace einheriServer {
 
 
 

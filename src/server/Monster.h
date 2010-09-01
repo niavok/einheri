@@ -5,10 +5,10 @@
  *      Author: fred
  */
 
-#ifndef MONSTER_H_
-#define MONSTER_H_
+#ifndef SERVER_MONSTER_H_
+#define SERVER_MONSTER_H_
 
-namespace einheri {
+namespace einheriServer {
 
 class Monster {
 public:

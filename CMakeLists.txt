@@ -4,8 +4,11 @@
 cmake_minimum_required (VERSION 2.6)
 project (EINHERI)
 
+set(CMAKE_CXX_FLAGS "-Wall -Werror")
+
 SET(EINHERI_CFLAGS "-Wall") # additional compile flags for einheri
 SET(EINHERI_LDFLAGS "")		# additional linking flags for einheri
+
 
 IF(PROFILE)
 	add_definitions(-pg)

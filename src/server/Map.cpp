@@ -7,7 +7,7 @@
 
 #include "Map.h"
 
-namespace einheri {
+namespace einheriServer {
 
 Map::Map() {
     // TODO Auto-generated constructor stub

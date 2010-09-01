@@ -5,10 +5,10 @@
  *      Author: fred
  */
 
-#ifndef HERO_H_
-#define HERO_H_
+#ifndef SERVER_HERO_H_
+#define SERVER_HERO_H_
 
-namespace einheri {
+namespace einheriServer {
 
 class Hero {
 public:

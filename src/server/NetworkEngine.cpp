@@ -13,7 +13,7 @@
 #include "EinheriProtocol.h"
 
 
-namespace einheri {
+namespace einheriServer {
 
 NetworkEngine::NetworkEngine(Application * application) {
     app = application;
@@ -42,7 +42,7 @@ void NetworkEngine::Hello(NetworkClient * client) {
         int majorProtocolVersion = 45;
         int minorProtocolVersion = 13;
         std::string description = "Einheri server alpha - x86_64 GNU/Linux - ubuntu 10.04";
-        int command = EinheriProtocol::CLIENT_HELLO;
+        int command = einheri::EinheriProtocol::CLIENT_HELLO;
 
         packet<<command<<majorProtocolVersion<<minorProtocolVersion<<description;
         std::cout<<"command "<<command<<std::endl;
@@ -52,7 +52,7 @@ void NetworkEngine::Hello(NetworkClient * client) {
 void NetworkEngine::AddMonster(NetworkClient * client, Monster * monster) {
        sf::Packet packet;
        int id = monster->id;
-       int command = EinheriProtocol::CLIENT_ADD_MONSTER;
+       int command = einheri::EinheriProtocol::CLIENT_ADD_MONSTER;
        packet<<command<<id;
        std::cout<<"Send AddMonster command. id="<<id<<std::endl;
        client->Send(packet);
@@ -61,8 +61,8 @@ void NetworkEngine::AddMonster(NetworkClient * client, Monster * monster) {
 void NetworkEngine::AddMonsters(NetworkClient * client, std::vector<Monster *> monsters) {
 
     sf::Packet packet;
-    packet << EinheriProtocol::CLIENT_ADD_MONSTERS << (int) monsters.size();
-    for(int i = 0; i < monsters.size(); i++) {
+    packet << einheri::EinheriProtocol::CLIENT_ADD_MONSTERS << (int) monsters.size();
+    for(int i = 0; i < (int) monsters.size(); i++) {
         packet << monsters[i]->id;
     }
     client->Send(packet);
@@ -79,7 +79,7 @@ void NetworkEngine::UpdateMonster(NetworkClient * client, Monster * monster) {
        double posY = monster->positionY;
        double angle = monster->angle;
 
-       int command = EinheriProtocol::CLIENT_UPDATE_MONSTER;
+       int command = einheri::EinheriProtocol::CLIENT_UPDATE_MONSTER;
        packet<<command<<id<<speedX<<speedY<<posX<<posY<<angle;
        std::cout<<"Send UpdateMonster command. id="<<id<<std::endl;
        client->Send(packet);
@@ -95,8 +95,8 @@ void NetworkEngine::UpdateMonsters(NetworkClient * client, std::vector<Monster *
         double angle;
         sf::Packet packet;
 
-        packet << EinheriProtocol::CLIENT_UPDATE_MONSTERS << (int) monsters.size();
-        for(int i = 0; i < monsters.size(); i++) {
+        packet << einheri::EinheriProtocol::CLIENT_UPDATE_MONSTERS << (int) monsters.size();
+        for(int i = 0; i < (int)monsters.size(); i++) {
 
             Monster *monster = monsters[i];
 

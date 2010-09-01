@@ -5,23 +5,36 @@
  *      Author: fred
  */
 
-#ifndef GAMEEVENT_H_
-#define GAMEEVENT_H_
+#ifndef SERVER_GAMEEVENT_H_
+#define SERVER_GAMEEVENT_H_
 
-namespace einheri {
+#include <map>
+
+namespace einheriServer {
 
 class GameEvent {
 public:
 
     enum EventType {
         NONE,
+        ADD_PLAYER,
+        ADD_HERO,
+    };
+
+    GameEvent(EventType type);
+
+
+
+    enum EventField {
+        PLAYER_ID,
+        HERO_ID,
     };
 
     GameEvent();
     virtual ~GameEvent();
 
     EventType type;
-
+    std::map<EventField, int> intValues;
 };
 
 }

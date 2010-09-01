@@ -7,7 +7,7 @@
 
 #include "Hero.h"
 
-namespace einheri {
+namespace einheriServer {
 
 Hero::Hero() {
     positionX = 0;

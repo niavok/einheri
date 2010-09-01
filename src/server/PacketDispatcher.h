@@ -5,15 +5,15 @@
  *      Author: fred
  */
 
-#ifndef PACKETDISPATCHER_H_
-#define PACKETDISPATCHER_H_
+#ifndef SERVER_PACKETDISPATCHER_H_
+#define SERVER_PACKETDISPATCHER_H_
 
 #include <SFML/Network.hpp>
 
 #include "MessageQueue.h"
 #include "NetworkClient.h"
 
-namespace einheri {
+namespace einheriServer {
 
 class Application;
 
@@ -39,7 +39,9 @@ private:
 
     void dispatchServerHello(sf::Packet *packet, NetworkClient *client);
     void dispatchServerGetWorld(sf::Packet *packet, NetworkClient *client);
-
+    void dispatchServerGetAddPlayer(sf::Packet *packet, NetworkClient *client);
+    void dispatchServerGetAddHero(sf::Packet *packet, NetworkClient *client);
+    void dispatchServerSetPlayerName(sf::Packet *packet, NetworkClient *client);
 
 };
 

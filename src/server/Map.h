@@ -5,10 +5,10 @@
  *      Author: fred
  */
 
-#ifndef MAP_H_
-#define MAP_H_
+#ifndef SERVER_MAP_H_
+#define SERVER_MAP_H_
 
-namespace einheri {
+namespace einheriServer {
 
 class Map {
 public:

@@ -5,13 +5,13 @@
  *      Author: fred
  */
 
-#ifndef NETWORKCLIENT_H_
-#define NETWORKCLIENT_H_
+#ifndef SERVER_NETWORKCLIENT_H_
+#define SERVER_NETWORKCLIENT_H_
 
 #include <SFML/Network.hpp>
 
 
-namespace einheri {
+namespace einheriServer {
 
 
 class NetworkClient {

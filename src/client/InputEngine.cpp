@@ -42,19 +42,19 @@ void InputEngine::PushEvent(sf::Event event){
 }
 
 bool InputEngine::IsMoveLeft() {
-    input->IsKeyDown(sf::Key::Q);
+    return input->IsKeyDown(sf::Key::Q);
 }
 
 bool InputEngine::IsMoveRight() {
-    input->IsKeyDown(sf::Key::D);
+    return input->IsKeyDown(sf::Key::D);
 }
 
 bool InputEngine::IsMoveUp() {
-    input->IsKeyDown(sf::Key::Z);
+    return input->IsKeyDown(sf::Key::Z);
 }
 
 bool InputEngine::IsMoveDown() {
-    input->IsKeyDown(sf::Key::S);
+    return input->IsKeyDown(sf::Key::S);
 }
 
 //Private

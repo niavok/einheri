@@ -11,3 +11,4 @@ CMakeCache.txt
 src/client/einheri
 src/server/einheri-server
 log*
+gmon.out

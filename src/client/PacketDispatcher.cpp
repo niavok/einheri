@@ -62,6 +62,9 @@ void PacketDispatcher::Run() {
         case EinheriProtocol::CLIENT_HELLO:
             dispatchClientHello(&packet);
             break;
+        case EinheriProtocol::CLIENT_GOODBYE:
+            //TODO
+            break;
         case EinheriProtocol::CLIENT_ADD_MONSTER:
             dispatchClientAddMonster(&packet);
             break;
@@ -73,6 +76,15 @@ void PacketDispatcher::Run() {
             break;
         case EinheriProtocol::CLIENT_UPDATE_MONSTERS:
             dispatchClientUpdateMonsters(&packet);
+            break;
+        case EinheriProtocol::CLIENT_ADD_HERO:
+            //TODO
+            break;
+        case EinheriProtocol::CLIENT_ADD_HEROES:
+            //TODO
+            break;
+        case EinheriProtocol::CLIENT_UPDATE_HERO:
+            //TODO
             break;
         }
 

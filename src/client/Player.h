@@ -8,13 +8,15 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-namespace einheriServer {
+namespace einheri {
 
 class Player {
 public:
     Player();
     virtual ~Player();
+
     int id;
+    int heroId;
 };
 
 }

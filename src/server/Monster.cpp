@@ -8,7 +8,7 @@
 #include "Monster.h"
 #include "IdGenerator.h"
 
-namespace einheri {
+namespace einheriServer {
 
 Monster::Monster() {
     speedX = 0;

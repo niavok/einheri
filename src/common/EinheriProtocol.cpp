@@ -35,6 +35,12 @@ std::string EinheriProtocol::getCommandName(ServerCommandType type) {
     case SERVER_UPDATE_HERO_MOVEMENT:
         response = "SERVER_UPDATE_HERO_MOVEMENT";
         break;
+    case SERVER_SET_PLAYER_NAME:
+        response = "SERVER_SET_PLAYER_NAME";
+        break;
+    case SERVER_QUIT:
+        response = "SERVER_QUIT";
+        break;
 
     }
 
@@ -62,6 +68,15 @@ std::string EinheriProtocol::getCommandName(ClientCommandType type) {
     case CLIENT_UPDATE_MONSTERS:
         response = "CLIENT_UPDATE_MONSTERS";
         break;
+    case CLIENT_ADD_HERO:
+            response = "CLIENT_ADD_HERO";
+            break;
+    case CLIENT_ADD_HEROES:
+            response = "CLIENT_ADD_HEROES";
+            break;
+    case CLIENT_UPDATE_HERO:
+            response = "CLIENT_UPDATE_HERO";
+            break;
     }
 
     return response;

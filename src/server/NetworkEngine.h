@@ -5,14 +5,14 @@
  *      Author: fred
  */
 
-#ifndef NETWORKENGINE_H_
-#define NETWORKENGINE_H_
+#ifndef SERVER_NETWORKENGINE_H_
+#define SERVER_NETWORKENGINE_H_
 
 #include <SFML/System.hpp>
 #include "NetworkClient.h"
 #include "Monster.h"
 
-namespace einheri {
+namespace einheriServer {
 
 class Application;
 
