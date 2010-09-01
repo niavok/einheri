@@ -18,12 +18,11 @@ Monster::Monster() {
     angle = 0;
 }
 
-void Monster::GenerateId() {
-    id = IdGenerator::GetId();
+Monster::~Monster() {
 }
 
-
-Monster::~Monster() {
+void Monster::GenerateId() {
+    id = IdGenerator::GetId();
 }
 
 }

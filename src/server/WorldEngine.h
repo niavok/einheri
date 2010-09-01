@@ -5,8 +5,8 @@
  *      Author: fred
  */
 
-#ifndef WORLDENGINE_H_
-#define WORLDENGINE_H_
+#ifndef SERVER_WORLDENGINE_H_
+#define SERVER_WORLDENGINE_H_
 
 #include <SFML/System.hpp>
 #include <queue>
@@ -25,7 +25,8 @@ public:
     void Stop();
 
     int AddMonster(Monster monster);
-
+    int AddHero(Hero hero);
+    Hero *GetHeroById(int id);
     WorldModel model;
 
 
@@ -46,6 +47,8 @@ private:
     sf::Mutex monsterQueueLock;
     std::queue<Monster *> monsterQueue;
 
+    sf::Mutex heroQueueLock;
+    std::queue<Hero *> heroQueue;
 
 
 

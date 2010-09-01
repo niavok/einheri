@@ -8,7 +8,10 @@
 #ifndef SERVER_IDGENERATOR_H_
 #define SERVER_IDGENERATOR_H_
 
+#include <SFML/System.hpp>
+
 namespace einheriServer {
+
 
 class IdGenerator {
 public:
@@ -19,7 +22,7 @@ public:
 
 private:
     static int nextId;
-
+    static sf::Mutex mutex;
 };
 
 }

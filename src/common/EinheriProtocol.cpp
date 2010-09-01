@@ -69,14 +69,20 @@ std::string EinheriProtocol::getCommandName(ClientCommandType type) {
         response = "CLIENT_UPDATE_MONSTERS";
         break;
     case CLIENT_ADD_HERO:
-            response = "CLIENT_ADD_HERO";
-            break;
+        response = "CLIENT_ADD_HERO";
+        break;
     case CLIENT_ADD_HEROES:
-            response = "CLIENT_ADD_HEROES";
-            break;
+        response = "CLIENT_ADD_HEROES";
+        break;
     case CLIENT_UPDATE_HERO:
-            response = "CLIENT_UPDATE_HERO";
-            break;
+        response = "CLIENT_UPDATE_HERO";
+        break;
+    case CLIENT_PLAYER_ADDED:
+        response = "CLIENT_PLAYER_ADDED";
+        break;
+    case CLIENT_HERO_ADDED:
+        response = "CLIENT_HERO_ADDED";
+        break;
     }
 
     return response;

@@ -62,6 +62,13 @@ void ClientWorldModel::AddMonster(Monster *monster){
     monsters[monster->id] = monster;
 }
 
+void ClientWorldModel::AddHero(Hero *hero){
+    if(!hero) {
+        std::cerr<<"Error : null hero"<<std::endl;
+    }
+    heroes[hero->id] = hero;
+}
+
 const std::map<int, Monster *> &ClientWorldModel::GetMonsters(){
     return monsters;
 }

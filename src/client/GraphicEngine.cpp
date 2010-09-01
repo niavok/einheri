@@ -9,6 +9,7 @@
 
 #include "GraphicEngine.h"
 #include "ClientWorldModel.h"
+#include "Hero.h"
 
 #include <iostream>
 

@@ -28,6 +28,8 @@ public:
     void UpdateMonster(NetworkClient * client, Monster * monster);
     void AddMonsters(NetworkClient * client, std::vector<Monster *> monsters);
     void UpdateMonsters(NetworkClient * client, std::vector<Monster *> monsters);
+    void PlayerAdded(NetworkClient * client, int id);
+    void HeroAdded(NetworkClient * client, int playerid, int heroId);
 
     std::map<sf::SocketTCP, NetworkClient *> clients;
 

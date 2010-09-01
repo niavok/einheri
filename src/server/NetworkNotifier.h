@@ -13,6 +13,7 @@
 #include "NetworkEngine.h"
 #include "MessageQueue.h"
 #include "Monster.h"
+#include "Hero.h"
 
 
 namespace einheriServer {
@@ -22,15 +23,15 @@ public:
     NetworkNotifier(Application *application);
     virtual ~NetworkNotifier();
 
-
-
-
-
     void AddMonster(Monster *monster);
     void AddMonsters(std::vector<Monster *>);
     void UpdateMonster(Monster *monster);
     void StackUpdateMonster(Monster *monster);
     void UpdateMonsters(std::vector<Monster *>);
+
+
+    void AddHero(Hero *hero);
+
     void Flush();
     void Start();
     void Stop();

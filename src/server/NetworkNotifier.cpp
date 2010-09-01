@@ -80,6 +80,21 @@ void NetworkNotifier::UpdateMonsters(std::vector<Monster *> monsters) {
 
 }
 
+
+void NetworkNotifier::AddHero(Hero * hero) {
+
+    sf::Packet *packetAddHero= new sf::Packet();
+    *packetAddHero << einheri::EinheriProtocol::CLIENT_ADD_HERO<< hero->id;
+    packetQueue.PushMessage(packetAddHero);
+
+    sf::Packet *packetUpdateHero = new sf::Packet();
+    *packetUpdateHero << einheri::EinheriProtocol::CLIENT_UPDATE_HERO
+            << hero->id << hero->speedX << hero->speedY
+            << hero->positionX << hero->positionY << hero->angle;
+    packetQueue.PushMessage(packetUpdateHero);
+
+}
+
 void NetworkNotifier::Flush() {
     flushMutext.Lock();
 

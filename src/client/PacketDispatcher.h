@@ -38,6 +38,10 @@ private:
     void dispatchClientUpdateMonster(sf::Packet *packet);
     void dispatchClientUpdateMonsters(sf::Packet *packet);
 
+    void dispatchClientAddHero(sf::Packet *packet);
+
+    void dispatchClientPlayerAdded(sf::Packet *packet);
+    void dispatchClientHeroAdded(sf::Packet *packet);
 
     MessageQueue<sf::Packet> packetQueue;
 

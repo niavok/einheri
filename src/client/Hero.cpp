@@ -7,6 +7,8 @@
 
 #include "Hero.h"
 
+namespace einheri {
+
 Hero::Hero() {
     positionX = 0;
     positionY = 0;
@@ -16,3 +18,8 @@ Hero::Hero() {
 Hero::~Hero() {
     // TODO Auto-generated destructor stub
 }
+
+
+
+
+}  // namespace einheri

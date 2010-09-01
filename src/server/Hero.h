@@ -10,16 +10,24 @@
 
 namespace einheriServer {
 
+class Player;
+
 class Hero {
 public:
     Hero();
     virtual ~Hero();
+
+    int id;
 
     double positionX;
     double positionY;
     double speedX;
     double speedY;
     double angle;
+
+    Player * parentPlayer;
+
+    void GenerateId();
 };
 
 }

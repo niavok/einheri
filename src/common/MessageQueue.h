@@ -18,20 +18,20 @@ public:
     virtual ~MessageQueue(){}
 
     void PushMessage(T message) {
-        messaqueQueue.push(message);
+        messageQueue.push(message);
         messageSemaphore.set();
     }
     T PopMessage() {
         messageSemaphore.get();
-        T message = messaqueQueue.front();
-        messaqueQueue.pop();
+        T message = messageQueue.front();
+        messageQueue.pop();
         return message;
     }
 
 private:
 
     Semaphore messageSemaphore;
-    std::queue<T> messaqueQueue;
+    std::queue<T> messageQueue;
 
 };
 

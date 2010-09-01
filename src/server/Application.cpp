@@ -33,8 +33,10 @@ void Application::Run() {
 
 
     worldEngine.Start();
+    gameEngine.Start();
     networkEngine.Start();
     networkNotifier.Start();
+
 
     for(int i = 0; i < 10000; i++) {
         Monster monster;
@@ -52,6 +54,7 @@ void Application::Run() {
 
     networkNotifier.Stop();
     networkEngine.Stop();
+    gameEngine.Stop();
     worldEngine.Stop();
     std::cout<<"exit"<<std::endl;
 

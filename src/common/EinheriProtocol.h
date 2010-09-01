@@ -41,6 +41,8 @@ public:
         CLIENT_UPDATE_MONSTER, // int id, double speedX, double speedXY, double posX, double posY, double angle
         CLIENT_UPDATE_MONSTERS, // int count, int id, double speedX, double speedXY, double posX, double posY, double angle, ...
         CLIENT_UPDATE_HERO, // int id, double posX, double posY, double angle
+        CLIENT_PLAYER_ADDED, // int playerId
+        CLIENT_HERO_ADDED // int playerId int heroId
     };
 
     static std::string getCommandName(ServerCommandType type);

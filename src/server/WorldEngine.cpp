@@ -5,36 +5,36 @@
  *      Author: fred
  */
 #include <iostream>
+#include <math.h>
+
 #include "WorldEngine.h"
 #include "Application.h"
-#include <math.h>
+#include "IdGenerator.h"
 
 namespace einheriServer {
 
 WorldEngine::WorldEngine(Application *application) {
     this->app = application;
-    frameDuration = 1./60.;
-
+    frameDuration = 1. / 60.;
 
 }
 
 WorldEngine::~WorldEngine() {
-    std::cout<<"WorldEngine destructor"<<std::endl;
+    std::cout << "WorldEngine destructor" << std::endl;
 }
 
-
-void WorldEngine::Start(){
+void WorldEngine::Start() {
     running = true;
     Launch();
 }
 
-void WorldEngine::Stop(){
+void WorldEngine::Stop() {
     running = false;
     Wait();
 }
 
-int WorldEngine::AddMonster(Monster monster){
-    Monster *newMonster =new Monster(monster);
+int WorldEngine::AddMonster(Monster monster) {
+    Monster *newMonster = new Monster(monster);
     newMonster->GenerateId();
 
     monsterQueueLock.Lock();
@@ -43,33 +43,42 @@ int WorldEngine::AddMonster(Monster monster){
 
     monsterQueueLock.Unlock();
 
-
     return newMonster->id;
 }
 
+int WorldEngine::AddHero(Hero hero) {
+    Hero *newHero = new Hero(hero);
+    newHero->GenerateId();
 
+    heroQueueLock.Lock();
+
+    heroQueue.push(newHero);
+
+    heroQueueLock.Unlock();
+
+    return newHero->id;
+}
 
 //Private
 
-void WorldEngine::Run(){
-    std::cout<<"WorldEngine started"<<std::endl;
+void WorldEngine::Run() {
+    std::cout << "WorldEngine started" << std::endl;
 
     lastFrameClock = clock.GetElapsedTime();
 
-    while(running) {
+    while (running) {
         float currentTime = clock.GetElapsedTime();
-        if(currentTime - lastFrameClock > frameDuration) {
-            lastFrameClock+=frameDuration;
+        if (currentTime - lastFrameClock > frameDuration) {
+            lastFrameClock += frameDuration;
             frame();
-        }else {
+        } else {
             sf::Sleep(frameDuration - (currentTime - lastFrameClock));
         }
 
     }
 
-    std::cout<<"WorldEngine stopped"<<std::endl;
+    std::cout << "WorldEngine stopped" << std::endl;
 }
-
 
 void WorldEngine::frame() {
 
@@ -85,69 +94,88 @@ void WorldEngine::frame() {
 
 }
 
-
-void WorldEngine::addNewElements(){
+void WorldEngine::addNewElements() {
     monsterQueueLock.Lock();
 
-    while(!monsterQueue.empty()) {
+    while (!monsterQueue.empty()) {
         Monster * monster = monsterQueue.front();
         monsterQueue.pop();
         model.monsters.push_back(monster);
+        model.monstersMap[monster->id] = monster;
 
         app->networkNotifier.AddMonster(monster);
     }
 
     monsterQueueLock.Unlock();
+
+    heroQueueLock.Lock();
+
+    while (!heroQueue.empty()) {
+        Hero * hero = heroQueue.front();
+        heroQueue.pop();
+        model.heroes.push_back(hero);
+        model.heroesMap[hero->id] = hero;
+
+        app->networkNotifier.AddHero(hero);
+    }
+
+    heroQueueLock.Unlock();
 }
 
+Hero *WorldEngine::GetHeroById(int id) {
+    Hero *result = NULL;
+    heroQueueLock.Lock();
 
-void WorldEngine::computeMonsterTarget(){
-    for(int i = 0; i< (int)model.monsters.size(); i++){
+    result = model.heroesMap[id];
+
+    heroQueueLock.Unlock();
+    return result;
+}
+
+void WorldEngine::computeMonsterTarget() {
+    for (int i = 0; i < (int) model.monsters.size(); i++) {
         bool monsterChanged = false;
 
         Monster *monster = model.monsters[i];
-        if(monster->positionX > 10 && monster->speedX > 0 ) {
+        if (monster->positionX > 10 && monster->speedX > 0) {
             monster->speedX = -monster->speedX;
             monsterChanged = true;
         }
 
-        if(monster->positionX < -10 && monster->speedX < 0) {
+        if (monster->positionX < -10 && monster->speedX < 0) {
             monster->speedX = -monster->speedX;
             monsterChanged = true;
         }
 
-        if(monster->positionY > 10 && monster->speedY > 0) {
+        if (monster->positionY > 10 && monster->speedY > 0) {
             monster->speedY = -monster->speedY;
             monsterChanged = true;
         }
 
-        if(monster->positionY < -10 && monster->speedY < 0) {
+        if (monster->positionY < -10 && monster->speedY < 0) {
             monster->speedY = -monster->speedY;
             monsterChanged = true;
         }
 
-        if(monsterChanged) {
-             //std::cout<<"WorldEngine monster "<<monster->id<<" change"<<std::endl;
+        if (monsterChanged) {
+            //std::cout<<"WorldEngine monster "<<monster->id<<" change"<<std::endl;
             app->networkNotifier.StackUpdateMonster(monster);
         }
     }
 
 }
 
-void WorldEngine::computeMonsterSpeed(){
+void WorldEngine::computeMonsterSpeed() {
 
 }
 
-void WorldEngine::computeMonsterPosition(){
-    for(int i = 0; i< (int)model.monsters.size(); i++){
+void WorldEngine::computeMonsterPosition() {
+    for (int i = 0; i < (int) model.monsters.size(); i++) {
         Monster *monster = model.monsters[i];
         monster->positionX = monster->positionX + monster->speedX * frameDuration;
         monster->positionY = monster->positionY + monster->speedY * frameDuration;
         //std::cout<<"WorldEngine monster "<<monster->id<<" speed is "<<monster->speedX<<" and new pos is "<<monster->positionX<<std::endl;
     }
 }
-
-
-
 
 }

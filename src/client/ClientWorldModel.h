@@ -26,6 +26,7 @@ public:
     void Copy(ClientWorldModel *sourceModel);
 
     void AddMonster(Monster *monster);
+    void AddHero(Hero *hero);
     const std::map<int, Monster *> &GetMonsters();
 
     const std::map<int, Hero *> &GetHeroes();

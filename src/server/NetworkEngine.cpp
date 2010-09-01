@@ -115,6 +115,22 @@ void NetworkEngine::UpdateMonsters(NetworkClient * client, std::vector<Monster *
 
 }
 
+void NetworkEngine::PlayerAdded(NetworkClient * client, int id) {
+    sf::Packet packet;
+    packet << einheri::EinheriProtocol::CLIENT_PLAYER_ADDED
+            << id;
+    client->Send(packet);
+
+}
+
+void NetworkEngine::HeroAdded(NetworkClient * client, int playerId, int heroId) {
+    sf::Packet packet;
+    packet << einheri::EinheriProtocol::CLIENT_HERO_ADDED
+            << playerId << heroId;
+    client->Send(packet);
+
+}
+
 //Private
 
 void NetworkEngine::Run(){

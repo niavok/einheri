@@ -117,6 +117,7 @@ void PacketDispatcher::dispatchServerGetWorld(sf::Packet *packet, NetworkClient 
 
 void PacketDispatcher::dispatchServerGetAddPlayer(sf::Packet *packet, NetworkClient *client) {
     GameEvent newPlayerEvent(GameEvent::ADD_PLAYER);
+    newPlayerEvent.objectValues[GameEvent::CLIENT] = client;
     app->gameEngine.SendEvent(newPlayerEvent);
 
 }
@@ -127,13 +128,20 @@ void PacketDispatcher::dispatchServerGetAddHero(sf::Packet *packet, NetworkClien
     int playerId;
     *packet >>playerId;
     newHeroEvent.intValues[GameEvent::PLAYER_ID] = playerId;
+    std::cout << "dispatchServerGetAddHero playerId="<< playerId << std::endl;
+    std::cout << "newHeroEvent playerId="<< newHeroEvent.intValues[GameEvent::PLAYER_ID] << std::endl;
+
+    GameEvent newHeroEvent2 = newHeroEvent;
+
+    std::cout << "newHeroEvent2 playerId="<< newHeroEvent2.intValues[GameEvent::PLAYER_ID] << std::endl;
+
     app->gameEngine.SendEvent(newHeroEvent);
 
 }
 
 void PacketDispatcher::dispatchServerSetPlayerName(sf::Packet *packet, NetworkClient *client) {
-    GameEvent newHeroEvent(GameEvent::ADD_HERO);
-    app->gameEngine.SendEvent(newHeroEvent);
+    //GameEvent newHeroEvent(GameEvent::ADD_HERO);
+    //app->gameEngine.SendEvent(newHeroEvent);
 
 }
 

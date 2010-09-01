@@ -28,6 +28,7 @@ public:
     enum EventField {
         PLAYER_ID,
         HERO_ID,
+        CLIENT,
     };
 
     GameEvent();
@@ -35,6 +36,7 @@ public:
 
     EventType type;
     std::map<EventField, int> intValues;
+    std::map<EventField, void *> objectValues;
 };
 
 }

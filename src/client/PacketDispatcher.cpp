@@ -78,13 +78,19 @@ void PacketDispatcher::Run() {
             dispatchClientUpdateMonsters(&packet);
             break;
         case EinheriProtocol::CLIENT_ADD_HERO:
-            //TODO
+            dispatchClientAddHero(&packet);
             break;
         case EinheriProtocol::CLIENT_ADD_HEROES:
             //TODO
             break;
         case EinheriProtocol::CLIENT_UPDATE_HERO:
             //TODO
+            break;
+        case EinheriProtocol::CLIENT_PLAYER_ADDED:
+            dispatchClientPlayerAdded(&packet);
+            break;
+        case EinheriProtocol::CLIENT_HERO_ADDED:
+            dispatchClientHeroAdded(&packet);
             break;
         }
 
@@ -108,8 +114,7 @@ void PacketDispatcher::dispatchClientHello(sf::Packet *packet) {
             << majorProtocolVersion << "." << minorProtocolVersion
             << ". Description : " << description << std::endl;
 
-    GameEvent gameEvent;
-    gameEvent.type = GameEvent::REGISTERED_TO_SERVER;
+    GameEvent gameEvent(GameEvent::REGISTERED_TO_SERVER);
     app->gameEngine.SendEvent(gameEvent);
 
 }
@@ -215,5 +220,47 @@ void PacketDispatcher::dispatchClientUpdateMonsters(sf::Packet *packet) {
     }
     app->clientWorldEngine.worldModel->mutexMonsters.Unlock();
 }
+
+void PacketDispatcher::dispatchClientAddHero(sf::Packet *packet) {
+    int id;
+
+    (*packet) >> id;
+    //std::cout << "Add monster " << id << std::endl;
+
+    Hero *hero = new Hero();
+    hero->id = id;
+
+    app->clientWorldEngine.worldModel->mutexHeroes.Lock();
+
+    app->clientWorldEngine.worldModel->AddHero(hero);
+
+    app->clientWorldEngine.worldModel->mutexHeroes.Unlock();
+}
+
+
+void PacketDispatcher::dispatchClientPlayerAdded(sf::Packet *packet) {
+    int id;
+
+    (*packet) >> id;
+
+    std::cout << "PacketDispatcher::dispatchClientPlayerAdded" << id << std::endl;
+    GameEvent gameEvent(GameEvent::PLAYER_ADDED);
+    gameEvent.intValues[GameEvent::PLAYER_ID] = id;
+    app->gameEngine.SendEvent(gameEvent);
+}
+
+void PacketDispatcher::dispatchClientHeroAdded(sf::Packet *packet) {
+    int playerId;
+    int heroId;
+
+    (*packet) >> playerId >> heroId;
+
+    std::cout << "PacketDispatcher::dispatchClientHeroAdded" << playerId << " " << heroId<< std::endl;
+    GameEvent gameEvent(GameEvent::HERO_ADDED);
+    gameEvent.intValues[GameEvent::PLAYER_ID] = playerId;
+    gameEvent.intValues[GameEvent::HERO_ID] = heroId;
+    app->gameEngine.SendEvent(gameEvent);
+}
+
 
 }

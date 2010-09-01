@@ -11,6 +11,7 @@ NetworkClient.cpp
 NetworkEngine.cpp
 NetworkNotifier.cpp
 PacketDispatcher.cpp
+Player.cpp
 WorldEngine.cpp
 WorldModel.cpp
 ${EINHERI_SOURCE_DIR}/src/common/EinheriProtocol.cpp

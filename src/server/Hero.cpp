@@ -4,8 +4,10 @@
  *  Created on: 21 août 2010
  *      Author: fred
  */
-
 #include "Hero.h"
+
+#include "Player.h"
+#include "IdGenerator.h"
 
 namespace einheriServer {
 
@@ -16,6 +18,10 @@ Hero::Hero() {
 }
 
 Hero::~Hero() {
+}
+
+void Hero::GenerateId() {
+    id = IdGenerator::GetId();
 }
 
 }

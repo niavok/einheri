@@ -10,13 +10,15 @@
 
 namespace einheri {
 
+class Hero;
+
 class Player {
 public:
     Player();
     virtual ~Player();
-
     int id;
     int heroId;
+
 };
 
 }

@@ -23,6 +23,8 @@ public:
         HERO_ADDED,
     };
 
+    GameEvent(EventType type);
+
     enum EventField {
         PLAYER_ID,
         HERO_ID,

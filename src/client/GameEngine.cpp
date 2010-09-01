@@ -78,11 +78,11 @@ void GameEngine::processEvent(){
     }
 
     if(event.type == GameEvent::HERO_ADDED) {
-                std::cout<<"GameEngine process event ADD_HERO"<<std::endl;
-                if(event.intValues[GameEvent::PLAYER_ID ] == localPlayer.id) {
-                    localPlayer.heroId =  event.intValues[GameEvent::HERO_ID];
-                }
-        }
+            std::cout<<"GameEngine process event ADD_HERO"<<std::endl;
+            if(event.intValues[GameEvent::PLAYER_ID ] == localPlayer.id) {
+                localPlayer.heroId =  event.intValues[GameEvent::HERO_ID];
+            }
+    }
 
 
 

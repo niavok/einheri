@@ -8,8 +8,11 @@
 #ifndef SERVER_GAMEENGINE_H_
 #define SERVER_GAMEENGINE_H_
 
+#include <SFML/System.hpp>
+
 #include "GameEvent.h"
 #include "MessageQueue.h"
+#include "Player.h"
 
 namespace einheriServer {
 
@@ -35,6 +38,9 @@ private:
     virtual void processEvent();
 
     MessageQueue<GameEvent> events;
+    std::map<int, Player *> players;
+
+
 };
 
 }

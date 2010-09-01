@@ -5,16 +5,22 @@
  *      Author: fred
  */
 
-#ifndef PLAYER_H_
-#define PLAYER_H_
+#ifndef SERVER_PLAYER_H_
+#define SERVER_PLAYER_H_
+
+#include "NetworkClient.h"
 
 namespace einheriServer {
+
+class Hero;
 
 class Player {
 public:
     Player();
     virtual ~Player();
     int id;
+    NetworkClient * client;
+    Hero * hero;
 };
 
 }

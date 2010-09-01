@@ -13,6 +13,7 @@
 #include "Hero.h"
 #include "Monster.h"
 #include "Map.h"
+#include <map>
 
 namespace einheriServer {
 
@@ -27,6 +28,8 @@ public:
     Map map;
     std::vector<Hero *> heroes;
     std::vector<Monster *> monsters;
+    std::map<int, Hero *> heroesMap;
+    std::map<int, Monster *> monstersMap;
 
 private:
     sf::Mutex lock;
