@@ -42,6 +42,8 @@ private:
 
     void dispatchClientPlayerAdded(sf::Packet *packet);
     void dispatchClientHeroAdded(sf::Packet *packet);
+    void dispatchClientUpdateHero(sf::Packet *packet);
+    void dispatchClientUpdateHeroes(sf::Packet *packet);
 
     MessageQueue<sf::Packet> packetQueue;
 

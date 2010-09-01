@@ -25,6 +25,10 @@ public:
     double speedY;
     double angle;
 
+    bool playerMove;
+    double playerAngle;
+    double playerSpeed;
+
     Player * parentPlayer;
 
     void GenerateId();

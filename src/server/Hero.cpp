@@ -15,6 +15,10 @@ Hero::Hero() {
     positionX = 0;
     positionY = 0;
     angle = 0;
+
+    playerAngle = 0;
+    playerMove = true;
+    playerSpeed = 0;
 }
 
 Hero::~Hero() {

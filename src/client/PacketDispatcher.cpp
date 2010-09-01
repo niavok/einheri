@@ -84,7 +84,10 @@ void PacketDispatcher::Run() {
             //TODO
             break;
         case EinheriProtocol::CLIENT_UPDATE_HERO:
-            //TODO
+            dispatchClientUpdateHero(&packet);
+            break;
+        case EinheriProtocol::CLIENT_UPDATE_HEROES:
+            dispatchClientUpdateHeroes(&packet);
             break;
         case EinheriProtocol::CLIENT_PLAYER_ADDED:
             dispatchClientPlayerAdded(&packet);
@@ -184,6 +187,8 @@ void PacketDispatcher::dispatchClientUpdateMonster(sf::Packet *packet) {
     app->clientWorldEngine.worldModel->mutexMonsters.Unlock();
 }
 
+
+
 void PacketDispatcher::dispatchClientUpdateMonsters(sf::Packet *packet) {
 
     int count;
@@ -219,6 +224,75 @@ void PacketDispatcher::dispatchClientUpdateMonsters(sf::Packet *packet) {
 
     }
     app->clientWorldEngine.worldModel->mutexMonsters.Unlock();
+}
+
+void PacketDispatcher::dispatchClientUpdateHero(sf::Packet *packet) {
+    int id;
+    double speedX;
+    double speedY;
+    double posX;
+    double posY;
+    double angle;
+
+    (*packet) >> id >> speedX >> speedY >> posX >> posY >> angle;
+    //std::cout<<"Update monster "<<id<<" sx"<<speedX<<" sy"<<speedY<<" px"<<posX<<" py"<<posY<<" a"<<angle<<" "<<std::endl;
+
+    app->clientWorldEngine.worldModel->mutexHeroes.Lock();
+
+    if (app->clientWorldEngine.worldModel->GetHeroes().count(id) > 0) {
+        Hero *hero = app->clientWorldEngine.worldModel->GetHeroes().at(
+                id);
+        hero->angle = angle;
+        hero->speedX = speedX;
+        hero->speedY = speedY;
+        hero->positionX = posX;
+        hero->positionY = posY;
+    } else {
+        std::cout << "Error missing id Updating hero " << id << " sx"
+                << speedX << " sy" << speedY << " px" << posX << " py" << posY
+                << " a" << angle << " " << std::endl;
+    }
+
+    app->clientWorldEngine.worldModel->mutexHeroes.Unlock();
+}
+
+
+
+void PacketDispatcher::dispatchClientUpdateHeroes(sf::Packet *packet) {
+
+    int count;
+
+    (*packet) >> count;
+    //std::cout << "Update monsters " << count << std::endl;
+
+    app->clientWorldEngine.worldModel->mutexHeroes.Lock();
+    for (int i = 0; i < count; i++) {
+        int id;
+        double speedX;
+        double speedY;
+        double posX;
+        double posY;
+        double angle;
+
+        (*packet) >> id >> speedX >> speedY >> posX >> posY >> angle;
+        //std::cout<<"Update monster "<<id<<" sx"<<speedX<<" sy"<<speedY<<" px"<<posX<<" py"<<posY<<" a"<<angle<<" "<<std::endl;
+
+        if (app->clientWorldEngine.worldModel->GetHeroes().count(id) > 0) {
+            Hero *hero =
+                    app->clientWorldEngine.worldModel->GetHeroes().at(id);
+            hero->angle = angle;
+            hero->speedX = speedX;
+            hero->speedY = speedY;
+            hero->positionX = posX;
+            hero->positionY = posY;
+        } else {
+            std::cout << "Error missing id Updating hero " << id << " sx"
+                    << speedX << " sy" << speedY << " px" << posX << " py"
+                    << posY << " a" << angle << " " << std::endl;
+        }
+
+    }
+    app->clientWorldEngine.worldModel->mutexHeroes.Unlock();
 }
 
 void PacketDispatcher::dispatchClientAddHero(sf::Packet *packet) {

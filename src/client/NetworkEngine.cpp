@@ -92,7 +92,7 @@ void NetworkEngine::UpdateHeroMovement(int heroId, bool move, double angle, doub
 
     int command = EinheriProtocol::SERVER_UPDATE_HERO_MOVEMENT;
     packet << command << heroId << move << angle << speed;
-    std::cout << "command " << command << std::endl;
+    std::cout << "command UpdateHeroMovement heroId=" << heroId << " move=" << move<< " angle=" << move<< " speed=" << speed << std::endl;
     clientSocket.Send(packet);
 }
 

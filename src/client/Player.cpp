@@ -10,8 +10,8 @@
 namespace einheri {
 
 Player::Player() {
-    // TODO Auto-generated constructor stub
-
+    id = -1;
+    heroId = -1;
 }
 
 Player::~Player() {

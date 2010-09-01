@@ -202,10 +202,10 @@ void GraphicEngine::paintHeroes(){
         glRotatef(hero->angle*180/PI,0,0,1);
         glBegin(GL_TRIANGLES);
             glColor3f(1,0,1);
-            glVertex3f(1.0f, 0.f, 0.f);
+            glVertex3f(0.5f, 0.f, 0.f);
             glColor3f(1,0,0);
-            glVertex3f(-0.5f,  0.86f, 0.f);
-            glVertex3f(-0.5f,  -0.86f, 0.f);
+            glVertex3f(-0.25f,  0.43f, 0.f);
+            glVertex3f(-0.25f,  -0.43f, 0.f);
         glEnd();
         glPopMatrix();
     }

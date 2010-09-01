@@ -86,6 +86,10 @@ void WorldEngine::frame() {
 
     addNewElements();
 
+    computeHeroesSpeed();
+    computeHeroesPosition();
+    app->networkNotifier.Flush();
+
     computeMonsterSpeed();
     computeMonsterPosition();
     computeMonsterTarget();
@@ -174,6 +178,46 @@ void WorldEngine::computeMonsterPosition() {
         Monster *monster = model.monsters[i];
         monster->positionX = monster->positionX + monster->speedX * frameDuration;
         monster->positionY = monster->positionY + monster->speedY * frameDuration;
+        //std::cout<<"WorldEngine monster "<<monster->id<<" speed is "<<monster->speedX<<" and new pos is "<<monster->positionX<<std::endl;
+    }
+}
+
+void WorldEngine::computeHeroesSpeed() {
+    for (int i = 0; i < (int) model.heroes.size(); i++) {
+            Hero *hero = model.heroes[i];
+            bool heroChanged = false;
+
+            double newSpeedX = 0;
+            double newSpeedY = 0;
+
+
+            if(hero->playerMove) {
+                std::cout<<"WorldEngine angle "<<hero->playerAngle<<std::endl;
+                newSpeedX = cos(hero->playerAngle) * hero->playerSpeed * 0.01;
+                newSpeedY = sin(hero->playerAngle) * hero->playerSpeed * 0.01;
+                std::cout<<"WorldEngine newSpeedX "<<newSpeedX<<std::endl;
+                std::cout<<"WorldEngine newSpeedY "<<newSpeedY<<std::endl;
+            }
+
+
+            if(newSpeedX != hero->speedX || newSpeedY != hero->speedY) {
+                hero->speedX = newSpeedX;
+                hero->speedY = newSpeedY;
+                heroChanged = true;
+            }
+
+            if (heroChanged) {
+                //std::cout<<"WorldEngine monster "<<monster->id<<" change"<<std::endl;
+                app->networkNotifier.StackUpdateHero(hero);
+            }
+        }
+}
+
+void WorldEngine::computeHeroesPosition() {
+    for (int i = 0; i < (int) model.heroes.size(); i++) {
+        Hero *hero = model.heroes[i];
+        hero->positionX = hero->positionX + hero->speedX * frameDuration;
+        hero->positionY = hero->positionY + hero->speedY * frameDuration;
         //std::cout<<"WorldEngine monster "<<monster->id<<" speed is "<<monster->speedX<<" and new pos is "<<monster->positionX<<std::endl;
     }
 }

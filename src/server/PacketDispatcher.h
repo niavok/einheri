@@ -42,6 +42,7 @@ private:
     void dispatchServerGetAddPlayer(sf::Packet *packet, NetworkClient *client);
     void dispatchServerGetAddHero(sf::Packet *packet, NetworkClient *client);
     void dispatchServerSetPlayerName(sf::Packet *packet, NetworkClient *client);
+    void dispatchServerUpdateHeroMovement(sf::Packet *packet, NetworkClient *client);
 
 };
 

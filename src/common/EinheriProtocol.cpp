@@ -77,6 +77,9 @@ std::string EinheriProtocol::getCommandName(ClientCommandType type) {
     case CLIENT_UPDATE_HERO:
         response = "CLIENT_UPDATE_HERO";
         break;
+        case CLIENT_UPDATE_HEROES:
+            response = "CLIENT_UPDATE_HEROES";
+            break;
     case CLIENT_PLAYER_ADDED:
         response = "CLIENT_PLAYER_ADDED";
         break;

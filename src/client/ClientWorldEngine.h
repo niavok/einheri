@@ -43,6 +43,7 @@ private:
 
     void computeMonsterSpeed();
     void computeMonsterPosition();
+    void computeHeroesPosition();
 
     void updateHeroMovement();
 

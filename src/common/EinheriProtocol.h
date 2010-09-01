@@ -38,9 +38,10 @@ public:
         CLIENT_ADD_MONSTER, // int id
         CLIENT_ADD_HEROES, // int count, int id, int id ...
         CLIENT_ADD_MONSTERS, // int count, int id, int id ...
-        CLIENT_UPDATE_MONSTER, // int id, double speedX, double speedXY, double posX, double posY, double angle
+        CLIENT_UPDATE_MONSTER, // int id, double speedX, double speedY, double posX, double posY, double angle
         CLIENT_UPDATE_MONSTERS, // int count, int id, double speedX, double speedXY, double posX, double posY, double angle, ...
-        CLIENT_UPDATE_HERO, // int id, double posX, double posY, double angle
+        CLIENT_UPDATE_HERO, // int id, double speedX, double speedY, double posX, double posY, double angle
+        CLIENT_UPDATE_HEROES, // int count,int id, double speedX, double speedY, double posX, double posY, double angle
         CLIENT_PLAYER_ADDED, // int playerId
         CLIENT_HERO_ADDED // int playerId int heroId
     };

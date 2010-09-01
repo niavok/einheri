@@ -75,7 +75,7 @@ void PacketDispatcher::Run() {
             //TODO
             break;
         case einheri::EinheriProtocol::SERVER_UPDATE_HERO_MOVEMENT:
-            //TODO
+            dispatchServerUpdateHeroMovement(&packet, client);
             break;
         case einheri::EinheriProtocol::SERVER_QUIT:
             //TODO
@@ -126,14 +126,14 @@ void PacketDispatcher::dispatchServerGetAddHero(sf::Packet *packet, NetworkClien
     GameEvent newHeroEvent(GameEvent::ADD_HERO);
 
     int playerId;
-    *packet >>playerId;
+    *packet >> playerId;
     newHeroEvent.intValues[GameEvent::PLAYER_ID] = playerId;
-    std::cout << "dispatchServerGetAddHero playerId="<< playerId << std::endl;
-    std::cout << "newHeroEvent playerId="<< newHeroEvent.intValues[GameEvent::PLAYER_ID] << std::endl;
+    std::cout << "dispatchServerGetAddHero playerId=" << playerId << std::endl;
+    std::cout << "newHeroEvent playerId=" << newHeroEvent.intValues[GameEvent::PLAYER_ID] << std::endl;
 
     GameEvent newHeroEvent2 = newHeroEvent;
 
-    std::cout << "newHeroEvent2 playerId="<< newHeroEvent2.intValues[GameEvent::PLAYER_ID] << std::endl;
+    std::cout << "newHeroEvent2 playerId=" << newHeroEvent2.intValues[GameEvent::PLAYER_ID] << std::endl;
 
     app->gameEngine.SendEvent(newHeroEvent);
 
@@ -142,6 +142,25 @@ void PacketDispatcher::dispatchServerGetAddHero(sf::Packet *packet, NetworkClien
 void PacketDispatcher::dispatchServerSetPlayerName(sf::Packet *packet, NetworkClient *client) {
     //GameEvent newHeroEvent(GameEvent::ADD_HERO);
     //app->gameEngine.SendEvent(newHeroEvent);
+
+}
+
+void PacketDispatcher::dispatchServerUpdateHeroMovement(sf::Packet *packet, NetworkClient *client) {
+
+    int heroId;
+    bool move;
+    double angle;
+    double speed;
+    *packet >> heroId >> move >> angle >> speed;
+
+    std::cout << "dispatchServerUpdateHeroMovement angle=" << angle << std::endl;
+
+    app->worldEngine.model.Lock();
+    Hero *hero = app->worldEngine.GetHeroById(heroId);
+    hero->playerMove = move;
+    hero->playerAngle = angle;
+    hero->playerSpeed = speed;
+    app->worldEngine.model.Unlock();
 
 }
 

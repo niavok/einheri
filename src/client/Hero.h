@@ -19,6 +19,9 @@ public:
 
     double positionX;
     double positionY;
+    double speedX;
+    double speedY;
+
     double angle;
 };
 

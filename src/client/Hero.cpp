@@ -12,6 +12,8 @@ namespace einheri {
 Hero::Hero() {
     positionX = 0;
     positionY = 0;
+    speedX = 0;
+    speedY = 0;
     angle = 0;
 }
 

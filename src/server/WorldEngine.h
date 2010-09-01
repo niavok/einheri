@@ -44,6 +44,10 @@ private:
     void computeMonsterSpeed();
     void computeMonsterPosition();
 
+    void computeHeroesSpeed();
+    void computeHeroesPosition();
+
+
     sf::Mutex monsterQueueLock;
     std::queue<Monster *> monsterQueue;
 

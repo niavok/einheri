@@ -31,6 +31,11 @@ public:
 
 
     void AddHero(Hero *hero);
+    void UpdateHero(Hero *hero);
+    void UpdateHeroes(std::vector<Hero *>);
+
+    void StackUpdateHero(Hero *hero);
+
 
     void Flush();
     void Start();
@@ -43,6 +48,7 @@ private:
     bool running;
     MessageQueue<sf::Packet *> packetQueue;
     std::vector<Monster *> monstersToUpdate;
+    std::vector<Hero *> heroesToUpdate;
 };
 
 }
