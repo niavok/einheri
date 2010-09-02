@@ -1,5 +1,6 @@
 FOREACH(FOLDER
 		server
+		client
     )
   ADD_SUBDIRECTORY(${FOLDER})	
 ENDFOREACH()

@@ -53,7 +53,7 @@ OPTION(BUILD_TEST "Enable CTEST and build the test unit." OFF)
 #SET(Boost_USE_MULTITHREADED ON)
 #FIND_PACKAGE(Boost)
 #INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
-FIND_PACKAGE(SFML COMPONENTS system graphics network)
+FIND_PACKAGE(SFML)
 INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIRS})
 
 # no definition of macro min and max
