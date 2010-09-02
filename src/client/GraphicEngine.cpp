@@ -43,7 +43,7 @@ void GraphicEngine::Init() {
 
     index = glGenLists(1);
 
-    // compile the display list, store a triangle in it
+    // compile the monster display list, store a triangle in it
     glNewList(index, GL_COMPILE);
     glBegin(GL_TRIANGLES);
     glColor3f(0, 1, 1);
@@ -68,23 +68,9 @@ void GraphicEngine::Resize(int width, int height) {
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    /*float L; // Longueur entre les 2 plans de coupe verticaux
-     float H; // Hauteur entre les 2 plans de coupe horizontaux
-     if (w<=h)
-     {
-     H=(GLfloat) (10*h/w);
-     L=10.0;
-     }
-     else
-     {
-     H=10.0;
-     L=(GLfloat) (10*w/h);
-     }*/
-    //gluOrtho2D(-(double)width/2,(double)width/2,-(double)height/2,(double)height/2);
 
     double zoom = 8;
     gluOrtho2D(-zoom * h, zoom * h, -zoom, zoom);
-    //gluPerspective(45.f, h, 0.1f, 500.f);
 
 
 }
@@ -169,7 +155,6 @@ void GraphicEngine::paintMonsters() {
         glPushMatrix();
         Monster *monster = it->second;
         glTranslatef(monster->positionX, monster->positionY, 0);
-        //std::cout<<"paint monster "<<monster->id<<" "<<monster->positionX<<" "<<monster->positionY<<std::endl;
 
         glRotatef(monster->angle * 180 / PI, 0, 0, 1);
 
@@ -178,16 +163,11 @@ void GraphicEngine::paintMonsters() {
         glPopMatrix();
     }
 
-    //std::cout<<"paint monsters end"<<modelToDraw->GetMonsters().size()<<std::endl;
-
     application->clientWorldEngine.worldModel->mutexMonsters.Unlock();
 
 }
 
 void GraphicEngine::paintHeroes() {
-
-    //std::cout<<"paint heroes"<<std::endl;
-
 
     std::map<int, Hero *>::const_iterator it;
 
