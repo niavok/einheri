@@ -59,6 +59,15 @@ void NetworkNotifier::UpdateHero(Hero * hero) {
 
 }
 
+void NetworkNotifier::UpdateHeroAimingAngle(Hero * hero) {
+    sf::Packet *packetUpdateHeroAimingAngle= new sf::Packet();
+    *packetUpdateHeroAimingAngle << einheri::EinheriProtocol::CLIENT_UPDATE_HERO_AIMING_ANGLE<< hero->id << hero->aimingAngle;
+    packetQueue.PushMessage(packetUpdateHeroAimingAngle);
+
+}
+
+
+
 void NetworkNotifier::UpdateMonsters(std::vector<Monster *> monsters) {
 
     //std::cout << "NetworkNotifier UpdateMonsters "<< monsters.size()<< std::endl;

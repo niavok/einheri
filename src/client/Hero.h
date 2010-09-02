@@ -23,6 +23,7 @@ public:
     double speedY;
 
     double angle;
+    double aimingAngle;
 };
 
 

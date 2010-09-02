@@ -15,6 +15,7 @@ Hero::Hero() {
     speedX = 0;
     speedY = 0;
     angle = 0;
+    aimingAngle = 0;
 }
 
 Hero::~Hero() {

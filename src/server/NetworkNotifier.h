@@ -33,6 +33,7 @@ public:
     void AddHero(Hero *hero);
     void UpdateHero(Hero *hero);
     void UpdateHeroes(std::vector<Hero *>);
+    void UpdateHeroAimingAngle(Hero *hero);
 
     void StackUpdateHero(Hero *hero);
 

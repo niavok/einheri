@@ -27,7 +27,7 @@ public:
     bool Paint();
     void Resize(int width, int height);
 
-    Vect2<double> Pick(int x, int y);
+    Vect2<double> Pick(Vect2<int> point);
 
 private:
     sf::Clock clock;
@@ -49,6 +49,11 @@ private:
     void paintProjectiles();
     void paintEffects();
     void paintCursor();
+
+    double zoom;
+
+    int width;
+    int height;
 
 };
 

@@ -53,7 +53,7 @@ void PacketDispatcher::Run() {
 
         commandType = (einheri::EinheriProtocol::ServerCommandType) commandTypeInt;
 
-        std::cout << "PacketDispatcher command " << einheri::EinheriProtocol::getCommandName(commandType) << std::endl;
+        //std::cout << "PacketDispatcher command " << einheri::EinheriProtocol::getCommandName(commandType) << std::endl;
 
         switch (commandType) {
         case einheri::EinheriProtocol::SERVER_HELLO:
@@ -76,6 +76,9 @@ void PacketDispatcher::Run() {
             break;
         case einheri::EinheriProtocol::SERVER_UPDATE_HERO_MOVEMENT:
             dispatchServerUpdateHeroMovement(&packet, client);
+            break;
+        case einheri::EinheriProtocol::SERVER_UPDATE_HERO_AIMING_ANGLE:
+            dispatchServerUpdateHeroAimingAngle(&packet, client);
             break;
         case einheri::EinheriProtocol::SERVER_QUIT:
             //TODO
@@ -160,14 +163,27 @@ void PacketDispatcher::dispatchServerUpdateHeroMovement(sf::Packet *packet, Netw
     double speed;
     *packet >> heroId >> move >> angle >> speed;
 
-    std::cout << "dispatchServerUpdateHeroMovement angle=" << angle << std::endl;
-
     app->worldEngine.model.Lock();
     Hero *hero = app->worldEngine.GetHeroById(heroId);
     if(hero) {
         hero->playerMove = move;
         hero->playerAngle = angle;
         hero->playerSpeed = speed;
+    }
+    app->worldEngine.model.Unlock();
+
+}
+
+void PacketDispatcher::dispatchServerUpdateHeroAimingAngle(sf::Packet *packet, NetworkClient */*client*/) {
+
+    int heroId;
+    double angle;
+    *packet >> heroId >> angle;
+
+    app->worldEngine.model.Lock();
+    Hero *hero = app->worldEngine.GetHeroById(heroId);
+    if(hero) {
+        hero->playerAimingAngle = angle;
     }
     app->worldEngine.model.Unlock();
 

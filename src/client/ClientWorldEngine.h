@@ -46,10 +46,12 @@ private:
     void computeHeroesPosition();
 
     void updateHeroMovement();
+    void updateHeroAngle();
 
     double previousAngle;
     bool previousMove;
     double previousSpeed;
+    double previousAimingAngle;
 };
 
 }

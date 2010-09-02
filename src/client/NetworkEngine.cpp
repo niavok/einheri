@@ -87,14 +87,25 @@ void NetworkEngine::SetPlayerName(int playerId, std::string name) {
 }
 
 void NetworkEngine::UpdateHeroMovement(int heroId, bool move, double angle, double speed) {
-    std::cout << "Send UpdateHero command" << std::endl;
+    //std::cout << "Send UpdateHero command" << std::endl;
     sf::Packet packet;
 
     int command = EinheriProtocol::SERVER_UPDATE_HERO_MOVEMENT;
     packet << command << heroId << move << angle << speed;
-    std::cout << "command UpdateHeroMovement heroId=" << heroId << " move=" << move<< " angle=" << move<< " speed=" << speed << std::endl;
+    //std::cout << "command UpdateHeroMovement heroId=" << heroId << " move=" << move<< " angle=" << angle<< " speed=" << speed << std::endl;
     clientSocket.Send(packet);
 }
+
+void NetworkEngine::UpdateHeroAimingAngle(int heroId, double angle) {
+    //std::cout << "Send UpdateHeroAimingAngle command" << std::endl;
+    sf::Packet packet;
+
+    int command = EinheriProtocol::SERVER_UPDATE_HERO_AIMING_ANGLE;
+    packet << command << heroId << angle ;
+    //std::cout << "command UpdateHeroAimingAngle heroId=" << heroId << " angle=" << angle << std::endl;
+    clientSocket.Send(packet);
+}
+
 
 //Private
 

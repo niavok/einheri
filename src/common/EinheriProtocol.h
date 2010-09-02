@@ -25,6 +25,7 @@ public:
         SERVER_GET_WORLD, //
 
         SERVER_UPDATE_HERO_MOVEMENT, // int heroId, bool move, double angle, double speed
+        SERVER_UPDATE_HERO_AIMING_ANGLE, // int heroId,double angle
 
         SERVER_QUIT
     };
@@ -41,6 +42,7 @@ public:
         CLIENT_UPDATE_MONSTER, // int id, double speedX, double speedY, double posX, double posY, double angle
         CLIENT_UPDATE_MONSTERS, // int count, int id, double speedX, double speedXY, double posX, double posY, double angle, ...
         CLIENT_UPDATE_HERO, // int id, double speedX, double speedY, double posX, double posY, double angle
+        CLIENT_UPDATE_HERO_AIMING_ANGLE, // int id, double angle
         CLIENT_UPDATE_HEROES, // int count,int id, double speedX, double speedY, double posX, double posY, double angle
         CLIENT_PLAYER_ADDED, // int playerId
         CLIENT_HERO_ADDED // int playerId int heroId

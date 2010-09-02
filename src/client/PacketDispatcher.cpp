@@ -86,6 +86,9 @@ void PacketDispatcher::Run() {
         case EinheriProtocol::CLIENT_UPDATE_HERO:
             dispatchClientUpdateHero(&packet);
             break;
+        case EinheriProtocol::CLIENT_UPDATE_HERO_AIMING_ANGLE:
+            dispatchClientUpdateHeroAimingAngle(&packet);
+            break;
         case EinheriProtocol::CLIENT_UPDATE_HEROES:
             dispatchClientUpdateHeroes(&packet);
             break;
@@ -256,7 +259,27 @@ void PacketDispatcher::dispatchClientUpdateHero(sf::Packet *packet) {
     app->clientWorldEngine.worldModel->mutexHeroes.Unlock();
 }
 
+void PacketDispatcher::dispatchClientUpdateHeroAimingAngle(sf::Packet *packet) {
+    int id;
+    double angle;
 
+    (*packet) >> id >>  angle;
+    //std::cout<<"Update monster "<<id<<" sx"<<speedX<<" sy"<<speedY<<" px"<<posX<<" py"<<posY<<" a"<<angle<<" "<<std::endl;
+
+    app->clientWorldEngine.worldModel->mutexHeroes.Lock();
+
+    if (app->clientWorldEngine.worldModel->GetHeroes().count(id) > 0) {
+        Hero *hero = app->clientWorldEngine.worldModel->GetHeroes().at(
+                id);
+        hero->aimingAngle = angle;
+
+    } else {
+        std::cout << "Error missing id Updating hero aiming angle" << id << " aiming angle="
+                << angle << std::endl;
+    }
+
+    app->clientWorldEngine.worldModel->mutexHeroes.Unlock();
+}
 
 void PacketDispatcher::dispatchClientUpdateHeroes(sf::Packet *packet) {
 

@@ -89,6 +89,7 @@ void WorldEngine::frame() {
     computeHeroesSpeed();
     computeHeroesPosition();
     app->networkNotifier.Flush();
+    computeHeroesAimingAngle();
 
     computeMonsterSpeed();
     computeMonsterPosition();
@@ -182,6 +183,17 @@ void WorldEngine::computeMonsterPosition() {
     }
 }
 
+void WorldEngine::computeHeroesAimingAngle() {
+    for (int i = 0; i < (int) model.heroes.size(); i++) {
+            Hero *hero = model.heroes[i];
+
+            if (hero->aimingAngle != hero->playerAimingAngle) {
+                hero->aimingAngle = hero->playerAimingAngle;
+                app->networkNotifier.UpdateHeroAimingAngle(hero);
+            }
+        }
+}
+
 void WorldEngine::computeHeroesSpeed() {
     for (int i = 0; i < (int) model.heroes.size(); i++) {
             Hero *hero = model.heroes[i];
@@ -192,11 +204,8 @@ void WorldEngine::computeHeroesSpeed() {
 
 
             if(hero->playerMove) {
-                std::cout<<"WorldEngine angle "<<hero->playerAngle<<std::endl;
                 newSpeedX = cos(hero->playerAngle) * hero->playerSpeed * 0.01;
                 newSpeedY = sin(hero->playerAngle) * hero->playerSpeed * 0.01;
-                std::cout<<"WorldEngine newSpeedX "<<newSpeedX<<std::endl;
-                std::cout<<"WorldEngine newSpeedY "<<newSpeedY<<std::endl;
             }
 
 

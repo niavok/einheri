@@ -24,10 +24,12 @@ public:
     double speedX;
     double speedY;
     double angle;
+    double aimingAngle;
 
     bool playerMove;
     double playerAngle;
     double playerSpeed;
+    double playerAimingAngle;
 
     Player * parentPlayer;
 

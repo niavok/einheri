@@ -46,6 +46,7 @@ private:
 
     void computeHeroesSpeed();
     void computeHeroesPosition();
+    void computeHeroesAimingAngle();
 
 
     sf::Mutex monsterQueueLock;

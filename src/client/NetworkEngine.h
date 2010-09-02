@@ -30,6 +30,7 @@ public:
     void AddHero(int playerId);
     void SetPlayerName(int playerId, std::string name);
     void UpdateHeroMovement(int heroId, bool move, double angle, double speed);
+    void UpdateHeroAimingAngle(int heroId, double angle);
 
    private:
        Application *app;

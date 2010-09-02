@@ -20,7 +20,7 @@ namespace einheri {
 GraphicEngine::GraphicEngine(Application *application) {
     this->application = application;
     modelToDraw = NULL;
-    frameDuration = 1. / 80.;
+    frameDuration = 1. / 30.;
 }
 
 GraphicEngine::~GraphicEngine() {
@@ -39,6 +39,8 @@ void GraphicEngine::Init() {
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
 
+    zoom = 20;
+
     Resize(application->app->GetWidth(), application->app->GetHeight());
 
     index = glGenLists(1);
@@ -54,23 +56,29 @@ void GraphicEngine::Init() {
     glEnd();
     glEndList();
 
+
+
     lastFrameClock = clock.GetElapsedTime();
 }
 
 void GraphicEngine::Resize(int width, int height) {
+
+    this->width = width;
+    this->height = height;
+
     glViewport(0, 0, width, height);
 
     double h = 1;
 
-    if (application->app->GetHeight() != 0) {
-        h = (double) application->app->GetWidth() / (double) application->app->GetHeight();
+    if (height != 0) {
+        h = (double) width / (double) height;
     }
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    double zoom = 8;
-    gluOrtho2D(-zoom * h, zoom * h, -zoom, zoom);
+
+    gluOrtho2D(-(zoom * h)/2., (zoom * h)/2., -zoom/2., zoom/2.);
 
 
 }
@@ -175,7 +183,7 @@ void GraphicEngine::paintHeroes() {
         glPushMatrix();
         Hero *hero = it->second;
         glTranslatef(hero->positionX, hero->positionY, 0);
-        glRotatef(hero->angle * 180 / PI, 0, 0, 1);
+        glRotatef(hero->aimingAngle * 180 / PI, 0, 0, 1);
         glBegin(GL_TRIANGLES);
         glColor3f(1, 0, 1);
         glVertex3f(0.25f, 0.f, 0.f);
@@ -245,9 +253,19 @@ void GraphicEngine::paintCursor() {
 
 }
 
-Vect2<double> GraphicEngine::Pick(int x, int y) {
-    //TODO
-    return Vect2<double> (x, y);
+Vect2<double> GraphicEngine::Pick(Vect2<int> point) {
+
+    double h = 1;
+
+    if (height != 0) {
+        h =  (double)width /  (double)height;
+    }
+
+    double pickX = (h*zoom) * ( (double)point.getX() / (double) width - 1./2.);
+    double pickY = zoom * ( (double)(height - point.getY()) / (double) height - 1./2.);
+
+
+    return Vect2<double> (pickX, pickY);
 }
 
 }

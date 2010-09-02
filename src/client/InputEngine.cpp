@@ -78,7 +78,7 @@ void InputEngine::Run(){
         }
 
         if(event.Type == sf::Event::KeyPressed) {
-                std::cout<<"Key Pressed"<<std::endl;
+                //std::cout<<"Key Pressed"<<std::endl;
         }
 
     }

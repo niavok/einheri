@@ -20,6 +20,7 @@ ClientWorldEngine::ClientWorldEngine(Application *application) {
     worldModel = new ClientWorldModel();
 
     previousAngle = -1;
+    previousAimingAngle = -1;
     previousMove = false;
     previousSpeed = -1;
 }
@@ -65,6 +66,7 @@ void ClientWorldEngine::frame() {
 
 
     updateHeroMovement();
+    updateHeroAngle();
 
     worldModel->mutexHeroes.Lock();
     computeHeroesPosition();
@@ -119,6 +121,34 @@ void ClientWorldEngine::computeHeroesPosition() {
     //std::cout<<"ClientWorldEngine computeMonsterPosition end"<<editModel->GetMonsters().size()<<std::endl;
 }
 
+void ClientWorldEngine::updateHeroAngle() {
+    if (app->gameEngine.localPlayer.heroId == -1) {
+        return;
+    }
+    InputEngine * inputEngine = &(app->inputEngine);
+    GraphicEngine * graphicEngine = &(app->graphicEngine);
+
+    Vect2<double> cursor = graphicEngine->Pick(inputEngine->GetMouse());
+
+    worldModel->mutexHeroes.Lock();
+    Hero *hero = worldModel->GetHeroes().at(app->gameEngine.localPlayer.heroId);
+    double heroX = hero->positionX;
+    double heroY = hero->positionY;
+    worldModel->mutexHeroes.Unlock();
+
+
+    double angleX = cursor.getX() - heroX;
+    double angleY = cursor.getY() - heroY;
+
+    double aimingAngle = atan2(angleY, angleX);
+
+    if(aimingAngle != previousAimingAngle) {
+            app->networkEngine.UpdateHeroAimingAngle(app->gameEngine.localPlayer.heroId,  aimingAngle);
+            previousAimingAngle = aimingAngle;
+    }
+
+}
+
 void ClientWorldEngine::updateHeroMovement() {
 
     if (app->gameEngine.localPlayer.heroId == -1) {
@@ -134,7 +164,7 @@ void ClientWorldEngine::updateHeroMovement() {
 
     double PI = 3.14159265;
 
-    std::cout << "ClientWorldEngine key state " << left << " " << right << " " << up << " " << down << " " << std::endl;
+    //std::cout << "ClientWorldEngine key state " << left << " " << right << " " << up << " " << down << " " << std::endl;
     double angle = 0;
     bool move = left || right || up || down;
     double speed = 100; //With keyboard, speed is always 0% or 100%
@@ -170,8 +200,6 @@ void ClientWorldEngine::updateHeroMovement() {
     if (left && !right && !up && down) {
         angle = -3 * PI / 4;
     }
-
-    std::cout << "ClientWorldEngine angle " << angle << " " << std::endl;
 
     if(move != previousMove || angle != previousAngle || speed != previousSpeed) {
         app->networkEngine.UpdateHeroMovement(app->gameEngine.localPlayer.heroId, move, angle, speed);

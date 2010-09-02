@@ -224,7 +224,7 @@ void NetworkEngine::Run(){
                     if (socket.Receive(packet) == sf::Socket::Done)
                     {
                         NetworkClient *client = clients[socket];
-                        std::cout << "Packet received" << std::endl;
+                        //std::cout << "Packet received" << std::endl;
                         packetDispatcher.Dispatch(packet, client);
                     }
                     else
