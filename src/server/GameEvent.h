@@ -18,7 +18,7 @@ public:
     enum EventType {
         NONE,
         ADD_PLAYER,
-        ADD_HERO,
+        ADD_HERO
     };
 
     GameEvent(EventType type);
@@ -28,7 +28,7 @@ public:
     enum EventField {
         PLAYER_ID,
         HERO_ID,
-        CLIENT,
+        CLIENT
     };
 
     GameEvent();

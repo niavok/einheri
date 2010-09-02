@@ -6,6 +6,9 @@
  */
 
 #include "Application.h"
+
+#include <Utils/FileFinder.h>
+
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -15,11 +18,11 @@
 namespace einheri {
 
 Application::Application():
-clientWorldEngine(this),
-gameEngine(this),
-graphicEngine(this),
-inputEngine(this),
-networkEngine(this){
+    clientWorldEngine(this),
+    gameEngine(this),
+    graphicEngine(this),
+    inputEngine(this),
+    networkEngine(this){
     app = NULL;
 
 }
@@ -41,15 +44,17 @@ void Application::Run() {
 
 
 
+    using einUtils::FileFinder;
+
      // Load a sprite to display
      sf::Image Image;
-     if (!Image.LoadFromFile("data/cute_image.jpg"))
+     if (!Image.LoadFromFile(FileFinder::get().file("share/cute_image.jpg")))
          return;
      sf::Sprite Sprite(Image);
 
      // Create a graphical string to display
      sf::Font Arial;
-     if (!Arial.LoadFromFile("data/arial.ttf"))
+     if (!Arial.LoadFromFile(FileFinder::get().file("share/arial.ttf")))
          return;
      sf::String title("Einheri", Arial, 16);
      sf::String fps("0 fps", Arial, 16);
@@ -58,7 +63,7 @@ void Application::Run() {
 
      // Load a music to play
      sf::Music Music;
-     if (!Music.OpenFromFile("data/Olivier_Militon.-.Apnee.ogg"))
+     if (!Music.OpenFromFile(FileFinder::get().file("share/Olivier_Militon.-.Apnee.ogg")))
          return;
 
      // Play the music

@@ -1,25 +1,26 @@
 #include <server/Application.h>
 
 #include <iostream>
+
 #include "signal.h"
 
-void sigPipeHandler(int signum) {
-    std::cerr<<"SIGPIPE"<<std::endl;
+void sigPipeHandler(int signum)
+{
+    std::cerr << "SIGPIPE " <<signum<< std::endl;
 }
 
 int main()
- {
-    if(signal(SIGPIPE, sigPipeHandler) == SIG_ERR) {
-        std::cerr<<"Fail to handler SIGPIPE"<<std::endl;
+{
+    if (signal(SIGPIPE, sigPipeHandler) == SIG_ERR)
+    {
+        std::cerr << "Fail to handler SIGPIPE" << std::endl;
     }
 
     einheriServer::Application application;
 
     application.Run();
 
+    return EXIT_SUCCESS;
 
-     return EXIT_SUCCESS;
-
- }
-
+}
 

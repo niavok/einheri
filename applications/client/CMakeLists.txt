@@ -3,7 +3,7 @@ SET(EXE_NAME einheri)
 
 # Make beautiful folder in visual studio
 GROUP_FILES()
-FIND_PACKAGE(SFML COMPONENTS network system graphics audio)
+FIND_PACKAGE(SFML COMPONENTS system network graphics audio)
 INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIRS})
 
 ADD_EXECUTABLE(${EXE_NAME} ${SRC})

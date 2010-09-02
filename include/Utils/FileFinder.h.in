@@ -1,0 +1,58 @@
+
+#ifndef FILEFINDER_H_
+#define FILEFINDER_H_
+
+#include <fstream>
+#include "Singleton.h"
+
+namespace einUtils
+{
+
+class FileFinder : public Singleton<FileFinder>
+{
+    EIN_SINGLETON(FileFinder);
+private:
+    FileFinder()
+    {
+        AddSearchPath("@CMAKE_INSTALL_PREFIX@/share/einheri");
+        AddSearchPath("@FILE_PATH@");
+        AddSearchPath("./");
+        AddSearchPath("/usr/local/share/einheri");
+    }
+public:
+    std::string file(const std::string& path)
+    {
+        for (unsigned int i = 0; i < pathes.size(); ++i)
+        {
+            std::ifstream fst((pathes[i] + path).c_str());
+            if (!fst.fail())
+            {
+                fst.close();
+                return pathes[i] + path;
+            }
+        }
+        return path + "-NotFound";
+    }
+
+    void AddSearchPath(const std::string& path)
+    {
+        std::size_t loc;
+        std::string tmpPath = path;
+        while( (loc = path.find_first_of("\\")) != path.npos)
+        {
+            tmpPath.replace(loc, 1, "/");
+        }
+        if(tmpPath[tmpPath.size()] != '/')
+        {
+            tmpPath += "/";
+        }
+        pathes.push_back(tmpPath);
+    }
+
+private:
+    std::vector<std::string> pathes;
+};
+
+}
+
+#endif /* FILEFINDER_H_ */

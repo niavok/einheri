@@ -26,7 +26,7 @@ public:
 
         SERVER_UPDATE_HERO_MOVEMENT, // int heroId, bool move, double angle, double speed
 
-        SERVER_QUIT,
+        SERVER_QUIT
     };
 
     enum ClientCommandType {

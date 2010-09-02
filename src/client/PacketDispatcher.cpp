@@ -34,7 +34,7 @@ void PacketDispatcher::Stop() {
     Wait();
 }
 
-void PacketDispatcher::Dispatch(sf::Packet packet, sf::SocketTCP socket) {
+void PacketDispatcher::Dispatch(sf::Packet packet, sf::SocketTCP /*socket*/) {
     packetQueue.PushMessage(packet);
 }
 

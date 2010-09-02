@@ -56,6 +56,9 @@ OPTION(BUILD_TEST "Enable CTEST and build the test unit." OFF)
 FIND_PACKAGE(SFML)
 INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIRS})
 
+### Create the FileFinder.h file
+CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/include/Utils/FileFinder.h.in" "${CMAKE_SOURCE_DIR}/include/Utils/FileFinder.h" @ONLY)
+
 # no definition of macro min and max
 IF(WIN32)
   ADD_DEFINITIONS(-DNOMINMAX)

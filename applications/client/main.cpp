@@ -1,5 +1,4 @@
 
-
 #include <client/Application.h>
 
 int main()
@@ -9,7 +8,6 @@ int main()
 
     application.Run();
 
-
-     return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
 

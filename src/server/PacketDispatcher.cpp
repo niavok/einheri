@@ -105,7 +105,7 @@ void PacketDispatcher::dispatchServerHello(sf::Packet *packet, NetworkClient *cl
 
 }
 
-void PacketDispatcher::dispatchServerGetWorld(sf::Packet *packet, NetworkClient *client) {
+void PacketDispatcher::dispatchServerGetWorld(sf::Packet */*packet*/, NetworkClient *client) {
     std::cout << "Client want world. Send it." << std::endl;
 
     app->worldEngine.model.Lock();
@@ -122,14 +122,14 @@ void PacketDispatcher::dispatchServerGetWorld(sf::Packet *packet, NetworkClient 
     app->worldEngine.model.Unlock();
 }
 
-void PacketDispatcher::dispatchServerGetAddPlayer(sf::Packet *packet, NetworkClient *client) {
+void PacketDispatcher::dispatchServerGetAddPlayer(sf::Packet */*packet*/, NetworkClient *client) {
     GameEvent newPlayerEvent(GameEvent::ADD_PLAYER);
     newPlayerEvent.objectValues[GameEvent::CLIENT] = client;
     app->gameEngine.SendEvent(newPlayerEvent);
 
 }
 
-void PacketDispatcher::dispatchServerGetAddHero(sf::Packet *packet, NetworkClient *client) {
+void PacketDispatcher::dispatchServerGetAddHero(sf::Packet *packet, NetworkClient */*client*/) {
     GameEvent newHeroEvent(GameEvent::ADD_HERO);
 
     int playerId;
@@ -146,13 +146,13 @@ void PacketDispatcher::dispatchServerGetAddHero(sf::Packet *packet, NetworkClien
 
 }
 
-void PacketDispatcher::dispatchServerSetPlayerName(sf::Packet *packet, NetworkClient *client) {
+void PacketDispatcher::dispatchServerSetPlayerName(sf::Packet */*packet*/, NetworkClient */*client*/) {
     //GameEvent newHeroEvent(GameEvent::ADD_HERO);
     //app->gameEngine.SendEvent(newHeroEvent);
 
 }
 
-void PacketDispatcher::dispatchServerUpdateHeroMovement(sf::Packet *packet, NetworkClient *client) {
+void PacketDispatcher::dispatchServerUpdateHeroMovement(sf::Packet *packet, NetworkClient */*client*/) {
 
     int heroId;
     bool move;

@@ -20,14 +20,14 @@ public:
         CONNECTED_TO_SERVER,
         REGISTERED_TO_SERVER,
         PLAYER_ADDED,
-        HERO_ADDED,
+        HERO_ADDED
     };
 
     GameEvent(EventType type);
 
     enum EventField {
         PLAYER_ID,
-        HERO_ID,
+        HERO_ID
     };
 
     GameEvent();
