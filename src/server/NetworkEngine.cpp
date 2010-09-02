@@ -115,6 +115,49 @@ void NetworkEngine::UpdateMonsters(NetworkClient * client, std::vector<Monster *
 
 }
 
+void NetworkEngine::AddHeroes(NetworkClient * client, std::vector<Hero *> heroes) {
+
+    sf::Packet packet;
+    packet << einheri::EinheriProtocol::CLIENT_ADD_HEROES << (int) heroes.size();
+    for(int i = 0; i < (int) heroes.size(); i++) {
+        packet << heroes[i]->id;
+    }
+    client->Send(packet);
+
+
+}
+
+void NetworkEngine::UpdateHeroes(NetworkClient * client, std::vector<Hero *> heroes) {
+
+        int id;
+        double speedX;
+        double speedY;
+        double posX;
+        double posY;
+        double angle;
+        sf::Packet packet;
+
+        packet << einheri::EinheriProtocol::CLIENT_UPDATE_HEROES << (int) heroes.size();
+        for(int i = 0; i < (int)heroes.size(); i++) {
+
+            Hero *hero = heroes[i];
+
+            id = hero->id;
+            speedX = hero->speedX;
+            speedY = hero->speedY;
+            posX = hero->positionX;
+            posY = hero->positionY;
+            angle = hero->angle;
+
+            packet<<id<<speedX<<speedY<<posX<<posY<<angle;
+        }
+
+        std::cout<<"Send UpdateHeroes command. size="<<heroes.size()<<std::endl;
+        client->Send(packet);
+
+}
+
+
 void NetworkEngine::PlayerAdded(NetworkClient * client, int id) {
     sf::Packet packet;
     packet << einheri::EinheriProtocol::CLIENT_PLAYER_ADDED

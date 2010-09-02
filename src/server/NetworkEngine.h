@@ -11,6 +11,7 @@
 #include <SFML/System.hpp>
 #include "NetworkClient.h"
 #include "Monster.h"
+#include "Hero.h"
 
 namespace einheriServer {
 
@@ -30,6 +31,10 @@ public:
     void UpdateMonsters(NetworkClient * client, std::vector<Monster *> monsters);
     void PlayerAdded(NetworkClient * client, int id);
     void HeroAdded(NetworkClient * client, int playerid, int heroId);
+
+    void AddHeroes(NetworkClient * client, std::vector<Hero *> heroes);
+    void UpdateHeroes(NetworkClient * client, std::vector<Hero *> heroes);
+
 
     std::map<sf::SocketTCP, NetworkClient *> clients;
 

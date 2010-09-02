@@ -108,11 +108,18 @@ void PacketDispatcher::dispatchServerHello(sf::Packet *packet, NetworkClient *cl
 void PacketDispatcher::dispatchServerGetWorld(sf::Packet *packet, NetworkClient *client) {
     std::cout << "Client want world. Send it." << std::endl;
 
+    app->worldEngine.model.Lock();
     std::vector<Monster *> monsters = app->worldEngine.model.monsters;
 
     app->networkEngine.AddMonsters(client, monsters);
     app->networkEngine.UpdateMonsters(client, monsters);
 
+    std::vector<Hero *> heroes = app->worldEngine.model.heroes;
+
+    app->networkEngine.AddHeroes(client, heroes);
+    app->networkEngine.UpdateHeroes(client, heroes);
+
+    app->worldEngine.model.Unlock();
 }
 
 void PacketDispatcher::dispatchServerGetAddPlayer(sf::Packet *packet, NetworkClient *client) {
