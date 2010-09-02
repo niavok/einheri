@@ -57,6 +57,11 @@ bool InputEngine::IsMoveDown() {
     return input->IsKeyDown(sf::Key::S);
 }
 
+
+Vect2<int> InputEngine::GetMouse() {
+    return Vect2<int>(input->GetMouseX(), input->GetMouseY());
+}
+
 //Private
 
 void InputEngine::Run(){

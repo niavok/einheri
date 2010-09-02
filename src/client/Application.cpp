@@ -39,6 +39,7 @@ void Application::Run() {
     Settings.StencilBits       = 8;  // Request a 8 bits stencil buffer
     Settings.AntialiasingLevel = 8;  // Request 2 levels of antialiasing
     app = new sf::RenderWindow(sf::VideoMode(1650, 1080, 32), "Einheri", sf::Style::Close|sf::Style::Resize, Settings);
+    app->ShowMouseCursor(false);
 
     graphicEngine.Init();
 

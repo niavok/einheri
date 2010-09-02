@@ -10,6 +10,7 @@
 
 #include <SFML/Window.hpp>
 #include "../common/MessageQueue.h"
+#include "../common/Vect2.h"
 
 namespace einheri {
 
@@ -29,6 +30,7 @@ public:
     bool IsMoveRight();
     bool IsMoveUp();
     bool IsMoveDown();
+    Vect2<int> GetMouse();
 
 private:
     MessageQueue<sf::Event> eventQueue;

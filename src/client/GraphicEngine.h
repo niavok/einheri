@@ -10,6 +10,7 @@
 
 
 #include <SFML/Window.hpp>
+#include "../common/Vect2.h"
 
 namespace einheri {
 
@@ -25,6 +26,8 @@ public:
     void Init();
     bool Paint();
     void Resize(int width, int height);
+
+    Vect2<double> Pick(int x, int y);
 
 private:
     sf::Clock clock;
@@ -45,6 +48,7 @@ private:
     void paintHeroes();
     void paintProjectiles();
     void paintEffects();
+    void paintCursor();
 
 };
 
