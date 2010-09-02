@@ -39,6 +39,7 @@ private:
     void dispatchClientUpdateMonsters(sf::Packet *packet);
 
     void dispatchClientAddHero(sf::Packet *packet);
+    void dispatchClientAddHeroes(sf::Packet *packet);
 
     void dispatchClientPlayerAdded(sf::Packet *packet);
     void dispatchClientHeroAdded(sf::Packet *packet);

@@ -81,7 +81,7 @@ void PacketDispatcher::Run() {
             dispatchClientAddHero(&packet);
             break;
         case EinheriProtocol::CLIENT_ADD_HEROES:
-            //TODO
+            dispatchClientAddHeroes(&packet);
             break;
         case EinheriProtocol::CLIENT_UPDATE_HERO:
             dispatchClientUpdateHero(&packet);
@@ -311,6 +311,24 @@ void PacketDispatcher::dispatchClientAddHero(sf::Packet *packet) {
     app->clientWorldEngine.worldModel->mutexHeroes.Unlock();
 }
 
+void PacketDispatcher::dispatchClientAddHeroes(sf::Packet *packet) {
+
+    int count;
+
+    (*packet) >> count;
+    std::cout << "Add heroes " << count << std::endl;
+
+    app->clientWorldEngine.worldModel->mutexHeroes.Lock();
+    for (int i = 0; i < count; i++) {
+        int id;
+        (*packet) >> id;
+        //std::cout<<"Add monster "<<id<<std::endl;
+        Hero *hero = new Hero();
+        hero->id = id;
+        app->clientWorldEngine.worldModel->AddHero(hero);
+    }
+    app->clientWorldEngine.worldModel->mutexHeroes.Unlock();
+}
 
 void PacketDispatcher::dispatchClientPlayerAdded(sf::Packet *packet) {
     int id;
