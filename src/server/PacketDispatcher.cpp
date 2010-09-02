@@ -164,9 +164,11 @@ void PacketDispatcher::dispatchServerUpdateHeroMovement(sf::Packet *packet, Netw
 
     app->worldEngine.model.Lock();
     Hero *hero = app->worldEngine.GetHeroById(heroId);
-    hero->playerMove = move;
-    hero->playerAngle = angle;
-    hero->playerSpeed = speed;
+    if(hero) {
+        hero->playerMove = move;
+        hero->playerAngle = angle;
+        hero->playerSpeed = speed;
+    }
     app->worldEngine.model.Unlock();
 
 }
