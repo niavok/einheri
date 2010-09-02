@@ -7,7 +7,7 @@
 #include <iostream>
 
 #include "PacketDispatcher.h"
-#include "EinheriProtocol.h"
+#include "../common/EinheriProtocol.h"
 #include "GameEvent.h"
 #include "Application.h"
 

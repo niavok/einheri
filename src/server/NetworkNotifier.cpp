@@ -6,7 +6,7 @@
  */
 #include <iostream>
 #include "NetworkNotifier.h"
-#include "EinheriProtocol.h"
+#include "../common/EinheriProtocol.h"
 #include "Application.h"
 
 namespace einheriServer {

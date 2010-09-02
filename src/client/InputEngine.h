@@ -9,7 +9,7 @@
 #define INPUTENGINE_H_
 
 #include <SFML/Window.hpp>
-#include "MessageQueue.h"
+#include "../common/MessageQueue.h"
 
 namespace einheri {
 

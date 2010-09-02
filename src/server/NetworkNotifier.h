@@ -11,7 +11,7 @@
 #include <vector>
 #include <SFML/Network.hpp>
 #include "NetworkEngine.h"
-#include "MessageQueue.h"
+#include "../common/MessageQueue.h"
 #include "Monster.h"
 #include "Hero.h"
 

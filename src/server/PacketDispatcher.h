@@ -10,7 +10,7 @@
 
 #include <SFML/Network.hpp>
 
-#include "MessageQueue.h"
+#include "../common/MessageQueue.h"
 #include "NetworkClient.h"
 
 namespace einheriServer {

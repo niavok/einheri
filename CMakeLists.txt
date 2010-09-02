@@ -1,21 +1,108 @@
-# The name of our project is "EINHERI". CMakeLists files in this project can
-# refer to the root source directory of the project as ${EINHERI_SOURCE_DIR} and
-# to the root binary directory of the project as ${EINHERI_BINARY_DIR}.
-cmake_minimum_required (VERSION 2.6)
-project (EINHERI)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-set(CMAKE_CXX_FLAGS "-Wall -Werror")
+### Project configuration 
+PROJECT(einheri)
 
-SET(EINHERI_CFLAGS "-Wall") # additional compile flags for einheri
-SET(EINHERI_LDFLAGS "")		# additional linking flags for einheri
+### Path and module include
+SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules")
+SET(DOC_PATH "${CMAKE_SOURCE_DIR}/doc")
+SET(FILE_PATH "${CMAKE_SOURCE_DIR}/files")
+INCLUDE(Utils)
 
+###Set Configuration Type
+IF(NOT CMAKE_BUILD_TYPE)
+  SET(CMAKE_BUILD_TYPE "Debug")
+ENDIF(NOT CMAKE_BUILD_TYPE)
+IF(CMAKE_BUILD_TYPE MATCHES "Debug")
+  ADD_DEFINITIONS(-DDEBUG)
+  ADD_DEFINITIONS(-DDEBUG_LOG)
+ENDIF(CMAKE_BUILD_TYPE MATCHES "Debug")
 
-IF(PROFILE)
-	add_definitions(-pg)
-    SET(CMAKE_EXE_LINKER_FLAGS "-pg ${CMAKE_EXE_LINKER_FLAGS}")
-ENDIF(PROFILE)
+### compil FLAGS
+IF(MSVC)
+  SET(CMAKE_CXX_WARNING_LEVEL 4)
+  IF(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+    STRING(REGEX REPLACE "/W[0-4]" "/W3" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+  ELSE(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3")
+  ENDIF(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4290 /wd4127")
+ELSEIF(CMAKE_COMPILER_IS_GNUCC)
+  SET (CMAKE_CXX_FLAGS "-Wall -ansi -pedantic -Wextra -fmessage-length=0" )
+  SET (CMAKE_CXX_FLAGS_DEBUG "-O0 -ggdb3 -pg" )
+  SET (CMAKE_CXX_FLAGS_RELEASE "-O2" )
+ELSE(MSVC)
+  SET (CMAKE_CXX_FLAGS "-Wall -Wextra" )
+  SET (CMAKE_CXX_FLAGS_DEBUG "-O0 - -g -pg" )
+  SET (CMAKE_CXX_FLAGS_RELEASE "-O2" )
+ENDIF(MSVC)
 
-# Recurse into the "Hello" and "Demo" subdirectories. This does not actually
-# cause another cmake executable to run. The same process will walk through
-# the project's entire directory structure.
-add_subdirectory (src)
+###Setting debug postfix
+SET(CMAKE_DEBUG_POSTFIX d)
+
+###Setting version
+SET(PROJECT_MAJOR_VERSION 0)
+SET(PROJECT_MINOR_VERSION 0)
+SET(PROJECT_PATCH_VERSION 1)
+SET(PROJECT_VERSION ${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}.${PROJECT_PATCH_VERSION})
+
+# Control the build 
+OPTION(BUILD_TEST "Enable CTEST and build the test unit." OFF)
+
+#SET(Boost_USE_STATIC_LIBS   ON)
+#SET(Boost_USE_MULTITHREADED ON)
+#FIND_PACKAGE(Boost)
+#INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+FIND_PACKAGE(SFML COMPONENTS system graphics network)
+INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIRS})
+
+# no definition of macro min and max
+IF(WIN32)
+  ADD_DEFINITIONS(-DNOMINMAX)
+ENDIF(WIN32)
+
+### Add the include project root include dirs
+INCLUDE_DIRECTORIES(include)
+INCLUDE_DIRECTORIES(src)
+
+### Add the subdirs. (File path is only for install)
+ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(${FILE_PATH})
+ADD_SUBDIRECTORY(applications)
+IF(BUILD_TEST)
+  INCLUDE(CTest)  
+  ADD_SUBDIRECTORY(test)
+ENDIF(BUILD_TEST)
+
+###Install
+INSTALL(DIRECTORY "include/"  
+  DESTINATION "include" 
+  COMPONENT headers 
+  FILES_MATCHING PATTERN "*.h"
+  PATTERN ".svn" EXCLUDE)
+
+### Uninstall TARGET uninstall
+CONFIGURE_FILE( "${CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in" "${CMAKE_MODULE_PATH}/cmake_uninstall.cmake" IMMEDIATE @ONLY)
+ADD_CUSTOM_TARGET(uninstall "${CMAKE_COMMAND}" -P "${CMAKE_MODULE_PATH}/cmake_uninstall.cmake") 
+
+## Documentation TARGET doc
+FIND_PACKAGE(Doxygen)
+IF (DOXYGEN_FOUND AND NOT NO_DOCUMENTATION)
+  IF    (CMAKE_BUILD_TOOL MATCHES "(msdev|devenv)")
+    SET(DOXY_WARN_FORMAT "\"$file($line) : $text \"")
+  ELSE  (CMAKE_BUILD_TOOL MATCHES "(msdev|devenv)")
+    SET(DOXY_WARN_FORMAT "\"$file:$line: $text \"")
+  ENDIF (CMAKE_BUILD_TOOL MATCHES "(msdev|devenv)")
+
+  IF(EXISTS ${CMAKE_MODULE_PATH}/doxy.config.in )
+    CONFIGURE_FILE(${CMAKE_MODULE_PATH}/doxy.config.in ${DOC_PATH}/doxy.config)
+    SET(DOXY_CONFIG "${DOC_PATH}/doxy.config")
+    ADD_CUSTOM_TARGET(doc ${DOXYGEN_EXECUTABLE} ${DOXY_CONFIG})
+    MESSAGE(STATUS "ADD target : doc")
+  ENDIF(EXISTS ${CMAKE_MODULE_PATH}/doxy.config.in )
+ENDIF (DOXYGEN_FOUND AND NOT NO_DOCUMENTATION)
+
+## Package generation TARGET package
+#INCLUDE("CPackInstalls/release/CPackConfig.cmake")
+#END_PACKAGE()
+

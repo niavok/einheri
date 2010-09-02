@@ -1,3 +1,4 @@
 
-add_subdirectory (client)
-add_subdirectory (server)
+ADD_SUBDIRECTORY(common)
+ADD_SUBDIRECTORY(client)
+ADD_SUBDIRECTORY(server)

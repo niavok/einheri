@@ -1,27 +1,17 @@
-add_executable (einheri 
-main.cpp
-Application.cpp
-ClientWorldModel.cpp
-ClientWorldEngine.cpp
-GameEngine.cpp
-GameEvent.cpp
-GraphicEngine.cpp
-Hero.cpp
-InputEngine.cpp
-Map.cpp
-Monster.cpp
-NetworkEngine.cpp
-PacketDispatcher.cpp
-Player.cpp
-${EINHERI_SOURCE_DIR}/src/common/EinheriProtocol.cpp
-${EINHERI_SOURCE_DIR}/src/common/Semaphore.cpp
-)
+### Configure library
+SET(LIBNAME einheri-client)
 
+REQUIRE_LIB(SFML)
+INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIRS})
 
+### Configure the src
+FILE(GLOB_RECURSE ${LIBNAME}_SRC "./*.cpp" "./*.h")
 
-include_directories(${EINHERI_SOURCE_DIR}/lib/sfml/include ${EINHERI_SOURCE_DIR}/src/common)
+### Create the lib
+ADD_LIBRARY(${LIBNAME} ${${LIBNAME}_SRC}) 
 
-
-target_link_libraries (einheri sfml-system sfml-network sfml-window sfml-graphics sfml-audio GLU )
-
-
+### Install and Uninstall 
+INSTALL(TARGETS ${${LIBNAME}_LIB}
+		LIBRARY DESTINATION lib
+		ARCHIVE DESTINATION lib
+		COMPONENT lib${LIBNAME} )

@@ -11,7 +11,7 @@
 #include <SFML/System.hpp>
 
 #include "GameEvent.h"
-#include "MessageQueue.h"
+#include "../common/MessageQueue.h"
 #include "Player.h"
 
 namespace einheriServer {

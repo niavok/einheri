@@ -1,26 +1,18 @@
-add_executable (einheri-server 
-main.cpp
-Application.cpp
-GameEngine.cpp
-GameEvent.cpp
-Hero.cpp
-IdGenerator.cpp
-Map.cpp
-Monster.cpp
-NetworkClient.cpp
-NetworkEngine.cpp
-NetworkNotifier.cpp
-PacketDispatcher.cpp
-Player.cpp
-WorldEngine.cpp
-WorldModel.cpp
-${EINHERI_SOURCE_DIR}/src/common/EinheriProtocol.cpp
-${EINHERI_SOURCE_DIR}/src/common/Semaphore.cpp
-)
+### Configure library
+SET(LIBNAME einheri-server)
 
+REQUIRE_LIB(SFML)
+INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIRS})
 
+### Configure the src
+FILE(GLOB_RECURSE ${LIBNAME}_SRC "./*.cpp" "./*.h")
 
-include_directories(${EINHERI_SOURCE_DIR}/lib/sfml/include ${EINHERI_SOURCE_DIR}/src/common)
+### Create the lib
+ADD_LIBRARY(${LIBNAME} ${${LIBNAME}_SRC}) 
 
+### Install and Uninstall 
+INSTALL(TARGETS ${${LIBNAME}_LIB}
+		LIBRARY DESTINATION lib
+		ARCHIVE DESTINATION lib
+		COMPONENT lib${LIBNAME} )
 
-target_link_libraries (einheri-server sfml-system sfml-network)
