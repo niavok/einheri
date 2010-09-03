@@ -10,6 +10,8 @@
 #include "GameEngine.h"
 #include "IdGenerator.h"
 
+#include "world/Bullet.h"
+
 #include <iostream>
 
 namespace einheriServer {
@@ -78,13 +80,34 @@ void GameEngine::processEvent(){
             Player *player = players[playerId];
             newHero.parentPlayer = player;
 
-            int heroId = application->worldEngine.AddHero(newHero);
-            Hero * hero = application->worldEngine.GetHeroById(heroId);
+            Hero * hero = application->worldEngine.AddHero(newHero);
             player->hero = hero;
 
-            application->networkEngine.HeroAdded(player->client, playerId, heroId);
+            application->networkEngine.HeroAdded(player->client, playerId, hero->id);
         }
 
+        if(event.type == GameEvent::HERO_USE_MAIN_ACTION) {
+                    std::cout<<"GameEngine process event HERO_USE_MAIN_ACTION"<<std::endl;
+                    int heroId = event.intValues[GameEvent::HERO_ID];
+
+                    application->worldEngine.model.Lock();
+
+                    Hero * hero = application->worldEngine.GetHeroById(heroId);
+
+                    Bullet * newBullet = new Bullet();
+                    newBullet->GenerateId();
+                    newBullet->shooter = hero;
+                    newBullet->positionX = hero->positionX;
+                    newBullet->positionY = hero->positionY;
+
+                    application->worldEngine.model.projectiles.insert(std::pair<int, Projectile *>(newBullet->id, newBullet));
+
+                    application->worldEngine.model.Unlock();
+
+
+
+                    application->networkNotifier.AddProjectile(newBullet);
+                }
 
 
 }

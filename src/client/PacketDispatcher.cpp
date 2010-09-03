@@ -98,6 +98,12 @@ void PacketDispatcher::Run() {
         case EinheriProtocol::CLIENT_HERO_ADDED:
             dispatchClientHeroAdded(&packet);
             break;
+        case EinheriProtocol::CLIENT_ADD_PROJECTILE:
+                    //TODO
+                    break;
+        case EinheriProtocol::CLIENT_UPDATE_PROJECTILE:
+                            //TODO
+                            break;
         }
 
         if (!packet) {

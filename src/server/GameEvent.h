@@ -18,7 +18,8 @@ public:
     enum EventType {
         NONE,
         ADD_PLAYER,
-        ADD_HERO
+        ADD_HERO,
+        HERO_USE_MAIN_ACTION
     };
 
     GameEvent(EventType type);
@@ -28,7 +29,10 @@ public:
     enum EventField {
         PLAYER_ID,
         HERO_ID,
-        CLIENT
+        CLIENT,
+        POSITION_X,
+        POSITION_Y
+
     };
 
     GameEvent();
@@ -36,7 +40,10 @@ public:
 
     EventType type;
     std::map<EventField, int> intValues;
+    std::map<EventField, double> doubleValues;
     std::map<EventField, void *> objectValues;
+
+
 };
 
 }

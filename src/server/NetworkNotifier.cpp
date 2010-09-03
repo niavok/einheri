@@ -140,6 +140,23 @@ void NetworkNotifier::AddHero(Hero * hero) {
 
 }
 
+void NetworkNotifier::AddProjectile(Projectile *projectile) {
+
+    sf::Packet *packetAddProjectile = new sf::Packet();
+
+    *packetAddProjectile << einheri::EinheriProtocol::CLIENT_ADD_PROJECTILE << projectile->id << (int) projectile->projectileType;
+    packetQueue.PushMessage(packetAddProjectile);
+
+    UpdateProjectile(projectile);
+}
+
+void NetworkNotifier::UpdateProjectile(Projectile *projectile) {
+    sf::Packet *packetUpdateProjectile = new sf::Packet();
+    *packetUpdateProjectile << einheri::EinheriProtocol::CLIENT_UPDATE_PROJECTILE << projectile->id << projectile->speedX << projectile->speedY << projectile->positionX << projectile->positionY << projectile->angle;
+    packetQueue.PushMessage(packetUpdateProjectile);
+
+}
+
 void NetworkNotifier::Flush() {
     flushMutext.Lock();
 

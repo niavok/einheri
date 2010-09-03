@@ -100,7 +100,9 @@ void Application::Run() {
                  graphicEngine.Resize(event.Size.Width, event.Size.Height);
 
              if (event.Type == sf::Event::KeyPressed ||
-                 event.Type == sf::Event::MouseMoved) {
+                 event.Type == sf::Event::MouseMoved ||
+                 event.Type == sf::Event::MouseButtonPressed ||
+                 event.Type == sf::Event::MouseButtonReleased ) {
                  inputEngine.PushEvent(event);
              }
 

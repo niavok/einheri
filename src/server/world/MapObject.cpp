@@ -5,12 +5,12 @@
  *      Author: fred
  */
 
-#include "Monster.h"
-#include "IdGenerator.h"
+#include "MapObject.h"
+#include "../IdGenerator.h"
 
 namespace einheriServer {
 
-Monster::Monster() {
+MapObject::MapObject() {
     speedX = 0;
     speedY = 0;
     positionX = 0;
@@ -18,10 +18,10 @@ Monster::Monster() {
     angle = 0;
 }
 
-Monster::~Monster() {
+MapObject::~MapObject() {
 }
 
-void Monster::GenerateId() {
+void MapObject::GenerateId() {
     id = IdGenerator::GetId();
 }
 

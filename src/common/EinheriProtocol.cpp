@@ -36,8 +36,11 @@ std::string EinheriProtocol::getCommandName(ServerCommandType type) {
         response = "SERVER_UPDATE_HERO_MOVEMENT";
         break;
     case SERVER_UPDATE_HERO_AIMING_ANGLE:
-            response = "SERVER_UPDATE_HERO_AIMING_ANGLE";
-            break;
+        response = "SERVER_UPDATE_HERO_AIMING_ANGLE";
+        break;
+    case SERVER_HERO_USE_MAIN_ACTION:
+        response = "SERVER_HERO_USE_MAIN_ACTION";
+        break;
     case SERVER_SET_PLAYER_NAME:
         response = "SERVER_SET_PLAYER_NAME";
         break;
@@ -81,17 +84,23 @@ std::string EinheriProtocol::getCommandName(ClientCommandType type) {
         response = "CLIENT_UPDATE_HERO";
         break;
     case CLIENT_UPDATE_HEROES:
-            response = "CLIENT_UPDATE_HEROES";
-            break;
+        response = "CLIENT_UPDATE_HEROES";
+        break;
     case CLIENT_UPDATE_HERO_AIMING_ANGLE:
-           response = "CLIENT_UPDATE_HERO_AIMING_ANGLE";
-           break;
+        response = "CLIENT_UPDATE_HERO_AIMING_ANGLE";
+        break;
     case CLIENT_PLAYER_ADDED:
         response = "CLIENT_PLAYER_ADDED";
         break;
     case CLIENT_HERO_ADDED:
         response = "CLIENT_HERO_ADDED";
         break;
+    case CLIENT_ADD_PROJECTILE:
+            response = "CLIENT_ADD_PROJECTILE";
+            break;
+    case CLIENT_UPDATE_PROJECTILE:
+                response = "CLIENT_UPDATE_PROJECTILE";
+                break;
     }
 
     return response;

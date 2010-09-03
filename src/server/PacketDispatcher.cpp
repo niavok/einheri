@@ -80,6 +80,11 @@ void PacketDispatcher::Run() {
         case einheri::EinheriProtocol::SERVER_UPDATE_HERO_AIMING_ANGLE:
             dispatchServerUpdateHeroAimingAngle(&packet, client);
             break;
+        case einheri::EinheriProtocol::SERVER_HERO_USE_MAIN_ACTION:
+            dispatchServerHeroUseMainAction(&packet, client);
+            break;
+
+
         case einheri::EinheriProtocol::SERVER_QUIT:
             //TODO
             break;
@@ -112,12 +117,23 @@ void PacketDispatcher::dispatchServerGetWorld(sf::Packet */*packet*/, NetworkCli
     std::cout << "Client want world. Send it." << std::endl;
 
     app->worldEngine.model.Lock();
-    std::vector<Monster *> monsters = app->worldEngine.model.monsters;
+
+    std::vector<Monster *> monsters;
+    std::map<int, Monster *>::iterator itMonsters;
+
+    for(itMonsters = app->worldEngine.model.monsters.begin() ; itMonsters != app->worldEngine.model.monsters.end(); ++itMonsters) {
+        monsters.push_back(itMonsters->second);
+    }
 
     app->networkEngine.AddMonsters(client, monsters);
     app->networkEngine.UpdateMonsters(client, monsters);
 
-    std::vector<Hero *> heroes = app->worldEngine.model.heroes;
+    std::vector<Hero *> heroes;
+    std::map<int, Hero *>::iterator itHeroes;
+
+    for(itHeroes = app->worldEngine.model.heroes.begin() ; itHeroes != app->worldEngine.model.heroes.end(); ++itHeroes) {
+        heroes.push_back(itHeroes->second);
+    }
 
     app->networkEngine.AddHeroes(client, heroes);
     app->networkEngine.UpdateHeroes(client, heroes);
@@ -186,6 +202,23 @@ void PacketDispatcher::dispatchServerUpdateHeroAimingAngle(sf::Packet *packet, N
         hero->playerAimingAngle = angle;
     }
     app->worldEngine.model.Unlock();
+
+}
+
+void PacketDispatcher::dispatchServerHeroUseMainAction(sf::Packet *packet, NetworkClient */*client*/) {
+    GameEvent useMainActionEvent(GameEvent::HERO_USE_MAIN_ACTION);
+
+    int heroId;
+    double positionX;
+    double positionY;
+    *packet >> heroId >> positionX >> positionY;
+    useMainActionEvent.intValues[GameEvent::HERO_ID] = heroId;
+    std::cout << "dispatchServerHeroUseMainAction playerId=" << heroId << std::endl;
+
+    useMainActionEvent.doubleValues[GameEvent::POSITION_X] = positionX;
+    useMainActionEvent.doubleValues[GameEvent::POSITION_Y] = positionY;
+
+    app->gameEngine.SendEvent(useMainActionEvent);
 
 }
 

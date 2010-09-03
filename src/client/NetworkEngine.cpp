@@ -106,6 +106,15 @@ void NetworkEngine::UpdateHeroAimingAngle(int heroId, double angle) {
     clientSocket.Send(packet);
 }
 
+void NetworkEngine::UseMainAction(int heroId, Vect2<double> cursor) {
+    std::cout << "Send UseMainAction command" << std::endl;
+    sf::Packet packet;
+
+    int command = EinheriProtocol::SERVER_HERO_USE_MAIN_ACTION;
+    packet << command << heroId << cursor.getX() << cursor.getY();
+    std::cout << "command UpdateHeroAimingAngle heroId=" << heroId << " cursor.x=" << cursor.getX() << " cursor.y=" << cursor.getY() << std::endl;
+    clientSocket.Send(packet);
+}
 
 //Private
 
@@ -117,7 +126,7 @@ void NetworkEngine::Run() {
 
     packetDispatcher.Start();
 
-    //if (clientSocket.Connect(5959, "192.168.0.12") != sf::Socket::Done)
+    //if (clientSocket.Connect(5959, "192.168.0.12") != sf::Socket::Done) {
     if (clientSocket.Connect(5959, "127.0.0.1") != sf::Socket::Done) {
         std::cout << "NetworkEngine failed to connect to 127.0.0.1 port 5959" << std::endl;
     }

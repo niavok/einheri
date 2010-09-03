@@ -8,9 +8,9 @@
 #include <SFML/System.hpp>
 
 #include "Application.h"
-#include "WorldEngine.h"
+#include "world/WorldEngine.h"
 #include "NetworkEngine.h"
-#include "Monster.h"
+#include "world/Monster.h"
 
 #include <iostream>
 

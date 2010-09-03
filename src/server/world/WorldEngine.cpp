@@ -8,8 +8,8 @@
 #include <math.h>
 
 #include "WorldEngine.h"
-#include "Application.h"
-#include "IdGenerator.h"
+#include "../Application.h"
+#include "../IdGenerator.h"
 
 namespace einheriServer {
 
@@ -33,7 +33,7 @@ void WorldEngine::Stop() {
     Wait();
 }
 
-int WorldEngine::AddMonster(Monster monster) {
+Monster *WorldEngine::AddMonster(Monster monster) {
     Monster *newMonster = new Monster(monster);
     newMonster->GenerateId();
 
@@ -43,10 +43,10 @@ int WorldEngine::AddMonster(Monster monster) {
 
     monsterQueueLock.Unlock();
 
-    return newMonster->id;
+    return newMonster;
 }
 
-int WorldEngine::AddHero(Hero hero) {
+Hero * WorldEngine::AddHero(Hero hero) {
     Hero *newHero = new Hero(hero);
     newHero->GenerateId();
 
@@ -56,7 +56,7 @@ int WorldEngine::AddHero(Hero hero) {
 
     heroQueueLock.Unlock();
 
-    return newHero->id;
+    return newHero;
 }
 
 //Private
@@ -105,8 +105,7 @@ void WorldEngine::addNewElements() {
     while (!monsterQueue.empty()) {
         Monster * monster = monsterQueue.front();
         monsterQueue.pop();
-        model.monsters.push_back(monster);
-        model.monstersMap[monster->id] = monster;
+        model.monsters.insert(std::pair<int, Monster *>(monster->id, monster));
 
         app->networkNotifier.AddMonster(monster);
     }
@@ -118,8 +117,7 @@ void WorldEngine::addNewElements() {
     while (!heroQueue.empty()) {
         Hero * hero = heroQueue.front();
         heroQueue.pop();
-        model.heroes.push_back(hero);
-        model.heroesMap[hero->id] = hero;
+        model.heroes.insert(std::pair<int, Hero *>(hero->id, hero));
 
         app->networkNotifier.AddHero(hero);
     }
@@ -131,17 +129,18 @@ Hero *WorldEngine::GetHeroById(int id) {
     Hero *result = NULL;
     heroQueueLock.Lock();
 
-    result = model.heroesMap[id];
+    result = model.heroes.at(id);
 
     heroQueueLock.Unlock();
     return result;
 }
 
 void WorldEngine::computeMonsterTarget() {
-    for (int i = 0; i < (int) model.monsters.size(); i++) {
+    std::map<int, Monster *>::iterator it;
+    for (it = model.monsters.begin(); it != model.monsters.end(); ++it) {
+        Monster *monster = it->second;
         bool monsterChanged = false;
 
-        Monster *monster = model.monsters[i];
         if (monster->positionX > 10 && monster->speedX > 0) {
             monster->speedX = -monster->speedX;
             monsterChanged = true;
@@ -175,8 +174,9 @@ void WorldEngine::computeMonsterSpeed() {
 }
 
 void WorldEngine::computeMonsterPosition() {
-    for (int i = 0; i < (int) model.monsters.size(); i++) {
-        Monster *monster = model.monsters[i];
+    std::map<int, Monster *>::iterator it;
+    for (it = model.monsters.begin(); it != model.monsters.end(); ++it) {
+        Monster *monster = it->second;
         monster->positionX = monster->positionX + monster->speedX * frameDuration;
         monster->positionY = monster->positionY + monster->speedY * frameDuration;
         //std::cout<<"WorldEngine monster "<<monster->id<<" speed is "<<monster->speedX<<" and new pos is "<<monster->positionX<<std::endl;
@@ -184,47 +184,48 @@ void WorldEngine::computeMonsterPosition() {
 }
 
 void WorldEngine::computeHeroesAimingAngle() {
-    for (int i = 0; i < (int) model.heroes.size(); i++) {
-            Hero *hero = model.heroes[i];
+    std::map<int, Hero *>::iterator it;
+    for (it = model.heroes.begin(); it != model.heroes.end(); ++it) {
+        Hero *hero = it->second;
 
-            if (hero->aimingAngle != hero->playerAimingAngle) {
-                hero->aimingAngle = hero->playerAimingAngle;
-                app->networkNotifier.UpdateHeroAimingAngle(hero);
-            }
+        if (hero->aimingAngle != hero->playerAimingAngle) {
+            hero->aimingAngle = hero->playerAimingAngle;
+            app->networkNotifier.UpdateHeroAimingAngle(hero);
         }
+    }
 }
 
 void WorldEngine::computeHeroesSpeed() {
-    for (int i = 0; i < (int) model.heroes.size(); i++) {
-            Hero *hero = model.heroes[i];
-            bool heroChanged = false;
+    std::map<int, Hero *>::iterator it;
+    for (it = model.heroes.begin(); it != model.heroes.end(); ++it) {
+        Hero *hero = it->second;
+        bool heroChanged = false;
 
-            double newSpeedX = 0;
-            double newSpeedY = 0;
+        double newSpeedX = 0;
+        double newSpeedY = 0;
 
-
-            if(hero->playerMove) {
-                newSpeedX = cos(hero->playerAngle) * hero->playerSpeed * 0.01;
-                newSpeedY = sin(hero->playerAngle) * hero->playerSpeed * 0.01;
-            }
-
-
-            if(newSpeedX != hero->speedX || newSpeedY != hero->speedY) {
-                hero->speedX = newSpeedX;
-                hero->speedY = newSpeedY;
-                heroChanged = true;
-            }
-
-            if (heroChanged) {
-                //std::cout<<"WorldEngine monster "<<monster->id<<" change"<<std::endl;
-                app->networkNotifier.StackUpdateHero(hero);
-            }
+        if (hero->playerMove) {
+            newSpeedX = cos(hero->playerAngle) * hero->playerSpeed * 0.01;
+            newSpeedY = sin(hero->playerAngle) * hero->playerSpeed * 0.01;
         }
+
+        if (newSpeedX != hero->speedX || newSpeedY != hero->speedY) {
+            hero->speedX = newSpeedX;
+            hero->speedY = newSpeedY;
+            heroChanged = true;
+        }
+
+        if (heroChanged) {
+            //std::cout<<"WorldEngine monster "<<monster->id<<" change"<<std::endl;
+            app->networkNotifier.StackUpdateHero(hero);
+        }
+    }
 }
 
 void WorldEngine::computeHeroesPosition() {
-    for (int i = 0; i < (int) model.heroes.size(); i++) {
-        Hero *hero = model.heroes[i];
+    std::map<int, Hero *>::iterator it;
+    for (it = model.heroes.begin(); it != model.heroes.end(); ++it) {
+        Hero *hero = it->second;
         hero->positionX = hero->positionX + hero->speedX * frameDuration;
         hero->positionY = hero->positionY + hero->speedY * frameDuration;
         //std::cout<<"WorldEngine monster "<<monster->id<<" speed is "<<monster->speedX<<" and new pos is "<<monster->positionX<<std::endl;

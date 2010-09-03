@@ -26,6 +26,7 @@ public:
 
         SERVER_UPDATE_HERO_MOVEMENT, // int heroId, bool move, double angle, double speed
         SERVER_UPDATE_HERO_AIMING_ANGLE, // int heroId,double angle
+        SERVER_HERO_USE_MAIN_ACTION, // int heroId, double positionX, double positionY
 
         SERVER_QUIT
     };
@@ -45,15 +46,23 @@ public:
         CLIENT_UPDATE_HERO_AIMING_ANGLE, // int id, double angle
         CLIENT_UPDATE_HEROES, // int count,int id, double speedX, double speedY, double posX, double posY, double angle
         CLIENT_PLAYER_ADDED, // int playerId
-        CLIENT_HERO_ADDED // int playerId int heroId
+        CLIENT_HERO_ADDED,
+
+        CLIENT_ADD_PROJECTILE, // int id, int projectileType
+        CLIENT_UPDATE_PROJECTILE // int id,  double speedX, double speedY, double posX, double posY, double angle
+
+    // int playerId int heroId
+    };
+
+    enum ProjectileType {
+        PROJECTILE_BULLET = 0
     };
 
     static std::string getCommandName(ServerCommandType type);
     static std::string getCommandName(ClientCommandType type);
 
-
 };
 
-}  // namespace einheri
+} // namespace einheri
 
 #endif /* EINHERIPROTOCOL_H_ */

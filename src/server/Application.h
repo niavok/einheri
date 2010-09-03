@@ -10,7 +10,7 @@
 
 #include "NetworkEngine.h"
 #include "NetworkNotifier.h"
-#include "WorldEngine.h"
+#include "world/WorldEngine.h"
 #include "GameEngine.h"
 
 

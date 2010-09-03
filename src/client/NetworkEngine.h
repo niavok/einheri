@@ -12,6 +12,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
 
+#include "../common/Vect2.h"
+
 namespace einheri {
 
 class Application;
@@ -31,6 +33,7 @@ public:
     void SetPlayerName(int playerId, std::string name);
     void UpdateHeroMovement(int heroId, bool move, double angle, double speed);
     void UpdateHeroAimingAngle(int heroId, double angle);
+    void UseMainAction(int heroId, Vect2<double> cursor);
 
    private:
        Application *app;

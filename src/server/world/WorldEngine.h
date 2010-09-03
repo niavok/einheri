@@ -11,7 +11,7 @@
 #include <SFML/System.hpp>
 #include <queue>
 #include "WorldModel.h"
-#include "NetworkNotifier.h"
+#include "../NetworkNotifier.h"
 
 namespace einheriServer {
 
@@ -24,8 +24,8 @@ public:
     void Start();
     void Stop();
 
-    int AddMonster(Monster monster);
-    int AddHero(Hero hero);
+    Monster *AddMonster(Monster monster);
+    Hero *AddHero(Hero hero);
     Hero *GetHeroById(int id);
     WorldModel model;
 

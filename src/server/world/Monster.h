@@ -8,22 +8,14 @@
 #ifndef SERVER_MONSTER_H_
 #define SERVER_MONSTER_H_
 
+#include "MapObject.h"
+
 namespace einheriServer {
 
-class Monster {
+class Monster : public MapObject {
 public:
     Monster();
     virtual ~Monster();
-
-    void GenerateId();
-
-    int id;
-
-    double positionX;
-    double positionY;
-    double speedX;
-    double speedY;
-    double angle;
 
 };
 

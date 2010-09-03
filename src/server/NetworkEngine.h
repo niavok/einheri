@@ -10,8 +10,8 @@
 
 #include <SFML/System.hpp>
 #include "NetworkClient.h"
-#include "Monster.h"
-#include "Hero.h"
+#include "world/Monster.h"
+#include "world/Hero.h"
 
 namespace einheriServer {
 

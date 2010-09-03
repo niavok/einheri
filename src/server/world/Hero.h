@@ -8,22 +8,18 @@
 #ifndef SERVER_HERO_H_
 #define SERVER_HERO_H_
 
+#include "MapObject.h"
+
+
 namespace einheriServer {
 
 class Player;
 
-class Hero {
+class Hero : public MapObject{
 public:
     Hero();
     virtual ~Hero();
 
-    int id;
-
-    double positionX;
-    double positionY;
-    double speedX;
-    double speedY;
-    double angle;
     double aimingAngle;
 
     bool playerMove;
@@ -33,7 +29,6 @@ public:
 
     Player * parentPlayer;
 
-    void GenerateId();
 };
 
 }

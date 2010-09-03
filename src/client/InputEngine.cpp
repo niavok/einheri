@@ -81,6 +81,15 @@ void InputEngine::Run(){
                 //std::cout<<"Key Pressed"<<std::endl;
         }
 
+        if(event.Type == sf::Event::MouseButtonPressed) {
+            std::cout<<"Click"<<std::endl;
+            if(event.MouseButton.Button == sf::Mouse::Left) {
+                std::cout<<"Click left"<<std::endl;
+                Vect2<double> cursor = app->graphicEngine.Pick(GetMouse());
+                app->networkEngine.UseMainAction(app->gameEngine.localPlayer.heroId, cursor);
+            }
+        }
+
     }
     std::cout<<"InputEngine stopped"<<std::endl;
 }

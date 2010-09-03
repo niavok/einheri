@@ -12,6 +12,7 @@
 #include <SFML/System.hpp>
 #include "Hero.h"
 #include "Monster.h"
+#include "Projectile.h"
 #include "Map.h"
 #include <map>
 
@@ -26,11 +27,9 @@ public:
     void Unlock();
 
     Map map;
-    std::vector<Hero *> heroes;
-    std::vector<Monster *> monsters;
-    std::map<int, Hero *> heroesMap;
-    std::map<int, Monster *> monstersMap;
-
+    std::map<int, Hero *> heroes;
+    std::map<int, Monster *> monsters;
+    std::map<int, Projectile *> projectiles;
 private:
     sf::Mutex lock;
 

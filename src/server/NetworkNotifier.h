@@ -12,8 +12,9 @@
 #include <SFML/Network.hpp>
 #include "NetworkEngine.h"
 #include "../common/MessageQueue.h"
-#include "Monster.h"
-#include "Hero.h"
+#include "world/Monster.h"
+#include "world/Hero.h"
+#include "world/Projectile.h"
 
 
 namespace einheriServer {
@@ -37,6 +38,8 @@ public:
 
     void StackUpdateHero(Hero *hero);
 
+    void AddProjectile(Projectile *bullet);
+    void UpdateProjectile(Projectile *bullet);
 
     void Flush();
     void Start();
