@@ -12,3 +12,4 @@ src/client/einheri
 src/server/einheri-server
 log*
 gmon.out
+include/einheri/utils/FileFinder.h

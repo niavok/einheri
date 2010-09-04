@@ -1,13 +1,15 @@
 
-#include <client/Application.h>
+#include <einheri/common/GameManager.h>
+#include <einheri/common/engineGame/EngineGame.h>
 
 int main()
 {
 
-    einheri::Application application;
+    ein::GameManager gameManager;
+    gameManager.AddEngine(new ein::EngineGame(&gameManager));
 
-    application.Run();
+    gameManager.Run();
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 

@@ -51,13 +51,13 @@ OPTION(BUILD_TEST "Enable CTEST and build the test unit." OFF)
 
 #SET(Boost_USE_STATIC_LIBS   ON)
 #SET(Boost_USE_MULTITHREADED ON)
-#FIND_PACKAGE(Boost)
-#INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+FIND_PACKAGE(Boost)
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 FIND_PACKAGE(SFML)
 INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIRS})
 
 ### Create the FileFinder.h file
-CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/include/Utils/FileFinder.h.in" "${CMAKE_SOURCE_DIR}/include/Utils/FileFinder.h" @ONLY)
+CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/include/einheri/utils/FileFinder.h.in" "${CMAKE_SOURCE_DIR}/include/einheri/utils/FileFinder.h" @ONLY)
 
 # no definition of macro min and max
 IF(WIN32)
