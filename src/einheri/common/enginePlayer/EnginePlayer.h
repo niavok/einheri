@@ -19,8 +19,8 @@ public:
     EnginePlayer(GameManager* manager);
     virtual ~EnginePlayer();
 
-    void apply(const Event& event);
-    void frame();
+    void Apply(const Event& event);
+    void Frame();
 
 };
 

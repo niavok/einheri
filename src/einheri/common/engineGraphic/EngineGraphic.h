@@ -9,19 +9,25 @@
 #define EHR_COMMON_ENGINEGRAPHIC_H_
 
 #include <einheri/common/Engine.h>
+#include "einheri/common/FramerateEngine.h"
+#include <SFML/Graphics.hpp>
 
 namespace ein {
 
 class Event;
 
-class EngineGraphic : public Engine{
+class EngineGraphic : public FramerateEngine {
 public:
     EngineGraphic(GameManager* manager);
     virtual ~EngineGraphic();
 
-    void apply(const Event& event);
-    void frame();
+    void Apply(const Event& event);
+private:
+    void frame(EinValue frameTime);
+    void initWindow();
+    void paint();
 
+    sf::RenderWindow *renderWindow;
 };
 
 }

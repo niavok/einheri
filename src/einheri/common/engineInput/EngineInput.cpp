@@ -16,10 +16,10 @@ EngineInput::EngineInput(GameManager* manager) : Engine(manager){
 EngineInput::~EngineInput() {
 }
 
-void EngineInput::apply(const Event& /*event*/) {
+void EngineInput::Apply(const Event& /*event*/) {
 }
 
-void EngineInput::frame() {
+void EngineInput::Frame() {
 }
 
 }

@@ -29,7 +29,7 @@ void GameManager::AddEngine(Engine *engine) {
     engines.push_back(engine);
 }
 
-void GameManager::apply(const Event& event)
+void GameManager::Apply(const Event& event)
 {
     class GameManagerVistor : public EventVisitor
     {
@@ -53,18 +53,18 @@ void GameManager::Run() {
     AddEngine(this);
 
     while (running) {
-        sf::Sleep(0.2);
+        sf::Sleep(0.001);
         while (!events.empty()) {
             Event *event = events.front();
             events.pop();
 
             BOOST_FOREACH(Engine * engine, engines) {
-                engine->apply(*event);
+                engine->Apply(*event);
             }
         }
 
         BOOST_FOREACH(Engine * engine, engines) {
-            engine->frame();
+            engine->Frame();
         }
 
     }

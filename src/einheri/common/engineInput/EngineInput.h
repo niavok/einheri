@@ -19,8 +19,8 @@ public:
     EngineInput(GameManager* manager);
     virtual ~EngineInput();
 
-    void apply(const Event& event);
-    void frame();
+    void Apply(const Event& event);
+    void Frame();
 
 };
 

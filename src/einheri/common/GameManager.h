@@ -14,6 +14,7 @@
 
 #include <einheri/common/Engine.h>
 #include <einheri/common/Event.h>
+#include <einheri/common/Model.h>
 
 
 namespace ein {
@@ -28,13 +29,16 @@ public:
     void AddEvent(Event *);
     void AddEngine(Engine *);
 
-    void apply(const Event& event);
-    void frame(){}
+    void Apply(const Event& event);
+    void Frame(){}
+
+    Model* GetModel() { return model; }
 
 private:
     bool running;
-    std::queue<Event *> events;
-    std::vector<Engine *> engines;
+    std::queue<Event*> events;
+    std::vector<Engine*> engines;
+    Model* model;
 };
 
 }

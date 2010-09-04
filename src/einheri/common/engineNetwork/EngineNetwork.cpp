@@ -16,10 +16,10 @@ EngineNetwork::EngineNetwork(GameManager* manager) : Engine(manager){
 EngineNetwork::~EngineNetwork() {
 }
 
-void EngineNetwork::apply(const Event& /*event*/) {
+void EngineNetwork::Apply(const Event& /*event*/) {
 }
 
-void EngineNetwork::frame() {
+void EngineNetwork::Frame() {
 }
 
 }

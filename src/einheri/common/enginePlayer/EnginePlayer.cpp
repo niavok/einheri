@@ -16,10 +16,10 @@ EnginePlayer::EnginePlayer(GameManager* manager) : Engine(manager){
 EnginePlayer::~EnginePlayer() {
 }
 
-void EnginePlayer::apply(const Event& /*event*/) {
+void EnginePlayer::Apply(const Event& /*event*/) {
 }
 
-void EnginePlayer::frame() {
+void EnginePlayer::Frame() {
 }
 
 }

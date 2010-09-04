@@ -19,8 +19,8 @@ public:
     EngineAI(GameManager* manager);
     virtual ~EngineAI();
 
-    void apply(const Event& event);
-    void frame();
+    void Apply(const Event& event);
+    void Frame();
 
 };
 

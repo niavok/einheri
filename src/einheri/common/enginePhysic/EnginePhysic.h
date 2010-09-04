@@ -19,8 +19,8 @@ public:
     EnginePhysic(GameManager* manager);
     virtual ~EnginePhysic();
 
-    void apply(const Event& event);
-    void frame();
+    void Apply(const Event& event);
+    void Frame();
 
 };
 

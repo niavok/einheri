@@ -21,11 +21,11 @@ EngineGame::EngineGame(GameManager* manager) :
 EngineGame::~EngineGame() {
 }
 
-void EngineGame::apply(const Event& /*event*/) {
+void EngineGame::Apply(const Event& /*event*/) {
 }
 
 int plop = 0;
-void EngineGame::frame() {
+void EngineGame::Frame() {
     std::cout << "Real " << Timer::get().GetRealTime() << std::endl;
     std::cout << "Game " << Timer::get().GetGameTime() << std::endl;
     if (Timer::get().GetRealTime() > plop) {

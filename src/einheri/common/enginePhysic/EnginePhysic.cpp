@@ -16,10 +16,10 @@ EnginePhysic::EnginePhysic(GameManager* manager) : Engine(manager){
 EnginePhysic::~EnginePhysic() {
 }
 
-void EnginePhysic::apply(const Event& event) {
+void EnginePhysic::Apply(const Event& event) {
 }
 
-void EnginePhysic::frame() {
+void EnginePhysic::Frame() {
 }
 
 }

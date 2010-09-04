@@ -16,10 +16,10 @@ EngineAI::EngineAI(GameManager* manager) : Engine(manager){
 EngineAI::~EngineAI() {
 }
 
-void EngineAI::apply(const Event& /*event*/) {
+void EngineAI::Apply(const Event& /*event*/) {
 }
 
-void EngineAI::frame() {
+void EngineAI::Frame() {
 }
 
 }
