@@ -11,7 +11,7 @@
 #include "GraphicEngine.h"
 #include "InputEngine.h"
 #include "NetworkEngine.h"
-#include "ClientWorldEngine.h"
+#include "world/ClientWorldEngine.h"
 #include "GameEngine.h"
 #include <SFML/Graphics.hpp>
 

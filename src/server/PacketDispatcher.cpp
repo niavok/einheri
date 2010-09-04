@@ -180,6 +180,7 @@ void PacketDispatcher::dispatchServerUpdateHeroMovement(sf::Packet *packet, Netw
     *packet >> heroId >> move >> angle >> speed;
 
     app->worldEngine.model.Lock();
+
     Hero *hero = app->worldEngine.GetHeroById(heroId);
     if(hero) {
         hero->playerMove = move;

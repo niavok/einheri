@@ -44,6 +44,7 @@ private:
     void computeMonsterSpeed();
     void computeMonsterPosition();
     void computeHeroesPosition();
+    void computeProjectilesPosition();
 
     void updateHeroMovement();
     void updateHeroAngle();

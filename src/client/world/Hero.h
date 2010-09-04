@@ -8,21 +8,15 @@
 #ifndef HERO_H_
 #define HERO_H_
 
+#include "MapObject.h"
+
 namespace einheri {
 
-class Hero {
+class Hero : public MapObject{
 public:
     Hero();
     virtual ~Hero();
 
-    int id;
-
-    double positionX;
-    double positionY;
-    double speedX;
-    double speedY;
-
-    double angle;
     double aimingAngle;
 };
 

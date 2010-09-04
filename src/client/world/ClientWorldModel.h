@@ -12,6 +12,7 @@
 #include <map>
 #include "Hero.h"
 #include "Monster.h"
+#include "Projectile.h"
 
 namespace einheri {
 
@@ -23,16 +24,20 @@ public:
     void Lock();
     void Unlock();
 
-    void Copy(ClientWorldModel *sourceModel);
+    //void Copy(ClientWorldModel *sourceModel);
 
     void AddMonster(Monster *monster);
     void AddHero(Hero *hero);
+    void AddProjectile(Projectile *projectile);
+
     const std::map<int, Monster *> &GetMonsters();
 
     const std::map<int, Hero *> &GetHeroes();
+    const std::map<int, Projectile *> &GetProjectiles();
 
     sf::Mutex mutexMonsters;
     sf::Mutex mutexHeroes;
+    sf::Mutex mutexProjectiles;
 
 
 private:
@@ -40,6 +45,7 @@ private:
 
     std::map<int, Hero *> heroes;
     std::map<int, Monster *> monsters;
+    std::map<int, Projectile *> projectiles;
 
 
 };

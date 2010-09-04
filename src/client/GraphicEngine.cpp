@@ -8,8 +8,8 @@
 #include "Application.h"
 
 #include "GraphicEngine.h"
-#include "ClientWorldModel.h"
-#include "Hero.h"
+#include "world/ClientWorldModel.h"
+#include "world/Hero.h"
 
 #include <iostream>
 
@@ -20,7 +20,7 @@ namespace einheri {
 GraphicEngine::GraphicEngine(Application *application) {
     this->application = application;
     modelToDraw = NULL;
-    frameDuration = 1. / 30.;
+    frameDuration = 1. / 60.;
 }
 
 GraphicEngine::~GraphicEngine() {
@@ -101,9 +101,10 @@ bool GraphicEngine::Paint() {
 
             paintCorpses();
             paintDecorations();
+            paintProjectiles();
             paintMonsters();
             paintHeroes();
-            paintProjectiles();
+
             paintEffects();
 
         }
@@ -196,7 +197,30 @@ void GraphicEngine::paintHeroes() {
 
 }
 void GraphicEngine::paintProjectiles() {
+    application->clientWorldEngine.worldModel->mutexProjectiles.Lock();
 
+        std::map<int, Projectile *>::const_iterator it;
+
+        for (it = modelToDraw->GetProjectiles().begin(); it != modelToDraw->GetProjectiles().end(); ++it) {
+
+            glPushMatrix();
+            Projectile *projectile = it->second;
+            glTranslatef(projectile->positionX, projectile->positionY, 0);
+
+            glRotatef(projectile->angle * 180 / PI, 0, 0, 1);
+
+            glBegin(GL_TRIANGLES);
+                    glColor3f(1, 1, 1);
+                    glVertex3f(-0.545f, 0.f, 0.f);
+                    glColor4f(1, 1, 1, 0.0);
+                    glVertex3f(0.0225f, 0.020f, 0.f);
+                    glVertex3f(0.0225f, -0.020f, 0.f);
+                    glEnd();
+
+            glPopMatrix();
+        }
+
+        application->clientWorldEngine.worldModel->mutexProjectiles.Unlock();
 }
 
 void GraphicEngine::paintEffects() {

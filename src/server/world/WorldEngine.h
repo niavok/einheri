@@ -48,6 +48,8 @@ private:
     void computeHeroesPosition();
     void computeHeroesAimingAngle();
 
+    void computeProjectilesPosition();
+
 
     sf::Mutex monsterQueueLock;
     std::queue<Monster *> monsterQueue;

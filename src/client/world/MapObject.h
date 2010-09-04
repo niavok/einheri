@@ -5,15 +5,15 @@
  *      Author: fred
  */
 
-#ifndef MONSTER_H_
-#define MONSTER_H_
+#ifndef CLIENT_MAP_OBJECT_H_
+#define CLIENT_MAP_OBJECT_H_
 
-namespace einheri {
+namespace einheri{
 
-class Monster {
+class MapObject {
 public:
-    Monster();
-    virtual ~Monster();
+    MapObject();
+    virtual ~MapObject();
 
     int id;
 
@@ -27,4 +27,4 @@ public:
 
 }
 
-#endif /* MONSTER_H_ */
+#endif /* SERVER_MAP_OBJECT_H_ */

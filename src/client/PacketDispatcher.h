@@ -48,6 +48,9 @@ private:
     void dispatchClientUpdateHeroes(sf::Packet *packet);
 
 
+    void dispatchClientAddProjectile(sf::Packet *packet);
+    void dispatchClientUpdateProjectile(sf::Packet *packet);
+
     MessageQueue<sf::Packet> packetQueue;
 
 

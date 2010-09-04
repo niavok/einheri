@@ -29,7 +29,7 @@ void ClientWorldModel::Unlock() {
     //std::cout<<"ClientWorldModel : unlock "<<this<<std::endl;
     lock.Unlock();
 }
-
+/*
 void ClientWorldModel::Copy(ClientWorldModel *sourceModel) {
 
     //Copy monsters
@@ -53,7 +53,7 @@ void ClientWorldModel::Copy(ClientWorldModel *sourceModel) {
     //heroes = sourceModel->heroes;
     //monsters = sourceModel->monsters;
 
-}
+}*/
 
 void ClientWorldModel::AddMonster(Monster *monster){
     if(!monster) {
@@ -69,6 +69,13 @@ void ClientWorldModel::AddHero(Hero *hero){
     heroes[hero->id] = hero;
 }
 
+void ClientWorldModel::AddProjectile(Projectile *projectile){
+    if(!projectile) {
+        std::cerr<<"Error : null projectile"<<std::endl;
+    }
+    projectiles[projectile->id] = projectile;
+}
+
 const std::map<int, Monster *> &ClientWorldModel::GetMonsters(){
     return monsters;
 }
@@ -77,5 +84,9 @@ const std::map<int, Hero *> &ClientWorldModel::GetHeroes(){
     return heroes;
 }
 
+
+const std::map<int, Projectile *> &ClientWorldModel::GetProjectiles(){
+    return projectiles;
+}
 
 }

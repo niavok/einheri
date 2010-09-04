@@ -6,8 +6,8 @@
  */
 #include <iostream>
 #include "ClientWorldEngine.h"
-#include "InputEngine.h"
-#include "Application.h"
+#include "../InputEngine.h"
+#include "../Application.h"
 typedef std::pair<std::string, std::string> TStrStrPair;
 #include <math.h>
 
@@ -77,6 +77,10 @@ void ClientWorldEngine::frame() {
     computeMonsterPosition();
     worldModel->mutexMonsters.Unlock();
 
+    worldModel->mutexProjectiles.Lock();
+    computeProjectilesPosition();
+    worldModel->mutexProjectiles.Unlock();
+
 }
 
 void ClientWorldEngine::computeMonsterSpeed() {
@@ -122,7 +126,7 @@ void ClientWorldEngine::computeHeroesPosition() {
 }
 
 void ClientWorldEngine::updateHeroAngle() {
-    if (app->gameEngine.localPlayer.heroId == -1) {
+    if (app->gameEngine.localPlayer.heroId == -1  ) {
         return;
     }
     InputEngine * inputEngine = &(app->inputEngine);
@@ -131,9 +135,11 @@ void ClientWorldEngine::updateHeroAngle() {
     Vect2<double> cursor = graphicEngine->Pick(inputEngine->GetMouse());
 
     worldModel->mutexHeroes.Lock();
-    Hero *hero = worldModel->GetHeroes().at(app->gameEngine.localPlayer.heroId);
-    double heroX = hero->positionX;
-    double heroY = hero->positionY;
+    if(worldModel->GetHeroes().count(app->gameEngine.localPlayer.heroId)) {
+        Hero *hero = worldModel->GetHeroes().at(app->gameEngine.localPlayer.heroId);
+        double heroX = hero->positionX;
+        double heroY = hero->positionY;
+
     worldModel->mutexHeroes.Unlock();
 
 
@@ -145,6 +151,9 @@ void ClientWorldEngine::updateHeroAngle() {
     if(aimingAngle != previousAimingAngle) {
             app->networkEngine.UpdateHeroAimingAngle(app->gameEngine.localPlayer.heroId,  aimingAngle);
             previousAimingAngle = aimingAngle;
+    }
+    } else {
+        worldModel->mutexHeroes.Unlock();
     }
 
 }
@@ -207,6 +216,22 @@ void ClientWorldEngine::updateHeroMovement() {
         previousAngle = angle;
         previousSpeed = speed;
     }
+}
+
+void ClientWorldEngine::computeProjectilesPosition() {
+    std::map<int, Projectile *>::const_iterator it;
+
+    //std::cout<<"ClientWorldEngine computeMonsterPosition "<<editModel->GetMonsters().size()<<std::endl;
+
+    worldModel->GetHeroes().size();
+
+    for (it = worldModel->GetProjectiles().begin(); it != worldModel->GetProjectiles().end(); ++it) {
+        Projectile *projectile = it->second;
+        projectile->positionX = projectile->positionX + projectile->speedX * frameDuration;
+        projectile->positionY = projectile->positionY + projectile->speedY * frameDuration;
+        //std::cout<<"ClientWorldEngine monster "<<monster->id<<" speed is "<<monster->speedX<<" and new pos is "<<monster->positionX<<std::endl;
+    }
+    //std::cout<<"ClientWorldEngine computeMonsterPosition end"<<editModel->GetMonsters().size()<<std::endl;
 }
 
 }

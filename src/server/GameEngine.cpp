@@ -5,6 +5,9 @@
  *      Author: fred
  */
 
+#include <math.h>
+
+
 #include "Application.h"
 
 #include "GameEngine.h"
@@ -99,6 +102,11 @@ void GameEngine::processEvent(){
                     newBullet->shooter = hero;
                     newBullet->positionX = hero->positionX;
                     newBullet->positionY = hero->positionY;
+                    newBullet->angle = hero->aimingAngle;
+
+                    newBullet->speedX = cos(hero->aimingAngle)*10;
+                    newBullet->speedY = sin(hero->aimingAngle)*10;
+
 
                     application->worldEngine.model.projectiles.insert(std::pair<int, Projectile *>(newBullet->id, newBullet));
 

@@ -95,6 +95,9 @@ void WorldEngine::frame() {
     computeMonsterPosition();
     computeMonsterTarget();
     app->networkNotifier.Flush();
+
+    computeProjectilesPosition();
+
     model.Unlock();
 
 }
@@ -129,7 +132,9 @@ Hero *WorldEngine::GetHeroById(int id) {
     Hero *result = NULL;
     heroQueueLock.Lock();
 
-    result = model.heroes.at(id);
+    if(model.heroes.count(id) > 0) {
+        result = model.heroes.at(id);
+    }
 
     heroQueueLock.Unlock();
     return result;
@@ -228,6 +233,16 @@ void WorldEngine::computeHeroesPosition() {
         Hero *hero = it->second;
         hero->positionX = hero->positionX + hero->speedX * frameDuration;
         hero->positionY = hero->positionY + hero->speedY * frameDuration;
+        //std::cout<<"WorldEngine monster "<<monster->id<<" speed is "<<monster->speedX<<" and new pos is "<<monster->positionX<<std::endl;
+    }
+}
+
+void WorldEngine::computeProjectilesPosition() {
+    std::map<int, Projectile *>::iterator it;
+    for (it = model.projectiles.begin(); it != model.projectiles.end(); ++it) {
+        Projectile *projectile = it->second;
+        projectile->positionX = projectile->positionX + projectile->speedX * frameDuration;
+        projectile->positionY = projectile->positionY + projectile->speedY * frameDuration;
         //std::cout<<"WorldEngine monster "<<monster->id<<" speed is "<<monster->speedX<<" and new pos is "<<monster->positionX<<std::endl;
     }
 }
