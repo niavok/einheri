@@ -26,8 +26,8 @@ void EngineGame::Apply(const Event& /*event*/) {
 
 int plop = 0;
 void EngineGame::Frame() {
-    std::cout << "Real " << Timer::get().GetRealTime() << std::endl;
-    std::cout << "Game " << Timer::get().GetGameTime() << std::endl;
+    //std::cout << "Real " << Timer::get().GetRealTime() << std::endl;
+    //std::cout << "Game " << Timer::get().GetGameTime() << std::endl;
     if (Timer::get().GetRealTime() > plop) {
         if (plop % 2 == 1) {
             Timer::get().PauseGame();
@@ -44,9 +44,7 @@ void EngineGame::Frame() {
         }
         plop++;
     }
-    if (plop == 10) {
-        manager->AddEvent(new EventWindowClose());
-    }
+
 
 }
 

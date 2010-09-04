@@ -33,12 +33,14 @@ void FramerateEngine::Frame() {
 
     while(currentTime > nextFrameTime) {
         frame(preferredFrameTime);
-        if(useSoftFrameRate) {
+
+        nextFrameTime += preferredFrameTime;
+
+        if(useSoftFrameRate && nextFrameTime < currentTime) {
             nextFrameTime = currentTime + preferredFrameTime;
-        }else {
-            nextFrameTime += preferredFrameTime;
         }
     }
+
 }
 
 }

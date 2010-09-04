@@ -53,7 +53,13 @@ void GameManager::Run() {
     AddEngine(this);
 
     while (running) {
-        sf::Sleep(0.001);
+        sf::Sleep(0.0001);
+
+
+        BOOST_FOREACH(Engine * engine, engines) {
+            engine->Frame();
+        }
+
         while (!events.empty()) {
             Event *event = events.front();
             events.pop();
@@ -61,10 +67,6 @@ void GameManager::Run() {
             BOOST_FOREACH(Engine * engine, engines) {
                 engine->Apply(*event);
             }
-        }
-
-        BOOST_FOREACH(Engine * engine, engines) {
-            engine->Frame();
         }
 
     }

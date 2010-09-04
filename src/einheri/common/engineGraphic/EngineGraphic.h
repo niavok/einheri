@@ -24,10 +24,21 @@ public:
     void Apply(const Event& event);
 private:
     void frame(EinValue frameTime);
+
     void initWindow();
+    void initGlContext();
+
     void paint();
 
+private :
+
     sf::RenderWindow *renderWindow;
+
+    sf::Clock framerateClock;
+    sf::String title;
+    sf::String fps;
+    sf::Font font;
+    int fpsCount;
 };
 
 }
