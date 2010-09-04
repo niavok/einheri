@@ -5,8 +5,8 @@
  *      Author: fred
  */
 
-#ifndef EHR_COMMON_ENGINEPPHYSIC_H_
-#define EHR_COMMON_ENGINEPPHYSIC_H_
+#ifndef EIN_ENGINEPHYSIC_H_
+#define EIN_ENGINEPHYSIC_H_
 
 #include <einheri/common/Engine.h>
 
@@ -26,4 +26,4 @@ public:
 
 }
 
-#endif /* EHR_COMMON_ENGINEPPHYSIC_H_ */
+#endif /* EIN_ENGINEPHYSIC_H_ */
