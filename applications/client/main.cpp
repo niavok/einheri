@@ -6,6 +6,7 @@
 #include <einheri/common/engineInput/EngineInput.h>
 #include <einheri/common/enginePlayer/EnginePlayer.h>
 #include <einheri/common/enginePhysic/EnginePhysic.h>
+#include <einheri/common/engineScenario/EngineScenario.h>
 
 int main()
 {
@@ -17,6 +18,7 @@ int main()
     gameManager.AddEngine(new ein::EngineInput(&gameManager));
     gameManager.AddEngine(new ein::EnginePlayer(&gameManager));
     gameManager.AddEngine(new ein::EnginePhysic(&gameManager));
+    gameManager.AddEngine(new ein::EngineScenario(&gameManager));
 
     gameManager.Run();
 

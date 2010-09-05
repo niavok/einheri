@@ -37,6 +37,10 @@ public:
         return projectiles;
     }
 
+    void AddMonster(Monster *monster) {
+        monsters.push_back(monster);
+    }
+
 private:
     std::list<Projectile *> projectiles;
     std::list<Hero *> heroes;
