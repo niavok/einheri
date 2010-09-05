@@ -157,10 +157,12 @@ void WorldDrawer::paintHeroes() {
         glRotatef(hero->GetAngle() * 180 / M_PI, 0, 0, 1);
         glBegin(GL_TRIANGLES);
         glColor3f(1, 0, 1);
-        glVertex3f(0.25f, 0.f, 0.f);
+        glVertex3f(0.5f, 0.f, 0.f);
         glColor3f(1, 0, 0);
-        glVertex3f(-0.125f, 0.215f, 0.f);
-        glVertex3f(-0.125f, -0.215f, 0.f);
+        glVertex3f(-0.25f, 0.43f, 0.f);
+        glVertex3f(-0.25f, -0.43f, 0.f);
+
+
         glEnd();
         glPopMatrix();
     }
@@ -202,7 +204,7 @@ void WorldDrawer::paintCursor() {
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    gluOrtho2D(0, manager->GetInputModel()->GetWindowSize().getX(), manager->GetInputModel()->GetWindowSize().getY(), 0);
+    gluOrtho2D(0, manager->GetCameraModel()->GetWindowSize().getX(), manager->GetCameraModel()->GetWindowSize().getY(), 0);
 
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();

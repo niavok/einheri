@@ -11,7 +11,7 @@ namespace ein {
 
 InputModel::InputModel() {
     input = NULL;
-    windowSize = Vector(0.,0.);
+
 }
 
 InputModel::~InputModel() {
@@ -22,9 +22,7 @@ void InputModel::SetInput(const sf::Input * input) {
     this->input = input;
 }
 
-void InputModel::SetWindowSize(Vector newSize) {
-    windowSize = newSize;
-}
+
 
 Vector InputModel::GetMouse() {
     if(input) {
@@ -42,8 +40,6 @@ bool InputModel::GetKeyState(sf::Key::Code code) {
         }
 }
 
-Vector InputModel::GetWindowSize() const{
-    return windowSize;
-}
+
 
 }

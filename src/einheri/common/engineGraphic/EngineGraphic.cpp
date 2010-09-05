@@ -70,7 +70,7 @@ void EngineGraphic::initWindow() {
     renderWindow = new sf::RenderWindow(sf::VideoMode(1650, 1080, 32), "Einheri", sf::Style::Close | sf::Style::Resize, Settings);
     renderWindow->ShowMouseCursor(false);
     renderWindow->PreserveOpenGLStates(true);
-    manager->GetInputModel()->SetWindowSize(Vector(renderWindow->GetWidth(), renderWindow->GetHeight()));
+    manager->GetCameraModel()->SetWindowSize(Vector(renderWindow->GetWidth(), renderWindow->GetHeight()));
 
     // Create a graphical string to display
     if (!font.LoadFromFile(FileFinder::get().file("share/DejaVuSans.ttf")))

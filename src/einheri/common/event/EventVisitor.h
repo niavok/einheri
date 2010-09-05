@@ -18,6 +18,7 @@
 #include <einheri/common/event/EventMouseButtonPressed.h>
 #include <einheri/common/event/EventMouseButtonReleased.h>
 #include <einheri/common/event/EventMonsterAdded.h>
+#include <einheri/common/event/EventHeroAdded.h>
 
 
 namespace ein {
@@ -34,6 +35,7 @@ public:
     virtual void Visit(const EventMouseButtonPressed&){}
     virtual void Visit(const EventMouseButtonReleased&){}
     virtual void Visit(const EventMonsterAdded&){}
+    virtual void Visit(const EventHeroAdded&){}
 };
 
 }  // namespace ehrCommon

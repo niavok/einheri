@@ -51,7 +51,7 @@ void EngineInput::Frame() {
                 renderWindow->Close();
 
             if (event.Type == sf::Event::Resized) {
-                manager->GetInputModel()->SetWindowSize(Vector(event.Size.Width, event.Size.Height));
+                manager->GetCameraModel()->SetWindowSize(Vector(event.Size.Width, event.Size.Height));
                 manager->AddEvent(new EventWindowResized(Vector(event.Size.Width, event.Size.Height)));
             }
 

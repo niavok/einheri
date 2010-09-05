@@ -20,14 +20,14 @@ public:
 
     Vector GetMouse();
     bool GetKeyState(sf::Key::Code code);
-    Vector GetWindowSize() const;
+
 
     void SetInput(const sf::Input *input);
-    void SetWindowSize(Vector newSize);
+
 
 private:
     const sf::Input * input;
-    Vector windowSize;
+
 
 };
 

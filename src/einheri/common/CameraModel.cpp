@@ -12,11 +12,35 @@ namespace ein {
 CameraModel::CameraModel() {
     distance = 30;
     position = Vector(0.,0.);
+    windowSize = Vector(0.,0.);
 
 }
 
 CameraModel::~CameraModel() {
 
+}
+
+void CameraModel::SetWindowSize(Vector newSize) {
+    windowSize = newSize;
+}
+
+Vector CameraModel::Pick(Vector point) {
+
+    double h = 1;
+
+    if (windowSize.getY() != 0) {
+        h =  windowSize.getX() /  windowSize.getY();
+    }
+
+    double pickX = (h*distance) * ( point.getX() /  windowSize.getX() - 1./2.);
+    double pickY = distance * ( (windowSize.getY() - point.getY()) /  windowSize.getY() - 1./2.);
+
+
+    return Vector(pickX, pickY);
+}
+
+Vector CameraModel::GetWindowSize() const{
+    return windowSize;
 }
 
 

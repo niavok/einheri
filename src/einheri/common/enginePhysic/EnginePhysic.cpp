@@ -30,25 +30,29 @@ EnginePhysic::~EnginePhysic() {
 
 void EnginePhysic::Apply(const Event& event) {
     class EnginePhysicVisitor: public EventVisitor {
-            public:
+    public:
         EnginePhysicVisitor(EnginePhysic* engine) :
-                    engine(engine) {
-                }
+            engine(engine) {
+        }
 
-                void Visit(const EventMonsterAdded& eventMonsterAdded) {
-                    engine->processEventMonsterAdded(eventMonsterAdded);
-                }
+        void Visit(const EventMonsterAdded& eventMonsterAdded) {
+            engine->processEventMonsterAdded(eventMonsterAdded);
+        }
 
-            private:
-                EnginePhysic* engine;
-            };
+        void Visit(const EventHeroAdded& eventHeroAdded) {
+            engine->processEventHeroAdded(eventHeroAdded);
+        }
+
+    private:
+        EnginePhysic* engine;
+    };
     EnginePhysicVisitor visitor(this);
-            event.accept(visitor);
+    event.accept(visitor);
 }
 
 void EnginePhysic::frame(EinValue frameTime) {
     importStates();
-    dynamicsWorld->stepSimulation(frameTime,10);
+    dynamicsWorld->stepSimulation(frameTime, 10);
     exportStates();
 }
 
@@ -67,13 +71,19 @@ void EnginePhysic::processEventMonsterAdded(const EventMonsterAdded& eventMonste
     PhysicEntity *physicEntity = new PhysicEntity(eventMonsterAdded.GetMonster());
     physicEntities.push_back(physicEntity);
 
+    dynamicsWorld->addRigidBody(physicEntity->GetRigidBody());
+}
+
+void EnginePhysic::processEventHeroAdded(const EventHeroAdded& eventHeroAdded) {
+    PhysicEntity *physicEntity = new PhysicEntity(eventHeroAdded.GetHero());
+    physicEntities.push_back(physicEntity);
 
     dynamicsWorld->addRigidBody(physicEntity->GetRigidBody());
 }
 
 void EnginePhysic::importStates() {
     std::list<PhysicEntity *>::const_iterator it;
-    for(it = physicEntities.begin(); it != physicEntities.end(); ++it) {
+    for (it = physicEntities.begin(); it != physicEntities.end(); ++it) {
         PhysicEntity *physicEntity = *it;
         physicEntity->Import();
     }
@@ -81,7 +91,7 @@ void EnginePhysic::importStates() {
 
 void EnginePhysic::exportStates() {
     std::list<PhysicEntity *>::const_iterator it;
-    for(it = physicEntities.begin(); it != physicEntities.end(); ++it) {
+    for (it = physicEntities.begin(); it != physicEntities.end(); ++it) {
         PhysicEntity *physicEntity = *it;
         physicEntity->Export();
     }

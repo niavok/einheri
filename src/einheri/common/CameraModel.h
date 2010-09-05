@@ -23,9 +23,15 @@ public:
     void SetDistance(EinValue newDistance) {distance = newDistance; }
     void SetDistance(Vector newPosition) {position = newPosition; }
 
+    void SetWindowSize(Vector newSize);
+    Vector GetWindowSize() const;
+
+    Vector Pick(Vector point);
+
 private:
     EinValue distance;
     Vector position;
+    Vector windowSize;
 
 };
 
