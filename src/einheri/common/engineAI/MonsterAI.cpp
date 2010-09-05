@@ -9,8 +9,9 @@
 
 namespace ein {
 
-MonsterAI::MonsterAI(Monster *monster) :
-    monster(monster) {
+MonsterAI::MonsterAI(GameManager *manager, Monster *monster) :
+    monster(monster),
+    manager(manager) {
 }
 
 MonsterAI::~MonsterAI() {

@@ -8,18 +8,20 @@
 #ifndef EIN_MONSTERAI_H_
 #define EIN_MONSTERAI_H_
 #include <einheri/common/model/Monster.h>
+#include <einheri/common/GameManager.h>
 
 namespace ein {
 
 class MonsterAI {
 public:
-    MonsterAI(Monster *monster);
+    MonsterAI(GameManager *manager, Monster *monster);
     virtual ~MonsterAI();
 
     virtual void Compute() = 0;
 
 protected:
     Monster *monster;
+    GameManager *manager;
 };
 
 }

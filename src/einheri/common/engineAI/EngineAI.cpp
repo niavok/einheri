@@ -10,6 +10,7 @@
 #include <einheri/common/event/EventVisitor.h>
 #include <einheri/common/engineAI/WanderingMonsterAI.h>
 #include <einheri/common/event/EventMonsterAdded.h>
+#include "EatTheHeroMonsterAI.h"
 
 namespace ein {
 
@@ -50,8 +51,9 @@ std::list<MonsterAI *>::const_iterator it;
 }
 
 void EngineAI::processEventMonsterAdded(const EventMonsterAdded& eventMonsterAdded) {
-    WanderingMonsterAI *wanderingMonsterAI = new WanderingMonsterAI(eventMonsterAdded.GetMonster());
-    monsterAIs.push_back(wanderingMonsterAI);
+    //WanderingMonsterAI *wanderingMonsterAI = new WanderingMonsterAI(eventMonsterAdded.GetMonster());
+    EatTheHeroMonsterAI *monsterAI = new EatTheHeroMonsterAI(manager, eventMonsterAdded.GetMonster());
+    monsterAIs.push_back(monsterAI);
 }
 
 }

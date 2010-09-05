@@ -13,7 +13,7 @@ namespace ein {
 
 class WanderingMonsterAI : public MonsterAI {
 public:
-    WanderingMonsterAI(Monster *monster);
+    WanderingMonsterAI(GameManager *manager, Monster *monster);
     virtual ~WanderingMonsterAI();
 
     virtual void Compute();

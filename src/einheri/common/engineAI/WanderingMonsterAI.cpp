@@ -13,8 +13,8 @@
 
 namespace ein {
 
-WanderingMonsterAI::WanderingMonsterAI(Monster *monster) :
-    MonsterAI(monster) {
+WanderingMonsterAI::WanderingMonsterAI(GameManager *manager, Monster *monster) :
+    MonsterAI(manager, monster) {
     nextComputeTime = Timer::get().GetGameTime() + 0.1f;
 }
 
