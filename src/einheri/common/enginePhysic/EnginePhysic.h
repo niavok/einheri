@@ -8,20 +8,30 @@
 #ifndef EIN_ENGINEPHYSIC_H_
 #define EIN_ENGINEPHYSIC_H_
 
-#include <einheri/common/Engine.h>
+#include <einheri/common/FramerateEngine.h>
+#include <btBulletDynamicsCommon.h>
 
 namespace ein {
 
 class Event;
 
-class EnginePhysic : public Engine{
+class EnginePhysic : public FramerateEngine {
 public:
     EnginePhysic(GameManager* manager);
     virtual ~EnginePhysic();
 
     void Apply(const Event& event);
-    void Frame();
+    void frame(EinValue frameTime);
 
+private:
+    void initBulletEngine();
+
+private:
+    btBroadphaseInterface* broadphase;
+    btDefaultCollisionConfiguration* collisionConfiguration;
+    btCollisionDispatcher* dispatcher;
+    btSequentialImpulseConstraintSolver* solver;
+    btDiscreteDynamicsWorld* dynamicsWorld;
 };
 
 }

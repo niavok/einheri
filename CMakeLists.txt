@@ -55,6 +55,7 @@ FIND_PACKAGE(Boost)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 FIND_PACKAGE(SFML)
 INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIRS})
+FIND_PACKAGE(Bullet)
 
 ### Create the FileFinder.h file
 CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/include/einheri/utils/FileFinder.h.in" "${CMAKE_SOURCE_DIR}/include/einheri/utils/FileFinder.h" @ONLY)
