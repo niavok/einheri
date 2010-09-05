@@ -21,11 +21,11 @@ public:
     Vector GetMouse();
     Vector GetWindowSize() const;
 
-    void SetInput(sf::Input *input);
+    void SetInput(const sf::Input *input);
     void SetWindowSize(Vector newSize);
 
 private:
-    sf::Input * input;
+    const sf::Input * input;
     Vector windowSize;
 
 };

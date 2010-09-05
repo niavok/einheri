@@ -22,6 +22,16 @@ WorldDrawer::~WorldDrawer() {
 }
 
 void WorldDrawer::Init() {
+
+    // Set color and depth clear value
+        glClearDepth(1.f);
+        glClearColor(0.f, 0.f, 0.f, 0.f);
+
+        // Disable Z-buffer for 2d
+        glDisable(GL_DEPTH_TEST);
+        glDepthMask(GL_FALSE);
+
+
     monsterListIndex = glGenLists(1);
 
         // compile the monster display list, store a triangle in it
@@ -59,6 +69,26 @@ void WorldDrawer::Draw() {
     paintCursor();
 
 
+
+}
+
+void WorldDrawer::Resize(Vector newWindowSize) {
+
+    windowSize = newWindowSize;
+
+    glViewport(0, 0, windowSize.getX(), windowSize.getY());
+
+    double h = 1;
+
+    if (windowSize.getY() != 0) {
+        h = windowSize.getX() / windowSize.getY();
+    }
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+
+    gluOrtho2D(-(manager->GetCameraModel()->GetDistance() * h)/2., (manager->GetCameraModel()->GetDistance() * h)/2., -manager->GetCameraModel()->GetDistance()/2., manager->GetCameraModel()->GetDistance()/2.);
 
 }
 

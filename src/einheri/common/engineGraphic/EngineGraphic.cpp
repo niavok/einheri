@@ -12,6 +12,7 @@
 #include <einheri/utils/FileFinder.h>
 #include <sstream>
 #include "einheri/common/event/EventWindowCreated.h"
+#include <einheri/common/event/EventVisitor.h>
 
 using einUtils::FileFinder;
 
@@ -30,10 +31,24 @@ EngineGraphic::~EngineGraphic() {
     delete worldDrawer;
 }
 
-void EngineGraphic::Apply(const Event& /*event*/) {
+void EngineGraphic::Apply(const Event& event) {
+    class EngineGraphicVisitor: public EventVisitor {
+    public:
+        EngineGraphicVisitor(EngineGraphic* engine) :
+            engine(engine) {
+        }
+
+        void Visit(const EventWindowResized& evenWindowResized) {
+            engine->worldDrawer->Resize(evenWindowResized.getSize());
+        }
+    private:
+        EngineGraphic* engine;
+    };
+    EngineGraphicVisitor visitor(this);
+    event.accept(visitor);
 }
 
-void EngineGraphic::frame(EinValue ) {
+void EngineGraphic::frame(EinValue) {
     if (renderWindow == NULL) {
         initWindow();
         initGlContext();
@@ -55,6 +70,7 @@ void EngineGraphic::initWindow() {
     renderWindow = new sf::RenderWindow(sf::VideoMode(1650, 1080, 32), "Einheri", sf::Style::Close | sf::Style::Resize, Settings);
     renderWindow->ShowMouseCursor(false);
     renderWindow->PreserveOpenGLStates(true);
+    manager->GetInputModel()->SetWindowSize(Vector(renderWindow->GetWidth(), renderWindow->GetHeight()));
 
     // Create a graphical string to display
     if (!font.LoadFromFile(FileFinder::get().file("share/DejaVuSans.ttf")))
@@ -67,9 +83,9 @@ void EngineGraphic::initWindow() {
     framerateClock.Reset();
 
     worldDrawer->Init();
+    worldDrawer->Resize(Vector(renderWindow->GetWidth(), renderWindow->GetHeight()));
 
     manager->AddEvent(new EventWindowCreated(renderWindow));
-
 
 }
 
@@ -97,22 +113,21 @@ void EngineGraphic::paint() {
 
     renderWindow->Draw(title);
 
-     if(framerateClock.GetElapsedTime() > 1) {
-          float framerate = fpsCount/ framerateClock.GetElapsedTime();
-          framerateClock.Reset();
-          fpsCount = 0;
-          std::ostringstream oss;
-          oss.precision(1);
-          oss.setf(std::ios::fixed);
-          oss << framerate;
-          fps.SetText(oss.str() + " fps");
-          fps.SetPosition(0,20);
-      }
+    if (framerateClock.GetElapsedTime() > 1) {
+        float framerate = fpsCount / framerateClock.GetElapsedTime();
+        framerateClock.Reset();
+        fpsCount = 0;
+        std::ostringstream oss;
+        oss.precision(1);
+        oss.setf(std::ios::fixed);
+        oss << framerate;
+        fps.SetText(oss.str() + " fps");
+        fps.SetPosition(0, 20);
+    }
 
-     renderWindow->Draw(fps);
+    renderWindow->Draw(fps);
 
-
-     renderWindow->Display();
+    renderWindow->Display();
 }
 
 }

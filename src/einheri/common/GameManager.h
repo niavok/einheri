@@ -16,7 +16,7 @@
 #include <einheri/common/Event.h>
 #include <einheri/common/Model.h>
 #include <einheri/common/InputModel.h>
-
+#include <einheri/common/CameraModel.h>
 
 namespace ein {
 
@@ -35,6 +35,7 @@ public:
 
     Model* GetModel() { return model; }
     InputModel* GetInputModel() { return inputModel; }
+    CameraModel* GetCameraModel() { return cameraModel; }
 
 private:
     bool running;
@@ -42,6 +43,7 @@ private:
     std::vector<Engine*> engines;
     Model* model;
     InputModel* inputModel;
+    CameraModel* cameraModel;
 };
 
 }

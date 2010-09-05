@@ -9,6 +9,7 @@
 #include <einheri/common/Event.h>
 #include <einheri/common/event/EventVisitor.h>
 #include "einheri/common/event/EventWindowCreated.h"
+#include <einheri/common/GameManager.h>
 
 namespace ein {
 
@@ -28,6 +29,8 @@ void EngineInput::Apply(const Event& event) {
             void Visit(const EventWindowCreated& evenWindowCreated)
             {
                 engine->renderWindow = evenWindowCreated.getWindow();
+                engine->input = &(engine->renderWindow->GetInput());
+                engine->manager->GetInputModel()->SetInput(engine->input);
             }
         private:
             EngineInput* engine;
@@ -45,8 +48,11 @@ void EngineInput::Frame() {
             if (event.Type == sf::Event::Closed)
                 renderWindow->Close();
 
-            if (event.Type == sf::Event::Resized)
-                //graphicEngine.Resize(event.Size.Width, event.Size.Height);
+            if (event.Type == sf::Event::Resized) {
+                manager->GetInputModel()->SetWindowSize(Vector(event.Size.Width, event.Size.Height));
+                manager->AddEvent(new EventWindowResized(Vector(event.Size.Width, event.Size.Height)));
+            }
+
 
             if (event.Type == sf::Event::KeyPressed || event.Type == sf::Event::MouseMoved || event.Type == sf::Event::MouseButtonPressed || event.Type == sf::Event::MouseButtonReleased) {
                 //inputEngine.PushEvent(event);

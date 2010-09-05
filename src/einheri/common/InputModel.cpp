@@ -18,7 +18,7 @@ InputModel::~InputModel() {
 
 }
 
-void InputModel::SetInput(sf::Input * input) {
+void InputModel::SetInput(const sf::Input * input) {
     this->input = input;
 }
 

@@ -18,6 +18,7 @@ public:
 
     void Init();
     void Draw();
+    void Resize(Vector newWindowSize);
 
 private:
     void clearView();
@@ -36,6 +37,7 @@ private:
 private:
     GameManager *manager;
     int monsterListIndex;
+    Vector windowSize;
 
 };
 

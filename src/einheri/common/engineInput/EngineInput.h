@@ -25,6 +25,7 @@ public:
 
 private:
     sf::RenderWindow *renderWindow;
+    const sf::Input *input;
 };
 
 }
