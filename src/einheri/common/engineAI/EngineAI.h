@@ -5,25 +5,34 @@
  *      Author: fred
  */
 
-#ifndef ENGINEAI_H_
-#define ENGINEAI_H_
+#ifndef EIN_ENGINEAI_H_
+#define EIN_ENGINEAI_H_
 
-#include <einheri/common/Engine.h>
+#include <einheri/common/FramerateEngine.h>
+#include <einheri/common/event/EventMonsterAdded.h>
+#include <list>
+#include "MonsterAI.h"
 
 namespace ein {
 
 class Event;
 
-class EngineAI : public Engine{
+class EngineAI : public FramerateEngine{
 public:
     EngineAI(GameManager* manager);
     virtual ~EngineAI();
 
     void Apply(const Event& event);
-    void Frame();
 
+
+private:
+    void frame(EinValue frameTime);
+    void processEventMonsterAdded(const EventMonsterAdded& eventMonsterAdded);
+
+private:
+    std::list<MonsterAI *> monsterAIs;
 };
 
 }
 
-#endif /* ENGINEAI_H_ */
+#endif /* EIN_ENGINEAI_H_ */

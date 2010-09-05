@@ -32,6 +32,7 @@ void EngineScenario::Frame() {
     if (Timer::get().GetGameTime() > newMonsterWave) {
         newMonsterWave += 1000;
         Monster *monster = new Monster();
+        monster->SetPosition(Vector(2,3));
         manager->GetModel()->AddMonster(monster);
         std::cout << "The monster arrived ! Fly, you fools!" << std::endl;
         manager->AddEvent(new EventMonsterAdded(monster));

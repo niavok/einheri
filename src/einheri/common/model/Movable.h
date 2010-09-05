@@ -33,6 +33,18 @@ public:
         return angle;
     }
 
+    void SetPosition(Vector newPosition) {
+        position = newPosition;
+    }
+
+    void SetSpeed(Vector newSpeed) {
+        speed = newSpeed;
+    }
+
+    void SetAngle(EinValue newAngle) {
+        angle = newAngle;
+    }
+
 private:
     EinId id;
 

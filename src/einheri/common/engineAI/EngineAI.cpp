@@ -7,19 +7,51 @@
 
 #include "EngineAI.h"
 #include <einheri/common/Event.h>
+#include <einheri/common/event/EventVisitor.h>
+#include <einheri/common/engineAI/WanderingMonsterAI.h>
+#include <einheri/common/event/EventMonsterAdded.h>
 
 namespace ein {
 
-EngineAI::EngineAI(GameManager* manager) : Engine(manager){
+EngineAI::EngineAI(GameManager* manager) : FramerateEngine(manager){
+    UseSoftFrameRate(true);
 }
 
 EngineAI::~EngineAI() {
 }
 
-void EngineAI::Apply(const Event& /*event*/) {
+void EngineAI::Apply(const Event& event) {
+    class EngineAIVisitor: public EventVisitor {
+        public:
+            EngineAIVisitor(EngineAI* engine) :
+                engine(engine) {
+            }
+
+            void Visit(const EventMonsterAdded& eventMonsterAdded) {
+                engine->processEventMonsterAdded(eventMonsterAdded);
+            }
+
+        private:
+            EngineAI* engine;
+        };
+    EngineAIVisitor visitor(this);
+        event.accept(visitor);
 }
 
-void EngineAI::Frame() {
+void EngineAI::frame(EinValue /*frameTime*/) {
+std::list<MonsterAI *>::const_iterator it;
+
+    for(it = monsterAIs.begin(); it != monsterAIs.end(); ++it) {
+        MonsterAI *ai = *it;
+        ai->Compute();
+    }
+
+
+}
+
+void EngineAI::processEventMonsterAdded(const EventMonsterAdded& eventMonsterAdded) {
+    WanderingMonsterAI *wanderingMonsterAI = new WanderingMonsterAI(eventMonsterAdded.GetMonster());
+    monsterAIs.push_back(wanderingMonsterAI);
 }
 
 }
