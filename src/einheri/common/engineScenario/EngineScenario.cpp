@@ -25,12 +25,12 @@ EngineScenario::~EngineScenario() {
 void EngineScenario::Apply(const Event& /*event*/) {
 }
 
-double  newMonsterWave = 5;
+double  newMonsterWave = 3;
 void EngineScenario::Frame() {
     //std::cout << "Real " << Timer::get().GetRealTime() << std::endl;
     //
     if (Timer::get().GetGameTime() > newMonsterWave) {
-        newMonsterWave += 1000;
+        newMonsterWave += 3;
         Monster *monster = new Monster();
         monster->SetPosition(Vector(2,3));
         manager->GetModel()->AddMonster(monster);

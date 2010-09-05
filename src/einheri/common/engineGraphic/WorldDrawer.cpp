@@ -38,10 +38,10 @@ void WorldDrawer::Init() {
         glNewList(monsterListIndex, GL_COMPILE);
         glBegin(GL_TRIANGLES);
         glColor3f(0, 1, 1);
-        glVertex3f(0.1f, 0.f, 0.f);
+        glVertex3f(0.5f, 0.f, 0.f);
         glColor3f(0, 1, 0);
-        glVertex3f(-0.05f, 0.086f, 0.f);
-        glVertex3f(-0.05f, -0.086f, 0.f);
+        glVertex3f(-0.25f, 0.43f, 0.f);
+        glVertex3f(-0.25f, -0.43f, 0.f);
         glEnd();
         glEndList();
 }

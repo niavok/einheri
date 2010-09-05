@@ -10,6 +10,9 @@
 
 #include <einheri/common/FramerateEngine.h>
 #include <btBulletDynamicsCommon.h>
+#include <einheri/common/event/EventMonsterAdded.h>
+#include <list>
+#include "PhysicEntity.h"
 
 namespace ein {
 
@@ -25,6 +28,10 @@ public:
 
 private:
     void initBulletEngine();
+    void processEventMonsterAdded(const EventMonsterAdded& eventMonsterAdded);
+
+    void importStates();
+    void exportStates();
 
 private:
     btBroadphaseInterface* broadphase;
@@ -32,6 +39,8 @@ private:
     btCollisionDispatcher* dispatcher;
     btSequentialImpulseConstraintSolver* solver;
     btDiscreteDynamicsWorld* dynamicsWorld;
+
+    std::list<PhysicEntity *> physicEntities;
 };
 
 }

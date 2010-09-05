@@ -10,7 +10,7 @@
 namespace ein {
 
 CameraModel::CameraModel() {
-    distance = 10;
+    distance = 30;
     position = Vector(0.,0.);
 
 }

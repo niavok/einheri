@@ -14,7 +14,7 @@ namespace ein {
 
 WanderingMonsterAI::WanderingMonsterAI(Monster *monster) :
     MonsterAI(monster) {
-    nextComputeTime = Timer::get().GetGameTime()+1;
+    nextComputeTime = Timer::get().GetGameTime()+0.1f;
 }
 
 WanderingMonsterAI::~WanderingMonsterAI() {
@@ -24,7 +24,7 @@ WanderingMonsterAI::~WanderingMonsterAI() {
 void WanderingMonsterAI::Compute(){
     if(nextComputeTime < Timer::get().GetGameTime()) {
 
-        EinValue newAngle = monster->GetAngle() + sf::Randomizer::Random((float)-M_PI/4.f,(float) M_PI/4.f);
+        EinValue newAngle = monster->GetAngle() + sf::Randomizer::Random((float)-M_PI,(float) M_PI);
 
 
 

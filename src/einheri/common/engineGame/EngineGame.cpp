@@ -29,7 +29,7 @@ void EngineGame::Frame() {
     //std::cout << "Real " << Timer::get().GetRealTime() << std::endl;
     //std::cout << "Game " << Timer::get().GetGameTime() << std::endl;
     if (Timer::get().GetRealTime() > plop) {
-        if (plop % 2 == 1) {
+        /*if (plop % 2 == 1) {
             Timer::get().PauseGame();
             std::cout << "pause" << std::endl;
             std::cout << "Real " << Timer::get().GetRealTime() << std::endl;
@@ -41,7 +41,7 @@ void EngineGame::Frame() {
             std::cout << "Real " << Timer::get().GetRealTime() << std::endl;
             std::cout << "Game " << Timer::get().GetGameTime() << std::endl;
             std::cout << "" << std::endl;
-        }
+        }*/
         plop++;
     }
 
