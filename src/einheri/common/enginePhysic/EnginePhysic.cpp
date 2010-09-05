@@ -9,6 +9,7 @@
 #include <einheri/common/Event.h>
 #include <einheri/common/event/EventVisitor.h>
 #include "PhysicEntity.h"
+#include <einheri/utils/Log.h>
 
 namespace ein {
 
@@ -58,6 +59,9 @@ void EnginePhysic::frame(EinValue frameTime) {
     importStates();
     dynamicsWorld->stepSimulation(frameTime, 10);
     exportStates();
+
+    processCollision();
+
 }
 
 void EnginePhysic::initBulletEngine() {
@@ -108,6 +112,37 @@ void EnginePhysic::exportStates() {
         PhysicEntity *physicEntity = *it;
         physicEntity->Export();
     }
+}
+
+void EnginePhysic::processCollision() {
+    int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
+        for (int i=0;i<numManifolds;i++)
+        {
+            btPersistentManifold* contactManifold =  dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+            btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
+            btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
+
+            PhysicEntity *objectA = (PhysicEntity*) obA->getUserPointer();
+            PhysicEntity *objectB = (PhysicEntity*) obB->getUserPointer();
+
+
+            /*if(objectA->GetMovable()->IsNeedReportingCollision() || objectB->GetMovable()->IsNeedReportingCollision()) {
+                manager->AddEvent(new EventObjectCollision(objectA->GetMovable(), objectB->GetMovable()));
+            }*/
+
+            /*int numContacts = contactManifold->getNumContacts();
+            for (int j=0;j<numContacts;j++)
+            {
+                btManifoldPoint& pt = contactManifold->getContactPoint(j);
+                if (pt.getDistance()<0.f)
+                {
+                    const btVector3& ptA = pt.getPositionWorldOnA();
+                    const btVector3& ptB = pt.getPositionWorldOnB();
+                    const btVector3& normalOnB = pt.m_normalWorldOnB;
+                }
+            }*/
+        }
+
 }
 
 }

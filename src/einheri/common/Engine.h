@@ -15,6 +15,8 @@ class GameManager;
 
 class Engine {
 public:
+    virtual ~Engine() {};
+
     explicit Engine(GameManager* manager);
     virtual void Apply(const Event& event) = 0;
     virtual void Frame() = 0;

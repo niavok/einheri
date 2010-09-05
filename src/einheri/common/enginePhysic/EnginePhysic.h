@@ -33,6 +33,8 @@ private:
     void processEventMonsterAdded(const EventMonsterAdded& eventMonsterAdded);
     void processEventHeroAdded(const EventHeroAdded& eventHeroAdded);
     void processEventProjectileAdded(const EventProjectileAdded& eventProjectileAdded);
+    void processCollision();
+
 
     void importStates();
     void exportStates();

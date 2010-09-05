@@ -26,7 +26,7 @@ PhysicEntity::PhysicEntity(Movable *movable) :
     rigidBody = new btRigidBody(sphereRigidBodyCI);
     rigidBody->setLinearFactor(btVector3(1, 1, 0));
     rigidBody->setAngularFactor(btVector3(0, 0, 1));
-
+    rigidBody->setUserPointer(movable);
 }
 
 PhysicEntity::~PhysicEntity() {
@@ -38,6 +38,7 @@ void PhysicEntity::SetMass(EinValue mass) {
     sphereShape->calculateLocalInertia(mass, sphereInertia);
     rigidBody->setMassProps(mass, sphereInertia);
 }
+
 
 void PhysicEntity::Import() {
 

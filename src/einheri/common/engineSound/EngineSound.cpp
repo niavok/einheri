@@ -16,27 +16,38 @@ using einUtils::FileFinder;
 namespace ein {
 
 EngineSound::EngineSound(GameManager* manager) : Engine(manager){
-    playingMusic = false;
+    music = NULL;
 }
 
 EngineSound::~EngineSound() {
+    if(music) {
+        music->Stop();
+        delete music;
+    }
 }
 
 void EngineSound::Apply(const Event& /*event*/) {
 }
 
 void EngineSound::Frame() {
-    if(!playingMusic) {
-        playingMusic = true;
+    if(!music) {
+
     // Load a music to play
-         sf::Music Music;
-         if (!Music.OpenFromFile(FileFinder::get().file("share/Olivier_Militon.-.Apnee.ogg")))
+         music = new sf::Music();
+         //if (!Music.OpenFromFile(FileFinder::get().file("share/Olivier_Militon.-.Apnee.ogg")))
+
+         if (!music->OpenFromFile("/home/fred/projets/einheri/files/share/Olivier_Militon.-.Apnee.ogg"))
              return;
 
          LOG("playMusic");
          // Play the music
-         Music.Play();
+         music->Play();
+    } else if(music->GetStatus() != sf::Music::Playing) {
+
+        delete music;
+        music = NULL;
     }
+
 }
 
 }

@@ -76,6 +76,12 @@ void GameManager::Run() {
     }
 
     LOG("GameManager stopped ! ");
+    BOOST_FOREACH(Engine * engine, engines) {
+        if(engine != this) {
+            delete engine;
+        }
     }
+
+}
 
 }

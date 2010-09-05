@@ -9,6 +9,7 @@
 #define EIN_ENGINESOUND_H_
 
 #include <einheri/common/Engine.h>
+#include <SFML/Audio.hpp>
 
 namespace ein {
 
@@ -22,7 +23,7 @@ public:
     void Apply(const Event& event);
     void Frame();
 private:
-    bool playingMusic;
+    sf::Music *music;
 };
 
 }
