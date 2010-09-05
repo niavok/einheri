@@ -20,12 +20,15 @@ public:
 
     btRigidBody* GetRigidBody() { return rigidBody; }
 
+    void SetMass(EinValue mass);
+
     void Import();
     void Export();
 
 protected:
     Movable *movable;
     btRigidBody* rigidBody;
+    btCollisionShape* sphereShape;
     KinematicMotionState* motionState;
 };
 

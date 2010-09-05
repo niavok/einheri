@@ -76,6 +76,7 @@ void EnginePhysic::processEventMonsterAdded(const EventMonsterAdded& eventMonste
 
 void EnginePhysic::processEventHeroAdded(const EventHeroAdded& eventHeroAdded) {
     PhysicEntity *physicEntity = new PhysicEntity(eventHeroAdded.GetHero());
+    physicEntity->SetMass(1.5);
     physicEntities.push_back(physicEntity);
 
     dynamicsWorld->addRigidBody(physicEntity->GetRigidBody());
