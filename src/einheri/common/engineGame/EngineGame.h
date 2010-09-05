@@ -9,6 +9,7 @@
 #define EHR_COMMON_ENGINEGAME_H_
 
 #include <einheri/common/Engine.h>
+#include <einheri/common/event/EventPrimaryActionUsed.h>
 
 namespace ein {
 
@@ -22,6 +23,8 @@ public:
     void Apply(const Event& event);
     void Frame();
 
+private:
+    void processEventPrimaryActionUsed(const EventPrimaryActionUsed& event);
 };
 
 }

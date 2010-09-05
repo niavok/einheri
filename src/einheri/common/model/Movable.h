@@ -29,6 +29,10 @@ public:
         return speed;
     }
 
+    Vector GetTargetedSpeed() const {
+        return targetedSpeed;
+    }
+
     EinValue GetAngle() const {
         return angle;
     }
@@ -41,6 +45,10 @@ public:
         speed = newSpeed;
     }
 
+    void SetTargetedSpeed(Vector newSpeed) {
+        targetedSpeed = newSpeed;
+    }
+
     void SetAngle(EinValue newAngle) {
         angle = newAngle;
     }
@@ -50,6 +58,7 @@ private:
 
     Vector position;
     Vector speed;
+    Vector targetedSpeed;
     EinValue angle;
 };
 

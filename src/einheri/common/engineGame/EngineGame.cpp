@@ -13,6 +13,8 @@
 #include <einheri/common/GameManager.h>
 #include <math.h>
 #include "einheri/common/event/EventHeroAdded.h"
+#include <einheri/common/event/EventVisitor.h>
+#include "einheri/common/event/EventProjectileAdded.h"
 
 namespace ein {
 
@@ -23,7 +25,22 @@ EngineGame::EngineGame(GameManager* manager) :
 EngineGame::~EngineGame() {
 }
 
-void EngineGame::Apply(const Event& /*event*/) {
+void EngineGame::Apply(const Event& event) {
+    class EngineGameVisitor: public EventVisitor {
+    public:
+        EngineGameVisitor(EngineGame* engine) :
+            engine(engine) {
+        }
+
+        void Visit(const EventPrimaryActionUsed& eventPrimaryActionUsed) {
+            engine->processEventPrimaryActionUsed(eventPrimaryActionUsed);
+        }
+
+    private:
+        EngineGame* engine;
+    };
+    EngineGameVisitor visitor(this);
+    event.accept(visitor);
 }
 
 int plop = 0;
@@ -62,9 +79,9 @@ void EngineGame::Frame() {
         if (player->getWantMove()) {
             EinValue moveAngle = player->getWantedAngle();
             EinValue speedFactor = player->getWantedSpeed() * 0.02;
-            hero->SetSpeed(Vector(cos(moveAngle) * speedFactor, sin(moveAngle) * speedFactor));
+            hero->SetTargetedSpeed(Vector(cos(moveAngle) * speedFactor, sin(moveAngle) * speedFactor));
         } else {
-            hero->SetSpeed(Vector(0, 0));
+            hero->SetTargetedSpeed(Vector(0, 0));
         }
 
         Vector cursor = manager->GetCameraModel()->Pick(manager->GetInputModel()->GetMouse());
@@ -80,6 +97,24 @@ void EngineGame::Frame() {
         hero->SetAngle(aimingAngle);
 
     }
+
+}
+
+void EngineGame::processEventPrimaryActionUsed(const EventPrimaryActionUsed& event) {
+    Player * player = event.GetPlayer();
+    Hero * hero = player->getHero();
+
+    EinValue dist = 0.5;
+
+    Projectile *projectile = new Projectile();
+    projectile->SetPosition(Vector(hero->GetPosition().getX()+dist*cos(hero->GetAngle()), hero->GetPosition().getY()+dist*sin(hero->GetAngle())));
+    projectile->SetAngle(hero->GetAngle());
+    projectile->SetSpeed(Vector(10*cos(hero->GetAngle()), 10*sin(hero->GetAngle())));
+    projectile->SetTargetedSpeed(projectile->GetSpeed());
+
+    manager->GetModel()->AddProjectile(projectile);
+
+    manager->AddEvent(new EventProjectileAdded(projectile));
 
 }
 

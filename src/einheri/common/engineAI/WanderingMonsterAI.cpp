@@ -42,7 +42,7 @@ void WanderingMonsterAI::Compute() {
         }
 
         monster->SetAngle(newAngle);
-        monster->SetSpeed(Vector(cos(newAngle), sin(newAngle)));
+        monster->SetTargetedSpeed(Vector(cos(newAngle), sin(newAngle)));
 
         nextComputeTime += sf::Randomizer::Random(1.f, 3.f);
 

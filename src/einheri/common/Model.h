@@ -45,6 +45,10 @@ public:
         heroes.push_back(hero);
     }
 
+    void AddProjectile(Projectile *projectile) {
+        projectiles.push_back(projectile);
+    }
+
 private:
     std::list<Projectile *> projectiles;
     std::list<Hero *> heroes;

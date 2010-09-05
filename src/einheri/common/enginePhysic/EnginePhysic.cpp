@@ -43,6 +43,10 @@ void EnginePhysic::Apply(const Event& event) {
             engine->processEventHeroAdded(eventHeroAdded);
         }
 
+        void Visit(const EventProjectileAdded& eventProjectileAdded) {
+            engine->processEventProjectileAdded(eventProjectileAdded);
+        }
+
     private:
         EnginePhysic* engine;
     };
@@ -77,6 +81,14 @@ void EnginePhysic::processEventMonsterAdded(const EventMonsterAdded& eventMonste
 void EnginePhysic::processEventHeroAdded(const EventHeroAdded& eventHeroAdded) {
     PhysicEntity *physicEntity = new PhysicEntity(eventHeroAdded.GetHero());
     physicEntity->SetMass(1.5);
+    physicEntities.push_back(physicEntity);
+
+    dynamicsWorld->addRigidBody(physicEntity->GetRigidBody());
+}
+
+void EnginePhysic::processEventProjectileAdded(const EventProjectileAdded& eventProjectileAdded) {
+    PhysicEntity *physicEntity = new PhysicEntity(eventProjectileAdded.GetProjectile());
+    physicEntity->SetMass(1000.1);
     physicEntities.push_back(physicEntity);
 
     dynamicsWorld->addRigidBody(physicEntity->GetRigidBody());

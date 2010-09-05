@@ -14,6 +14,7 @@
 #include <list>
 #include "PhysicEntity.h"
 #include "einheri/common/event/EventHeroAdded.h"
+#include "einheri/common/event/EventProjectileAdded.h"
 
 namespace ein {
 
@@ -31,6 +32,7 @@ private:
     void initBulletEngine();
     void processEventMonsterAdded(const EventMonsterAdded& eventMonsterAdded);
     void processEventHeroAdded(const EventHeroAdded& eventHeroAdded);
+    void processEventProjectileAdded(const EventProjectileAdded& eventProjectileAdded);
 
     void importStates();
     void exportStates();

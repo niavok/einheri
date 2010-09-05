@@ -32,7 +32,7 @@ void EatTheHeroMonsterAI::Compute() {
             EinValue meatAngle =atan2(freshMeat->GetPosition().getX()-monster->GetPosition().getX(),monster->GetPosition().getY()-freshMeat->GetPosition().getY()) -  M_PI/2.f;
 
             monster->SetAngle(meatAngle);
-            monster->SetSpeed(Vector(cos(meatAngle), sin(meatAngle)));
+            monster->SetTargetedSpeed(Vector(cos(meatAngle), sin(meatAngle)));
 
         }
 

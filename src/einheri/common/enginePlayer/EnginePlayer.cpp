@@ -16,6 +16,7 @@
 #include <list>
 #include <einheri/common/GameManager.h>
 #include <einheri/utils/Log.h>
+#include <einheri/common/event/EventPrimaryActionUsed.h>
 
 namespace ein {
 
@@ -131,7 +132,14 @@ void EnginePlayer::processEventKeyPressed(const EventKeyPressed& /*event*/) {
 void EnginePlayer::processEventKeyReleased(const EventKeyReleased& /*event*/) {
 }
 
-void EnginePlayer::processEventMouseButtonPressed(const EventMouseButtonPressed& /*event*/) {
+void EnginePlayer::processEventMouseButtonPressed(const EventMouseButtonPressed& event) {
+    Player * player = manager->GetGameModel()->GetPlayers().front();
+    if(player) {
+
+        if(event.getMouseButton() == sf::Mouse::Left) {
+            manager->AddEvent(new EventPrimaryActionUsed(player));
+        }
+    }
 
 }
 void EnginePlayer::processEventMouseButtonReleased(const EventMouseButtonReleased& /*event*/) {
