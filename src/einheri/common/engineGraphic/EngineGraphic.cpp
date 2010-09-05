@@ -11,6 +11,7 @@
 #include <einheri/common/GameManager.h>
 #include <einheri/utils/FileFinder.h>
 #include <sstream>
+#include "einheri/common/event/EventWindowCreated.h"
 
 using einUtils::FileFinder;
 
@@ -61,6 +62,8 @@ void EngineGraphic::initWindow() {
 
     fpsCount = 0;
     framerateClock.Reset();
+
+    manager->AddEvent(new EventWindowCreated(renderWindow));
 
 }
 

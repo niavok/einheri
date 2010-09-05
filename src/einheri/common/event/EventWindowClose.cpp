@@ -11,12 +11,9 @@
 namespace ein {
 
 EventWindowClose::EventWindowClose() {
-    // TODO Auto-generated constructor stub
-
 }
 
 EventWindowClose::~EventWindowClose() {
-    // TODO Auto-generated destructor stub
 }
 
 void EventWindowClose::accept(EventVisitor& visitor) const {

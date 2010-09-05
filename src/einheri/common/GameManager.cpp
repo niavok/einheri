@@ -31,10 +31,10 @@ void GameManager::AddEngine(Engine *engine) {
 
 void GameManager::Apply(const Event& event)
 {
-    class GameManagerVistor : public EventVisitor
+    class GameManagerVisitor : public EventVisitor
     {
     public:
-        GameManagerVistor(GameManager* manager):manager(manager){}
+        GameManagerVisitor(GameManager* manager):manager(manager){}
 
         void Visit(const EventWindowClose&)
         {
@@ -43,7 +43,7 @@ void GameManager::Apply(const Event& event)
     private:
         GameManager* manager;
     };
-    GameManagerVistor visitor(this);
+    GameManagerVisitor visitor(this);
     event.accept(visitor);
 }
 

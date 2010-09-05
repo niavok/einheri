@@ -11,6 +11,7 @@
 #include <einheri/utils/Visitor.h>
 #include <einheri/common/event/EventAddPlayer.h>
 #include <einheri/common/event/EventWindowClose.h>
+#include "einheri/common/event/EventWindowCreated.h"
 
 namespace ein {
 
@@ -19,6 +20,7 @@ class EventVisitor
 public:
     virtual void Visit(const EventAddPlayer&){}
     virtual void Visit(const EventWindowClose&){}
+    virtual void Visit(const EventWindowCreated&){}
 };
 
 }  // namespace ehrCommon

@@ -9,6 +9,7 @@
 #define EHR_COMMON_ENGINEINPUT_H_
 
 #include <einheri/common/Engine.h>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace ein {
 
@@ -22,6 +23,8 @@ public:
     void Apply(const Event& event);
     void Frame();
 
+private:
+    sf::RenderWindow *renderWindow;
 };
 
 }
