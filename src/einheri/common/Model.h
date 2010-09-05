@@ -21,19 +21,19 @@ public:
     Model();
     virtual ~Model();
 
-    std::list<Building*> getBuildings() const {
+    const std::list<Building*>& GetBuildings() const {
         return buildings;
     }
 
-    std::list<Hero*> getHeroes() const {
+    const std::list<Hero*> &GetHeroes() const {
         return heroes;
     }
 
-    std::list<Monster*> getMonsters() const {
+    const std::list<Monster*> &GetMonsters() const {
         return monsters;
     }
 
-    std::list<Projectile*> getProjectiles() const {
+    const std::list<Projectile*> &GetProjectiles() const {
         return projectiles;
     }
 

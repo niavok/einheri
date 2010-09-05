@@ -16,6 +16,8 @@ namespace ein {
 
 GameManager::GameManager():Engine(this) {
     running = true;
+    model = new Model();
+    inputModel = new InputModel();
 }
 
 GameManager::~GameManager() {

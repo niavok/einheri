@@ -21,10 +21,13 @@ EngineGraphic::EngineGraphic(GameManager* manager) :
     FramerateEngine(manager) {
     renderWindow = NULL;
     UseGameTime(false);
+
+    worldDrawer = new WorldDrawer(manager);
 }
 
 EngineGraphic::~EngineGraphic() {
     delete renderWindow;
+    delete worldDrawer;
 }
 
 void EngineGraphic::Apply(const Event& /*event*/) {
@@ -63,7 +66,10 @@ void EngineGraphic::initWindow() {
     fpsCount = 0;
     framerateClock.Reset();
 
+    worldDrawer->Init();
+
     manager->AddEvent(new EventWindowCreated(renderWindow));
+
 
 }
 
@@ -80,23 +86,15 @@ void EngineGraphic::initGlContext() {
 
     //Resize(application->app->GetWidth(), application->app->GetHeight());
 
-    /*index = glGenLists(1);
-
-    // compile the monster display list, store a triangle in it
-    glNewList(index, GL_COMPILE);
-    glBegin(GL_TRIANGLES);
-    glColor3f(0, 1, 1);
-    glVertex3f(0.1f, 0.f, 0.f);
-    glColor3f(0, 1, 0);
-    glVertex3f(-0.05f, 0.086f, 0.f);
-    glVertex3f(-0.05f, -0.086f, 0.f);
-    glEnd();
-    glEndList();*/
+    /**/
 
 }
 void EngineGraphic::paint() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     fpsCount++;
+
+    worldDrawer->Draw();
+
     renderWindow->Draw(title);
 
      if(framerateClock.GetElapsedTime() > 1) {

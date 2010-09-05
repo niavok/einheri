@@ -17,19 +17,19 @@ public:
     Movable();
     virtual ~Movable();
 
-    EinId getId() const {
+    EinId GetId() const {
         return id;
     }
 
-    Vector getPosition() const {
+    Vector GetPosition() const {
         return position;
     }
 
-    Vector getSpeed() const {
+    Vector GetSpeed() const {
         return speed;
     }
 
-    EinValue getAngle() const {
+    EinValue GetAngle() const {
         return angle;
     }
 

@@ -11,6 +11,7 @@
 #include <einheri/common/Engine.h>
 #include "einheri/common/FramerateEngine.h"
 #include <SFML/Graphics.hpp>
+#include "WorldDrawer.h"
 
 namespace ein {
 
@@ -33,6 +34,7 @@ private:
 private :
 
     sf::RenderWindow *renderWindow;
+    WorldDrawer * worldDrawer;
 
     sf::Clock framerateClock;
     sf::String title;
