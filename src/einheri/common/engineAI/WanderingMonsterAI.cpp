@@ -32,7 +32,29 @@ void WanderingMonsterAI::Compute(){
         monster->SetAngle(newAngle);
         monster->SetSpeed(Vector(cos(newAngle), sin(newAngle)));
 
-        nextComputeTime+=sf::Randomizer::Random(3, 5);
+        if(sf::Randomizer::Random(1,5) == 1) {
+            //The monster is affray an try to go to center
+
+            if(monster->GetPosition().getX() > 0 && monster->GetSpeed().getX() > 0) {
+                monster->SetSpeed(Vector(-monster->GetSpeed().getX(),monster->GetSpeed().getY()));
+            }
+
+            if(monster->GetPosition().getX() < 0 && monster->GetSpeed().getX() < 0) {
+                monster->SetSpeed(Vector(-monster->GetSpeed().getX(),monster->GetSpeed().getY()));
+            }
+
+            if(monster->GetPosition().getY() > 0 && monster->GetSpeed().getY() > 0) {
+                monster->SetSpeed(Vector(monster->GetSpeed().getX(),-monster->GetSpeed().getY()));
+            }
+
+            if(monster->GetPosition().getY() < 0 && monster->GetSpeed().getY() < 0) {
+                monster->SetSpeed(Vector(monster->GetSpeed().getX(),-monster->GetSpeed().getY()));
+            }
+        }
+
+
+
+        nextComputeTime+=sf::Randomizer::Random(3.f, 5.f);
 
     }
 }
