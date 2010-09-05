@@ -10,7 +10,7 @@
 namespace ein {
 
 Player::Player() {
-    name = "Unnamed player";
+    name = "Unamed player";
     isLocal = true;
     hero = NULL;
 

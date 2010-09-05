@@ -10,10 +10,12 @@
 #include <einheri/common/event/EventVisitor.h>
 #include "einheri/common/event/EventWindowCreated.h"
 #include <einheri/common/GameManager.h>
+#include <einheri/utils/Log.h>
 
 namespace ein {
 
-EngineInput::EngineInput(GameManager* manager) : Engine(manager){
+EngineInput::EngineInput(GameManager* manager) :
+    Engine(manager) {
     renderWindow = NULL;
 }
 
@@ -21,26 +23,26 @@ EngineInput::~EngineInput() {
 }
 
 void EngineInput::Apply(const Event& event) {
-    class EngineInputVisitor : public EventVisitor
-        {
-        public:
-            EngineInputVisitor(EngineInput* engine):engine(engine){}
+    class EngineInputVisitor: public EventVisitor {
+    public:
+        EngineInputVisitor(EngineInput* engine) :
+            engine(engine) {
+        }
 
-            void Visit(const EventWindowCreated& evenWindowCreated)
-            {
-                engine->renderWindow = evenWindowCreated.getWindow();
-                engine->input = &(engine->renderWindow->GetInput());
-                engine->manager->GetInputModel()->SetInput(engine->input);
-            }
-        private:
-            EngineInput* engine;
-        };
-        EngineInputVisitor visitor(this);
-        event.accept(visitor);
+        void Visit(const EventWindowCreated& evenWindowCreated) {
+            engine->renderWindow = evenWindowCreated.getWindow();
+            engine->input = &(engine->renderWindow->GetInput());
+            engine->manager->GetInputModel()->SetInput(engine->input);
+        }
+    private:
+        EngineInput* engine;
+    };
+    EngineInputVisitor visitor(this);
+    event.accept(visitor);
 }
 
 void EngineInput::Frame() {
-    if(renderWindow) {
+    if (renderWindow) {
         // Process events
         sf::Event event;
         while (renderWindow->GetEvent(event)) {
@@ -53,14 +55,25 @@ void EngineInput::Frame() {
                 manager->AddEvent(new EventWindowResized(Vector(event.Size.Width, event.Size.Height)));
             }
 
+            if (event.Type == sf::Event::KeyPressed) {
+                manager->AddEvent(new EventKeyPressed(event.Key.Code));
+            }
 
-            if (event.Type == sf::Event::KeyPressed || event.Type == sf::Event::MouseMoved || event.Type == sf::Event::MouseButtonPressed || event.Type == sf::Event::MouseButtonReleased) {
-                //inputEngine.PushEvent(event);
+            if (event.Type == sf::Event::KeyReleased) {
+                manager->AddEvent(new EventKeyReleased(event.Key.Code));
+            }
+
+            if (event.Type == sf::Event::MouseButtonPressed) {
+                manager->AddEvent(new EventMouseButtonPressed(event.MouseButton.Button));
+            }
+
+            if (event.Type == sf::Event::MouseButtonReleased) {
+                manager->AddEvent(new EventMouseButtonReleased(event.MouseButton.Button));
             }
 
         }
-    }
 
+    }
 }
 
 }

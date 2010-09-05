@@ -13,6 +13,10 @@
 #include <einheri/common/event/EventWindowClose.h>
 #include <einheri/common/event/EventWindowCreated.h>
 #include <einheri/common/event/EventWindowResized.h>
+#include <einheri/common/event/EventKeyPressed.h>
+#include <einheri/common/event/EventKeyReleased.h>
+#include <einheri/common/event/EventMouseButtonPressed.h>
+#include <einheri/common/event/EventMouseButtonReleased.h>
 
 
 namespace ein {
@@ -24,6 +28,10 @@ public:
     virtual void Visit(const EventWindowClose&){}
     virtual void Visit(const EventWindowCreated&){}
     virtual void Visit(const EventWindowResized&){}
+    virtual void Visit(const EventKeyPressed&){}
+    virtual void Visit(const EventKeyReleased&){}
+    virtual void Visit(const EventMouseButtonPressed&){}
+    virtual void Visit(const EventMouseButtonReleased&){}
 };
 
 }  // namespace ehrCommon

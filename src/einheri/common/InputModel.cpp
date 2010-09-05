@@ -34,6 +34,14 @@ Vector InputModel::GetMouse() {
     }
 }
 
+bool InputModel::GetKeyState(sf::Key::Code code) {
+    if(input) {
+            return input->IsKeyDown(code);
+        } else {
+            return false;
+        }
+}
+
 Vector InputModel::GetWindowSize() const{
     return windowSize;
 }

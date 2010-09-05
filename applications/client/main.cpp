@@ -4,6 +4,7 @@
 #include <einheri/common/engineGraphic/EngineGraphic.h>
 #include <einheri/common/engineSound/EngineSound.h>
 #include <einheri/common/engineInput/EngineInput.h>
+#include <einheri/common/enginePlayer/EnginePlayer.h>
 
 int main()
 {
@@ -13,6 +14,7 @@ int main()
     gameManager.AddEngine(new ein::EngineGraphic(&gameManager));
     gameManager.AddEngine(new ein::EngineSound(&gameManager));
     gameManager.AddEngine(new ein::EngineInput(&gameManager));
+    gameManager.AddEngine(new ein::EnginePlayer(&gameManager));
 
     gameManager.Run();
 

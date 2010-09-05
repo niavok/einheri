@@ -45,6 +45,11 @@ void EngineGame::Frame() {
         plop++;
     }
 
+    if(manager->GetGameModel()->GetPlayers().empty()) {
+        Player * player = new Player();
+        manager->GetGameModel()->AddPlayer(player);
+    }
+
 
 }
 

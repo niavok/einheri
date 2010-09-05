@@ -19,6 +19,7 @@ public:
     virtual ~InputModel();
 
     Vector GetMouse();
+    bool GetKeyState(sf::Key::Code code);
     Vector GetWindowSize() const;
 
     void SetInput(const sf::Input *input);
