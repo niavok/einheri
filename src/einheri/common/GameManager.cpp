@@ -19,6 +19,7 @@ GameManager::GameManager():Engine(this) {
     model = new Model();
     inputModel = new InputModel();
     cameraModel = new CameraModel();
+    gameModel = new GameModel();
 }
 
 GameManager::~GameManager() {
