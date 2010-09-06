@@ -7,6 +7,8 @@
 
 #ifndef EIN_UTILS_SEQUANCE_H_
 #define EIN_UTILS_SEQUANCE_H_
+#include <iostream>
+#include <typeinfo>
 
 // SEQ Inspired by Loki lib
 namespace einUtils {
@@ -36,6 +38,7 @@ void apply(TSeq, TAction& action)
 	typedef typename TSeq::Head Head;
 	typedef typename TSeq::Tail Tail;
 	action.operator()( new Head() );
+	std::cout << typeid(Head).name() << std::endl;
 	apply(typename TSeq::Tail(), action);
 }
 template <class TAction>

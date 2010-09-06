@@ -13,6 +13,7 @@
 #include <string>
 
 namespace ein {
+class CollisionVisitor;
 
 class Movable : public einUtils::VisitableBase<Movable> {
 public:
