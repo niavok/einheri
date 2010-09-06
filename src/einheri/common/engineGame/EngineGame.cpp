@@ -36,6 +36,10 @@ void EngineGame::Apply(const Event& event) {
             engine->processEventPrimaryActionUsed(eventPrimaryActionUsed);
         }
 
+        void Visit(const EventObjectCollision& eventObjectCollision) {
+                    engine->processEventObjectCollision(eventObjectCollision);
+                }
+
     private:
         EngineGame* engine;
     };
@@ -111,11 +115,15 @@ void EngineGame::processEventPrimaryActionUsed(const EventPrimaryActionUsed& eve
     projectile->SetAngle(hero->GetAngle());
     projectile->SetSpeed(Vector(10*cos(hero->GetAngle()), 10*sin(hero->GetAngle())));
     projectile->SetTargetedSpeed(projectile->GetSpeed());
-
+    projectile->SetName("Plasma ball");
     manager->GetModel()->AddProjectile(projectile);
 
     manager->AddEvent(new EventProjectileAdded(projectile));
 
 }
 
+void EngineGame::processEventObjectCollision(const EventObjectCollision& event) {
+    std::cout<<"Collision detected between "<<event.GetObject1()->GetName()<<" and "<<event.GetObject2()->GetName()<<std::endl;
+
+}
 }

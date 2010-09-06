@@ -26,7 +26,7 @@ PhysicEntity::PhysicEntity(Movable *movable) :
     rigidBody = new btRigidBody(sphereRigidBodyCI);
     rigidBody->setLinearFactor(btVector3(1, 1, 0));
     rigidBody->setAngularFactor(btVector3(0, 0, 1));
-    rigidBody->setUserPointer(movable);
+    rigidBody->setUserPointer(this);
 }
 
 PhysicEntity::~PhysicEntity() {

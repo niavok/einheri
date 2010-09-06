@@ -10,7 +10,7 @@
 namespace ein {
 
 Building::Building() {
-    // TODO Auto-generated constructor stub
+    SetName("Unnamed building");
 
 }
 

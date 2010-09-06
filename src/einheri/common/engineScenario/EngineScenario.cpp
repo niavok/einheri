@@ -35,19 +35,23 @@ void EngineScenario::Frame() {
         Monster *monster1 = new Monster();
         monster1->SetPosition(Vector(4, 4));
         monster1->SetAngle(M_PI / 4.f);
+        monster1->SetName("Balrog");
         manager->GetModel()->AddMonster(monster1);
 
         Monster *monster2 = new Monster();
         monster2->SetPosition(Vector(4, -4));
         monster2->SetAngle(-M_PI / 4.f);
+        monster2->SetName("Gobelin");
         manager->GetModel()->AddMonster(monster2);
         Monster *monster3 = new Monster();
         monster3->SetPosition(Vector(-4, 4));
         monster3->SetAngle(3. * M_PI / 4.);
+        monster3->SetName("Orc");
         manager->GetModel()->AddMonster(monster3);
         Monster *monster4 = new Monster();
         monster4->SetPosition(Vector(-4, -4));
         monster4->SetAngle(-3. * M_PI / 4.);
+        monster4->SetName("Troll");
         manager->GetModel()->AddMonster(monster4);
 
         std::cout << "The monster arrived ! Fly, you fools!" << std::endl;

@@ -10,6 +10,7 @@
 
 #include <einheri/common/Engine.h>
 #include <einheri/common/event/EventPrimaryActionUsed.h>
+#include <einheri/common/event/EventObjectCollision.h>
 
 namespace ein {
 
@@ -25,6 +26,7 @@ public:
 
 private:
     void processEventPrimaryActionUsed(const EventPrimaryActionUsed& event);
+    void processEventObjectCollision(const EventObjectCollision& event);
 };
 
 }

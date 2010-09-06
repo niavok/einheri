@@ -10,15 +10,26 @@
 
 #include <einheri/common/Vect2.h>
 #include <einheri/utils/Visitor.h>
+#include <string>
 
 namespace ein {
 
 class Movable : public einUtils::VisitableBase<Movable> {
 public:
-	EIN_DEFINE_VISITABLE()
+    EIN_DEFINE_VISITABLE()
 public:
     Movable();
     virtual ~Movable();
+
+    std::string GetName() const
+    {
+        return name;
+    }
+
+    void SetName(std::string name)
+    {
+        this->name = name;
+    }
 
     EinId GetId() const {
         return id;
@@ -40,6 +51,10 @@ public:
         return angle;
     }
 
+    bool IsNeedReportingCollision() const {
+        return needReportingCollision;
+    }
+
     void SetPosition(Vector newPosition) {
         position = newPosition;
     }
@@ -56,6 +71,10 @@ public:
         angle = newAngle;
     }
 
+    void SetNeedReportingCollision(bool needReportingCollision) {
+        this->needReportingCollision = needReportingCollision;
+    }
+
 private:
     EinId id;
 
@@ -63,6 +82,9 @@ private:
     Vector speed;
     Vector targetedSpeed;
     EinValue angle;
+    bool needReportingCollision;
+    std::string name;
+
 };
 
 }

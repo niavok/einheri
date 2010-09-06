@@ -95,7 +95,7 @@ void EngineSound::frame(EinValue) {
 
 }
 
-void EngineSound::processEventProjectileAdded(const EventProjectileAdded& eventProjectileAdded) {
+void EngineSound::processEventProjectileAdded(const EventProjectileAdded& /*eventProjectileAdded*/) {
     sf::Sound* sound = new sf::Sound();
     sound->SetBuffer(fireSoundBuffer);
     sound->Play();

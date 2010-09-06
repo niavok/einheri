@@ -10,12 +10,12 @@
 namespace ein {
 
 Hero::Hero() {
-    // TODO Auto-generated constructor stub
-
+    SetName("Unnamed hero");
+    SetNeedReportingCollision(true);
 }
 
 Hero::~Hero() {
-    // TODO Auto-generated destructor stub
+
 }
 
 }

@@ -10,7 +10,7 @@
 namespace ein {
 
 Monster::Monster() {
-    // TODO Auto-generated constructor stub
+    SetName("Unnamed monster");
 
 }
 

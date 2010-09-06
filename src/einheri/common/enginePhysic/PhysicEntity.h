@@ -25,6 +25,8 @@ public:
     void Import();
     void Export();
 
+    Movable *GetMovable() {return movable; }
+
 protected:
     Movable *movable;
     btRigidBody* rigidBody;

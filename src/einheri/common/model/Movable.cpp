@@ -10,12 +10,19 @@
 namespace ein {
 
 Movable::Movable() {
-    // TODO Auto-generated constructor stub
-
+    name = "Unnamed movable";
+    needReportingCollision = false;
+    id = 0;
+    position = Vector(0.,0.);
+    speed = Vector(0.,0.);
+    targetedSpeed = Vector(0.,0.);
+    angle = 0.;
 }
 
 Movable::~Movable() {
     // TODO Auto-generated destructor stub
 }
+
+
 
 }

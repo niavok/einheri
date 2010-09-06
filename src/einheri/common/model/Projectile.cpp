@@ -10,12 +10,12 @@
 namespace ein {
 
 Projectile::Projectile() {
-    // TODO Auto-generated constructor stub
-
+    SetName("Unnamed projectile");
+    SetNeedReportingCollision(true);
 }
 
 Projectile::~Projectile() {
-    // TODO Auto-generated destructor stub
+
 }
 
 }

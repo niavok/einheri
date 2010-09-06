@@ -10,6 +10,8 @@
 #include <einheri/common/event/EventVisitor.h>
 #include "PhysicEntity.h"
 #include <einheri/utils/Log.h>
+#include <einheri/common/GameManager.h>
+#include "einheri/common/event/EventObjectCollision.h"
 
 namespace ein {
 
@@ -125,10 +127,10 @@ void EnginePhysic::processCollision() {
             PhysicEntity *objectA = (PhysicEntity*) obA->getUserPointer();
             PhysicEntity *objectB = (PhysicEntity*) obB->getUserPointer();
 
-
-            /*if(objectA->GetMovable()->IsNeedReportingCollision() || objectB->GetMovable()->IsNeedReportingCollision()) {
+            if(objectA->GetMovable()->IsNeedReportingCollision() || objectB->GetMovable()->IsNeedReportingCollision()) {
                 manager->AddEvent(new EventObjectCollision(objectA->GetMovable(), objectB->GetMovable()));
-            }*/
+            }
+
 
             /*int numContacts = contactManifold->getNumContacts();
             for (int j=0;j<numContacts;j++)
