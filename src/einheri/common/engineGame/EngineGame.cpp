@@ -14,15 +14,24 @@
 #include <math.h>
 #include "einheri/common/event/EventHeroAdded.h"
 #include <einheri/common/event/EventVisitor.h>
-#include "einheri/common/event/EventProjectileAdded.h"
+#include <einheri/common/event/EventProjectileAdded.h>
+#include <einheri/common/engineGame/PlasmaBallController.h>
+#include "einheri/common/model/PlasmaBall.h"
 
 namespace ein {
 
 EngineGame::EngineGame(GameManager* manager) :
     Engine(manager) {
+
+    projectileControllers.push_back(new PlasmaBallController(manager));
 }
 
 EngineGame::~EngineGame() {
+    while(!projectileControllers.empty()) {
+        ProjectileController * controller = projectileControllers.front();
+        projectileControllers.pop_front();
+        delete controller;
+    }
 }
 
 void EngineGame::Apply(const Event& event) {
@@ -32,7 +41,7 @@ void EngineGame::Apply(const Event& event) {
             engine(engine) {
         }
 
-        void Visit(const EventPrimaryActionUsed& eventPrimaryActionUsed) {
+        void Visit(const EventPrimaryActionBegin& eventPrimaryActionUsed) {
             engine->processEventPrimaryActionUsed(eventPrimaryActionUsed);
         }
 
@@ -104,18 +113,17 @@ void EngineGame::Frame() {
 
 }
 
-void EngineGame::processEventPrimaryActionUsed(const EventPrimaryActionUsed& event) {
+void EngineGame::processEventPrimaryActionUsed(const EventPrimaryActionBegin& event) {
     Player * player = event.GetPlayer();
     Hero * hero = player->getHero();
 
     EinValue dist = 0.5;
 
-    Projectile *projectile = new Projectile();
+    Projectile *projectile = new PlasmaBall();
     projectile->SetPosition(Vector(hero->GetPosition().getX()+dist*cos(hero->GetAngle()), hero->GetPosition().getY()+dist*sin(hero->GetAngle())));
     projectile->SetAngle(hero->GetAngle());
     projectile->SetSpeed(Vector(10*cos(hero->GetAngle()), 10*sin(hero->GetAngle())));
     projectile->SetTargetedSpeed(projectile->GetSpeed());
-    projectile->SetName("Plasma ball");
     manager->GetModel()->AddProjectile(projectile);
 
     manager->AddEvent(new EventProjectileAdded(projectile));
@@ -125,5 +133,7 @@ void EngineGame::processEventPrimaryActionUsed(const EventPrimaryActionUsed& eve
 void EngineGame::processEventObjectCollision(const EventObjectCollision& event) {
     std::cout<<"Collision detected between "<<event.GetObject1()->GetName()<<" and "<<event.GetObject2()->GetName()<<std::endl;
 
+
 }
+
 }

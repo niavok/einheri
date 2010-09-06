@@ -5,8 +5,8 @@
  *      Author: fred
  */
 
-#ifndef EIN_EVENT_PRIMARY_ACTION_USED_H_
-#define EIN_EVENT_PRIMARY_ACTION_USED_H_
+#ifndef EIN_EVENT_PRIMARY_ACTION_END_H_
+#define EIN_EVENT_PRIMARY_ACTION_END_H_
 
 #include <einheri/common/Event.h>
 #include <einheri/common/Player.h>
@@ -15,10 +15,10 @@ namespace ein {
 
 class EventVisitor;
 
-class EventPrimaryActionUsed : public Event{
+class EventPrimaryActionEnd : public Event{
 public:
-    EventPrimaryActionUsed(Player *player);
-    virtual ~EventPrimaryActionUsed();
+    EventPrimaryActionEnd(Player *player);
+    virtual ~EventPrimaryActionEnd();
 
     void accept(EventVisitor& visitor)const;
 
@@ -30,4 +30,4 @@ private:
 
 }
 
-#endif /* EIN_EVENT_PRIMARY_ACTION_USED_H_ */
+#endif /* EIN_EVENT_PRIMARY_ACTION_END_H_ */
