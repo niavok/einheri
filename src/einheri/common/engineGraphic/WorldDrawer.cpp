@@ -102,7 +102,8 @@ void WorldDrawer::configureCamera() {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
+    Vector cameraPosition = manager->GetCameraModel()->GetPosition();
+    glTranslated(-cameraPosition.getX(), -cameraPosition.getY(), 0);
 }
 
 void WorldDrawer::paintGround() {

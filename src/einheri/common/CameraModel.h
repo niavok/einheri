@@ -21,7 +21,7 @@ public:
     Vector GetPosition() const { return position; }
 
     void SetDistance(EinValue newDistance) {distance = newDistance; }
-    void SetDistance(Vector newPosition) {position = newPosition; }
+    void SetPosition(Vector newPosition) {position = newPosition; }
 
     void SetWindowSize(Vector newSize);
     Vector GetWindowSize() const;

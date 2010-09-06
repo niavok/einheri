@@ -32,8 +32,8 @@ Vector CameraModel::Pick(Vector point) {
         h =  windowSize.getX() /  windowSize.getY();
     }
 
-    double pickX = (h*distance) * ( point.getX() /  windowSize.getX() - 1./2.);
-    double pickY = distance * ( (windowSize.getY() - point.getY()) /  windowSize.getY() - 1./2.);
+    double pickX = (h*distance) * ( point.getX() /  windowSize.getX() - 1./2.) + position.getX();
+    double pickY = distance * ( (windowSize.getY() - point.getY()) /  windowSize.getY() - 1./2.) + position.getY();
 
 
     return Vector(pickX, pickY);
