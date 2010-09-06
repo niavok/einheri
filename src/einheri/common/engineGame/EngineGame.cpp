@@ -16,6 +16,10 @@
 #include <einheri/common/event/EventVisitor.h>
 #include "einheri/common/event/EventProjectileAdded.h"
 
+#include <typeinfo>
+#include "einheri/utils/Sequance.h"
+
+
 namespace ein {
 
 EngineGame::EngineGame(GameManager* manager) :
@@ -122,8 +126,24 @@ void EngineGame::processEventPrimaryActionUsed(const EventPrimaryActionUsed& eve
 
 }
 
+class CollisionVisitor: public einUtils::Visitor<Movable, const char*> {
+public:
+	CollisionVisitor() {
+		Visit(*this, einUtils::Seq< Movable,  Hero,  Projectile>::Type(), CollisionInvoker());
+	}
+	virtual ~CollisionVisitor() {}
+
+	virtual const char* GetType( Movable& a){return typeid(a).name();}
+	virtual const char* GetType( Hero& a){return typeid(a).name();}
+	virtual const char* GetType( Projectile& a){return typeid(a).name();}
+
+private:
+	// Here you can change the name of the Visit method.
+	typedef EIN_VISIT_INVOKER( GetType ) CollisionInvoker;
+};
+
 void EngineGame::processEventObjectCollision(const EventObjectCollision& event) {
-    std::cout<<"Collision detected between "<<event.GetObject1()->GetName()<<" and "<<event.GetObject2()->GetName()<<std::endl;
+    std::cout<<"Collision detected between "<<CollisionVisitor().GetType(*event.GetObject1())<<" and "<<CollisionVisitor().GetType(*event.GetObject2())<<std::endl;
 
 }
 }

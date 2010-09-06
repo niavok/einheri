@@ -58,9 +58,10 @@ struct VisitableBase {
 /////////////
 // The VTable
 
-template<typename Base, typename Func>
+template<typename B, typename Func>
 class VTable {
-	std::vector<Func> table_; // storage
+public:
+	typedef B Base;
 public:
 	template<typename Visitable>
 	void add(Func f) {
@@ -82,6 +83,8 @@ public:
 		return table_[index];
 	}
 
+private:
+	std::vector<Func> table_; // storage
 }; // VTable
 
 /////////////////
@@ -110,7 +113,7 @@ struct CreateVtable {
 		(*this)(static_cast<typename Visitor::Base*> (0));
 
 		// add visit function for each type in VisitedList
-		apply(VisitedList(), *this);
+		einUtils::apply(VisitedList(), *this);
 	}
 }; // CreateVtable
 
@@ -124,10 +127,13 @@ struct GetStaticVtable {
 		return &s_table.vtable_;
 	}
 };
+template<typename Visitor, typename VisitedList, typename Invoker>
+CreateVtable<Visitor, VisitedList, Invoker> GetStaticVtable<Visitor, VisitedList, Invoker>::s_table;
 
-template<typename Base, typename TReturn = void>
+template<typename TBase, typename TReturn = void>
 class Visitor {
 public:
+	typedef TBase Base;
 	typedef Visitor<Base, TReturn> Type;
 	typedef TReturn ReturnType;
 	typedef ReturnType (Visitor::*Func)(Base&);
@@ -135,11 +141,6 @@ public:
 
 public:
 	Visitor() {
-	}
-
-	template<typename VisitedList, typename Invoker>
-	void Visit(const VisitedList&, const Invoker&) {
-		vtable_ = einUtils::GetStaticVtable<Type, VisitedList, Invoker> ();
 	}
 
 	template<typename VisitorImpl, typename Visitable, typename Invoker>
@@ -156,10 +157,16 @@ public:
 		return (this->*thunk)(b); // pointer to member function syntax
 	}
 
-private:
 	const VTableType* vtable_; // vtable pointer
 
 }; // Visitor
+
+
+// General helper function
+template<typename Visitor, typename VisitedList, typename Invoker>
+void Visit(Visitor& visitor, const VisitedList&, const Invoker&) {
+	visitor.vtable_ = einUtils::GetStaticVtable<Visitor, VisitedList, Invoker> ();
+}
 
 // TODO (boost static_assert)
 // check_member_function<ReturnType, VisitorImpl, Visitable> (&Visitor::name); // compile time assertion

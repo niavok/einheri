@@ -12,12 +12,12 @@
 
 namespace ein {
 
-class MovableVisiter: public einUtils::Visitor<MovableVisiter> {
+class MovableVisitor: public einUtils::Visitor<MovableVisitor> {
 public:
-	MovableVisiter() {
+	MovableVisitor() {
 		this->Visit(Seq<Movable, Monster, Hero, Building, Projectile>::Type, VisitInvoker);
 	}
-	virtual ~MovableVisiter() {}
+	virtual ~MovableVisitor() {}
 
 	virtual void Visit(Movable&){}
 	virtual void Visit(Monster&){}

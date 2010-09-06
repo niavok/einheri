@@ -28,20 +28,20 @@ template<>
 struct Seq<>
 {
 	typedef NullType Type;
-	typedef NullType Head;
-	typedef NullType Tail;
 };
 
 template <class TSeq, class TAction>
-void apply(TSeq&, TAction& action)
+void apply(TSeq, TAction& action)
 {
 	typedef typename TSeq::Head Head;
 	typedef typename TSeq::Tail Tail;
-	action(Head());
-	apply(Tail(), action);
+	action.operator()( new Head() );
+	apply(typename TSeq::Tail(), action);
 }
-template <class TSeq, class TAction>
-void apply(Seq<>&, TAction&){}
+template <class TAction>
+void apply(einUtils::Seq<>, TAction&){}
+template <class T>
+void apply(NullType, T&){}
 
 }  // namespace einUtils
 
