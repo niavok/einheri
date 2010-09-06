@@ -8,16 +8,20 @@
 #ifndef EHR_COMMON_EVENT_H_
 #define EHR_COMMON_EVENT_H_
 
+#include <einheri/utils/Visitor.h>
+
 namespace ein {
 
 class EventVisitor;
 
 class Event {
 public:
-    Event(){}
-    virtual ~Event(){}
+	Event() {
+	}
+	virtual ~Event() {
+	}
 
-    virtual void accept(EventVisitor &visitor) const =0;
+	virtual void accept(EventVisitor &visitor) const =0;
 };
 
 }

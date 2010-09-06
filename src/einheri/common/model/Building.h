@@ -14,6 +14,8 @@ namespace ein {
 
 class Building: public ein::Movable {
 public:
+    EIN_DEFINE_VISITABLE()
+public:
     Building();
     virtual ~Building();
 };

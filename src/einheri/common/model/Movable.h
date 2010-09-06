@@ -9,10 +9,13 @@
 #define EHR_COMMON_MOVABLE_H_
 
 #include <einheri/common/Vect2.h>
+#include <einheri/utils/Visitor.h>
 
 namespace ein {
 
-class Movable {
+class Movable : public einUtils::VisitableBase<Movable> {
+public:
+	EIN_DEFINE_VISITABLE()
 public:
     Movable();
     virtual ~Movable();

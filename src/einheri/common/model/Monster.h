@@ -14,6 +14,8 @@ namespace ein {
 
 class Monster: public ein::Movable {
 public:
+    EIN_DEFINE_VISITABLE()
+public:
     Monster();
     virtual ~Monster();
 };

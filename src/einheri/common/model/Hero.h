@@ -14,6 +14,8 @@ namespace ein {
 
 class Hero: public ein::Movable {
 public:
+    EIN_DEFINE_VISITABLE()
+public:
     Hero();
     virtual ~Hero();
 };

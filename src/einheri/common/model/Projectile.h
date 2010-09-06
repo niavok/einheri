@@ -14,6 +14,8 @@ namespace ein {
 
 class Projectile: public ein::Movable {
 public:
+    EIN_DEFINE_VISITABLE()
+public:
     Projectile();
     virtual ~Projectile();
 };
