@@ -9,8 +9,10 @@
 #define EHR_COMMON_ENGINEGAME_H_
 
 #include <einheri/common/Engine.h>
-#include <einheri/common/event/EventPrimaryActionUsed.h>
+#include <einheri/common/event/EventPrimaryActionBegin.h>
 #include <einheri/common/event/EventObjectCollision.h>
+#include <list>
+#include <einheri/common/engineGame/ProjectileController.h>
 
 namespace ein {
 
@@ -25,8 +27,11 @@ public:
     void Frame();
 
 private:
-    void processEventPrimaryActionUsed(const EventPrimaryActionUsed& event);
+    void processEventPrimaryActionUsed(const EventPrimaryActionBegin& event);
     void processEventObjectCollision(const EventObjectCollision& event);
+
+private:
+    std::list<ProjectileController *> projectileControllers;
 };
 
 }

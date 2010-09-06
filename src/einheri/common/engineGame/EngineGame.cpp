@@ -153,6 +153,6 @@ void EngineGame::processEventObjectCollision(const EventObjectCollision& event) 
 
 	CollisionVisitor visitor;
 	std::cout<<"Collision detected between "<<visitor(*event.GetObject1())<<" and "<<visitor(*event.GetObject2())<<std::endl;
-
 }
+
 }

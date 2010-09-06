@@ -8,7 +8,7 @@
 #include <einheri/common/enginePhysic/EnginePhysic.h>
 #include <einheri/common/engineScenario/EngineScenario.h>
 #include <einheri/common/engineAI/EngineAI.h>
-#include <SFML/Audio.hpp>
+#include <einheri/common/engineCamera/EngineCamera.h>
 
 int main()
 {
@@ -22,6 +22,7 @@ int main()
     gameManager.AddEngine(new ein::EnginePhysic(&gameManager));
     gameManager.AddEngine(new ein::EngineScenario(&gameManager));
     gameManager.AddEngine(new ein::EngineAI(&gameManager));
+    gameManager.AddEngine(new ein::EngineCamera(&gameManager));
 
     gameManager.Run();
 
