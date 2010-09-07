@@ -15,6 +15,7 @@
 #include "PhysicEntity.h"
 #include "einheri/common/event/EventHeroAdded.h"
 #include "einheri/common/event/EventProjectileAdded.h"
+#include <einheri/common/event/EventKill.h>
 
 namespace ein {
 
@@ -33,6 +34,8 @@ private:
     void processEventMonsterAdded(const EventMonsterAdded& eventMonsterAdded);
     void processEventHeroAdded(const EventHeroAdded& eventHeroAdded);
     void processEventProjectileAdded(const EventProjectileAdded& eventProjectileAdded);
+
+    void processEventKill(const EventKill& event);
     void processCollision();
 
 

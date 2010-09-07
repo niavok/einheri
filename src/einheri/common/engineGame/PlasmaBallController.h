@@ -17,7 +17,7 @@ public:
     PlasmaBallController(GameManager *manager);
     virtual ~PlasmaBallController();
 
-    virtual bool processCollision(const Projectile* projectile, Movable *collider);
+    virtual bool processCollision(Projectile* projectile, Movable *collider);
     void Process(PlasmaBall* plasmaBall, Movable* collider);
 };
 

@@ -17,7 +17,7 @@ public:
     ProjectileController(GameManager *manager);
     virtual ~ProjectileController();
 
-    virtual bool processCollision(const Projectile* projectile, Movable *collider) = 0;
+    virtual bool processCollision(Projectile* projectile, Movable *collider) = 0;
 
 protected:
     GameManager *manager;

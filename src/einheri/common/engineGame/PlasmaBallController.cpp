@@ -35,6 +35,7 @@ protected:
     }
 
     virtual bool Process(PlasmaBall& ball) {
+        std::cout<<" PlasmaBall !"<<std::endl;
         controller->Process(&ball, collider);
 
         return true;
@@ -47,15 +48,22 @@ private:
     Movable* collider;
 };
 
-bool PlasmaBallController::processCollision(const Projectile* projectile, Movable* collider) {
+bool PlasmaBallController::processCollision(Projectile* projectile, Movable* collider) {
+
+    /*std::cout<<" PlasmaBallController::processCollision 1"<<std::endl;
 
     CollisionVisitor visitor(this, collider);
 
     bool result = visitor(*projectile);
 
-    std::cout<<" PlasmaBallController::processCollision "<<result<<std::endl;
+    std::cout<<" PlasmaBallController::processCollision 2"<<result<<std::endl;
 
-    return result;
+    return result;*/
+    std::cout<<" PlasmaBallController::processCollision 1"<<std::endl;
+    manager->AddEvent(new EventKill(projectile));
+        manager->AddEvent(new EventKill(collider));
+        std::cout<<" PlasmaBallController::processCollision 2"<<std::endl;
+    return true;
 }
 
 void PlasmaBallController::Process(PlasmaBall* plasmaBall, Movable* collider) {

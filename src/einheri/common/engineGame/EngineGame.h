@@ -27,7 +27,7 @@ public:
 
     void Apply(const Event& event);
     void Frame();
-    std::list<ProjectileController *> GetProjectileControllers() {return projectileControllers; }
+    std::list<ProjectileController *>& GetProjectileControllers() {return projectileControllers; }
 
 private:
     void processEventPrimaryActionBegin(const EventPrimaryActionBegin& event);

@@ -50,6 +50,10 @@ void EnginePhysic::Apply(const Event& event) {
             engine->processEventProjectileAdded(eventProjectileAdded);
         }
 
+        void Visit(const EventKill& event) {
+                engine->processEventKill(event);
+        }
+
     private:
         EnginePhysic* engine;
     };
@@ -100,6 +104,19 @@ void EnginePhysic::processEventProjectileAdded(const EventProjectileAdded& event
     dynamicsWorld->addRigidBody(physicEntity->GetRigidBody());
 }
 
+void EnginePhysic::processEventKill(const EventKill& event) {
+    std::list<PhysicEntity *>::const_iterator it;
+    for (it = physicEntities.begin(); it != physicEntities.end(); ++it) {
+        PhysicEntity *physicEntity = *it;
+        if(physicEntity->GetMovable() == event.GetVictim()) {
+            std::cout<<"EnginePhysic::processEventKill "<<physicEntity<<std::endl;
+            dynamicsWorld->removeRigidBody(physicEntity->GetRigidBody());
+            physicEntities.remove(physicEntity);
+            break;
+        }
+    }
+}
+
 void EnginePhysic::importStates() {
     std::list<PhysicEntity *>::const_iterator it;
     for (it = physicEntities.begin(); it != physicEntities.end(); ++it) {
@@ -128,6 +145,7 @@ void EnginePhysic::processCollision() {
             PhysicEntity *objectB = (PhysicEntity*) obB->getUserPointer();
 
             if(objectA->GetMovable()->IsNeedReportingCollision() || objectB->GetMovable()->IsNeedReportingCollision()) {
+                std::cout<<"EnginePhysic::processCollision"<<std::endl;
                 manager->AddEvent(new EventObjectCollision(objectA->GetMovable(), objectB->GetMovable()));
             }
 

@@ -55,7 +55,7 @@ private:
 };
 
 void Model::Remove(Movable *movable) {
-
+    std::cout<<"Model::Remove "<<movable<<std::endl;
     RemoveVisitor visitor(this);
     visitor(*movable);
 
