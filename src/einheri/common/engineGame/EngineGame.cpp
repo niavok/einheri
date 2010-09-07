@@ -35,8 +35,8 @@ void EngineGame::Apply(const Event& event) {
 			engine(engine) {
 		}
 
-		void Visit(const EventPrimaryActionUsed& eventPrimaryActionUsed) {
-			engine->processEventPrimaryActionUsed(eventPrimaryActionUsed);
+		void Visit(const EventPrimaryActionBegin& eventPrimaryActionBegin) {
+			engine->processEventPrimaryActionBegin(eventPrimaryActionBegin);
 		}
 
 		void Visit(const EventObjectCollision& eventObjectCollision) {
@@ -107,7 +107,7 @@ void EngineGame::Frame() {
 
 }
 
-void EngineGame::processEventPrimaryActionUsed(const EventPrimaryActionUsed& event) {
+void EngineGame::processEventPrimaryActionBegin(const EventPrimaryActionBegin& event) {
 	Player * player = event.GetPlayer();
 	Hero * hero = player->getHero();
 
@@ -128,7 +128,7 @@ void EngineGame::processEventPrimaryActionUsed(const EventPrimaryActionUsed& eve
 class CollisionVisitor: public einUtils::Visitor<const Movable, std::string> {
 public:
 	CollisionVisitor() {
-		Visit(*this, einUtils::Seq<Hero, Projectile>::Type(), CollisionInvoker());
+		Visit(*this, einUtils::Seq<Hero, Projectile, Monster>::Type(), CollisionInvoker());
 	}
 	virtual ~CollisionVisitor() {
 	}
@@ -137,6 +137,11 @@ protected:
 	virtual std::string GetType(const Movable&) {
 		return "Movable";
 	}
+
+	virtual std::string GetType(const Monster&) {
+	        return "Monster";
+	    }
+
 	virtual std::string GetType(const Hero&) {
 		return "Hero";
 	}

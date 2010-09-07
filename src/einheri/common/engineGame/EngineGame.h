@@ -27,7 +27,7 @@ public:
     void Frame();
 
 private:
-    void processEventPrimaryActionUsed(const EventPrimaryActionBegin& event);
+    void processEventPrimaryActionBegin(const EventPrimaryActionBegin& event);
     void processEventObjectCollision(const EventObjectCollision& event);
 
 private:

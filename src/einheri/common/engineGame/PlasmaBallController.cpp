@@ -17,8 +17,8 @@ PlasmaBallController::~PlasmaBallController() {
 
 }
 
-bool PlasmaBallController::processCollision(const EventObjectCollision& event) {
-
+bool PlasmaBallController::processCollision(const EventObjectCollision& /*event*/) {
+    return false;
 }
 
 
