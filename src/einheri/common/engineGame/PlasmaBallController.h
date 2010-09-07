@@ -8,6 +8,7 @@
 #ifndef EIN_PLASMABALLCONTROLLER_H_
 #define EIN_PLASMABALLCONTROLLER_H_
 #include <einheri/common/engineGame/ProjectileController.h>
+#include "einheri/common/model/PlasmaBall.h"
 
 namespace ein {
 
@@ -16,8 +17,8 @@ public:
     PlasmaBallController(GameManager *manager);
     virtual ~PlasmaBallController();
 
-    virtual bool processCollision(const EventObjectCollision& event);
-
+    virtual bool processCollision(const Projectile* projectile, Movable *collider);
+    void Process(PlasmaBall* plasmaBall, Movable* collider);
 };
 
 }

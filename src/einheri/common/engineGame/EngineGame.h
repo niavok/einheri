@@ -5,14 +5,16 @@
  *      Author: fred
  */
 
-#ifndef EHR_COMMON_ENGINEGAME_H_
-#define EHR_COMMON_ENGINEGAME_H_
+#ifndef EIN_ENGINEGAME_H_
+#define EIN_ENGINEGAME_H_
 
 #include <einheri/common/Engine.h>
 #include <einheri/common/event/EventPrimaryActionBegin.h>
 #include <einheri/common/event/EventObjectCollision.h>
 #include <list>
 #include <einheri/common/engineGame/ProjectileController.h>
+#include <einheri/common/event/EventKill.h>
+#include <einheri/common/event/EventKilled.h>
 
 namespace ein {
 
@@ -25,10 +27,13 @@ public:
 
     void Apply(const Event& event);
     void Frame();
+    std::list<ProjectileController *> GetProjectileControllers() {return projectileControllers; }
 
 private:
     void processEventPrimaryActionBegin(const EventPrimaryActionBegin& event);
     void processEventObjectCollision(const EventObjectCollision& event);
+    void processEventKill(const EventKill& event);
+    void processEventKilled(const EventKilled& event);
 
 private:
     std::list<ProjectileController *> projectileControllers;
@@ -36,4 +41,4 @@ private:
 
 }
 
-#endif /* EHR_COMMON_ENGINEGAME_H_ */
+#endif /* EIN_ENGINEGAME_H_ */

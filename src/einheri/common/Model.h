@@ -49,11 +49,24 @@ public:
         projectiles.push_back(projectile);
     }
 
+    void AddBuilding(Building *building) {
+        buildings.push_back(building);
+    }
+
+    void Remove(Movable *movable);
+
+    void RemoveMonster(Monster *monster);
+    void RemoveHero(Hero *hero);
+    void RemoveProjectile(Projectile *projectile);
+    void RemoveBuilding(Building *building);
+
+
 private:
     std::list<Projectile *> projectiles;
     std::list<Hero *> heroes;
     std::list<Monster *> monsters;
     std::list<Building *> buildings;
+
 
 };
 

@@ -18,6 +18,7 @@
 
 #include <typeinfo>
 #include "einheri/utils/Sequance.h"
+#include <einheri/common/event/EventKilled.h>
 
 namespace ein {
 
@@ -42,6 +43,14 @@ void EngineGame::Apply(const Event& event) {
 		void Visit(const EventObjectCollision& eventObjectCollision) {
 			engine->processEventObjectCollision(eventObjectCollision);
 		}
+
+		void Visit(const EventKill& event) {
+                engine->processEventKill(event);
+        }
+
+		void Visit(const EventKilled& event) {
+                engine->processEventKilled(event);
+        }
 
 	private:
 		EngineGame* engine;
@@ -125,39 +134,67 @@ void EngineGame::processEventPrimaryActionBegin(const EventPrimaryActionBegin& e
 
 }
 
-class CollisionVisitor: public einUtils::Visitor<const Movable, std::string> {
+class CollisionVisitor: public einUtils::Visitor<const Movable> {
 public:
-	CollisionVisitor() {
+	CollisionVisitor(EngineGame* engine, Movable *collider):engine(engine), collider(collider) {
 		Visit(*this, einUtils::Seq<Hero, Projectile, Monster>::Type(), CollisionInvoker());
 	}
 	virtual ~CollisionVisitor() {
 	}
 
 protected:
-	virtual std::string GetType(const Movable&) {
-		return "Movable";
+	virtual void ProcessEvent(const Movable&) {
+
 	}
 
-	virtual std::string GetType(const Monster&) {
-	        return "Monster";
+	virtual void ProcessEvent(const Monster&) {
+
 	    }
 
-	virtual std::string GetType(const Hero&) {
-		return "Hero";
+	virtual void ProcessEvent(const Hero&) {
+
 	}
-	virtual std::string GetType(const Projectile&) {
-		return "Projectile";
+	virtual void ProcessEvent(const Projectile& projectile) {
+	    std::list<ProjectileController *>::iterator it;
+	    for(it = engine->GetProjectileControllers().begin(); it != engine->GetProjectileControllers().end(); it++) {
+	        ProjectileController* controller = *it;
+	        if(controller->processCollision(const_cast<Projectile *>(&projectile), collider)) {
+	            break;
+	        }
+
+
+	    }
+
 	}
 
 private:
 	// Here you can change the name of the Visit method.
-	typedef EIN_VISIT_INVOKER( GetType ) CollisionInvoker;
+	typedef EIN_VISIT_INVOKER( ProcessEvent ) CollisionInvoker;
+	EngineGame* engine;
+	Movable* collider;
 };
 
 void EngineGame::processEventObjectCollision(const EventObjectCollision& event) {
 
-	CollisionVisitor visitor;
-	std::cout<<"Collision detected between "<<visitor(*event.GetObject1())<<" and "<<visitor(*event.GetObject2())<<std::endl;
+	CollisionVisitor visitor1(this,event.GetObject2());
+	visitor1(*event.GetObject1());
+
+	CollisionVisitor visitor2(this,event.GetObject1());
+	visitor1(*event.GetObject2());
+
+
+	//std::cout<<"Collision detected between "<<visitor(*event.GetObject1())<<" and "<<visitor(*event.GetObject2())<<std::endl;
+}
+
+void EngineGame::processEventKill(const EventKill& event) {
+    event.GetVictim()->SetAlive(false);
+    manager->AddEvent(new EventKilled(event.GetVictim()));
+}
+
+
+
+void EngineGame::processEventKilled(const EventKilled& event){
+    manager->GetModel()->Remove(event.GetVictim());
 }
 
 }

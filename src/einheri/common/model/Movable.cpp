@@ -17,6 +17,7 @@ Movable::Movable() {
     speed = Vector(0.,0.);
     targetedSpeed = Vector(0.,0.);
     angle = 0.;
+    alive = true;
 }
 
 Movable::~Movable() {

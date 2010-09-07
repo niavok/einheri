@@ -76,6 +76,14 @@ public:
         this->needReportingCollision = needReportingCollision;
     }
 
+    bool IsAlive() {
+        return alive;
+    }
+
+    void SetAlive(bool alive) {
+        this->alive = alive;
+    }
+
 private:
     EinId id;
 
@@ -85,7 +93,7 @@ private:
     EinValue angle;
     bool needReportingCollision;
     std::string name;
-
+    bool alive;
 };
 
 }

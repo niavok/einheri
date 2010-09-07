@@ -22,6 +22,8 @@
 #include <einheri/common/event/EventHeroAdded.h>
 #include <einheri/common/event/EventProjectileAdded.h>
 #include <einheri/common/event/EventObjectCollision.h>
+#include <einheri/common/event/EventKill.h>
+#include <einheri/common/event/EventKilled.h>
 
 namespace ein {
 
@@ -41,6 +43,8 @@ public:
     virtual void Visit(const EventHeroAdded&){}
     virtual void Visit(const EventProjectileAdded&){}
     virtual void Visit(const EventObjectCollision&){}
+    virtual void Visit(const EventKill&){}
+    virtual void Visit(const EventKilled&){}
 
 };
 
