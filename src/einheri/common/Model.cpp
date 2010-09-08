@@ -56,27 +56,31 @@ private:
 };
 
 void Model::Remove(Movable *movable) {
-    std::cout<<"Model::Remove "<<movable<<std::endl;
+    std::cout<<"Model::Remove "<<movable->GetName()<<" "<<movable<<std::endl;
     RemoveVisitor visitor(this);
     visitor(*movable);
-    std::cout<<"Model::Remove fuite mémoire"<<movable<<std::endl;
 }
 
 void Model::RemoveMonster(Monster *monster) {
+    std::cout<<"Model::RemoveMonster 1 "<<monsters.size()<<std::endl;
     monsters.remove(monster);
-    //delete monster;
+    std::cout<<"Model::RemoveMonster 2 "<<monsters.size()<<std::endl;
+    std::cout<<"Model::RemoveMonster monster "<<monster<<std::endl;
+    delete monster;
 }
 void Model::RemoveHero(Hero *hero) {
     heroes.remove(hero);
-    //delete hero;
+    delete hero;
 }
 void Model::RemoveProjectile(Projectile *projectile) {
+    std::cout<<"Model::RemoveProjectile 1 "<<projectiles.size()<<std::endl;
     projectiles.remove(projectile);
-    //delete projectile;
+    std::cout<<"Model::RemoveProjectile 2 "<<projectiles.size()<<std::endl;
+    delete projectile;
 }
 void Model::RemoveBuilding(Building *building) {
     buildings.remove(building);
-    //delete building;
+    delete building;
 }
 
 }

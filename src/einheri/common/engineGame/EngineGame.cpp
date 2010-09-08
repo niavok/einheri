@@ -154,7 +154,6 @@ public:
 
 protected:
    virtual void ProcessEvent(const Movable& movable) {
-	std::cout << "Collision with movable detected " << typeid(movable).name()<< std::endl;
    }
 
    virtual void ProcessEvent(const Monster&) {
@@ -165,7 +164,6 @@ protected:
 
    }
    virtual void ProcessEvent(const Projectile& projectile) {
-       std::cout << "Collision with projectile detected " << typeid(projectile).name()<< std::endl;
         std::list<ProjectileController *>::iterator it;
         for (it = engine->GetProjectileControllers().begin(); it != engine->GetProjectileControllers().end(); it++) {
             ProjectileController* controller = *it;
@@ -195,11 +193,14 @@ void EngineGame::processEventObjectCollision(const EventObjectCollision& event) 
 }
 
 void EngineGame::processEventKill(const EventKill& event) {
-    event.GetVictim()->SetAlive(false);
-    manager->AddEvent(new EventKilled(event.GetVictim()));
+    if(event.GetVictim()->IsAlive()) {
+        event.GetVictim()->SetAlive(false);
+        manager->AddEvent(new EventKilled(event.GetVictim()));
+    }
 }
 
 void EngineGame::processEventKilled(const EventKilled& event){
+    std::cout<<"EngineGame::processEventKilled killed"<<event.GetVictim()<<std::endl;
     manager->GetModel()->Remove(event.GetVictim());
 }
 

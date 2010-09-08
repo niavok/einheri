@@ -25,15 +25,15 @@ public:
         return buildings;
     }
 
-    const std::list<Hero*> &GetHeroes() const {
+    const std::list<Hero*>& GetHeroes() const {
         return heroes;
     }
 
-    const std::list<Monster*> &GetMonsters() const {
+    const std::list<Monster*>& GetMonsters() const {
         return monsters;
     }
 
-    const std::list<Projectile*> &GetProjectiles() const {
+    const std::list<Projectile*>& GetProjectiles() const {
         return projectiles;
     }
 

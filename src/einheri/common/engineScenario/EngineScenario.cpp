@@ -26,7 +26,7 @@ EngineScenario::~EngineScenario() {
 void EngineScenario::Apply(const Event& /*event*/) {
 }
 
-double newMonsterWave = 4;
+double newMonsterWave = 1;
 void EngineScenario::Frame() {
     //std::cout << "Real " << Timer::get().GetRealTime() << std::endl;
     //

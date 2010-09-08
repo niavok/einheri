@@ -31,13 +31,11 @@ public:
 
 protected:
     virtual bool Process(Movable& projectile) {
-	std::cout<<"No PlasmaBall !"<< typeid(projectile).name()<<std::endl;
-        return false;
+	    return false;
 
     }
 
     virtual bool Process(PlasmaBall& ball) {
-        std::cout<<" PlasmaBall !"<<std::endl;
         controller->Process(&ball, collider);
 
         return true;
@@ -52,13 +50,11 @@ private:
 
 bool PlasmaBallController::processCollision(Projectile* projectile, Movable* collider) {
 
-    std::cout<<" PlasmaBallController::processCollision 1"<<std::endl;
 
     CollisionPlasmaBallVisitor visitor(this, collider);
 
     bool result = visitor(*projectile);
 
-    std::cout<<" PlasmaBallController::processCollision 2"<<result<<std::endl;
 
     return result;
     /*std::cout<<" PlasmaBallController::processCollision 1"<<std::endl;
@@ -70,6 +66,8 @@ bool PlasmaBallController::processCollision(Projectile* projectile, Movable* col
 
 void PlasmaBallController::Process(PlasmaBall* plasmaBall, Movable* collider) {
     if(plasmaBall->GetShooter() != collider) {
+        std::cout<<" PlasmaBallController::Process kill "<<plasmaBall<<std::endl;
+        std::cout<<" PlasmaBallController::Process kill "<<collider<<std::endl;
         manager->AddEvent(new EventKill(plasmaBall));
         manager->AddEvent(new EventKill(collider));
     }

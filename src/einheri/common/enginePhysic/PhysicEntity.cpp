@@ -30,6 +30,9 @@ PhysicEntity::PhysicEntity(Movable *movable) :
 }
 
 PhysicEntity::~PhysicEntity() {
+    delete rigidBody;
+    delete motionState;
+    delete sphereShape;
 
 }
 

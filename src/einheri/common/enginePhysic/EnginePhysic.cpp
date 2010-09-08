@@ -84,7 +84,7 @@ void EnginePhysic::initBulletEngine() {
 void EnginePhysic::processEventMonsterAdded(const EventMonsterAdded& eventMonsterAdded) {
     PhysicEntity *physicEntity = new PhysicEntity(eventMonsterAdded.GetMonster());
     physicEntities.push_back(physicEntity);
-
+    std::cout<<"EnginePhysic::processEventMonsterAdded "<<physicEntity<<" Movable "<<physicEntity->GetMovable()->GetName()<<" "<<physicEntity->GetMovable()<<std::endl;
     dynamicsWorld->addRigidBody(physicEntity->GetRigidBody());
 }
 
@@ -92,7 +92,7 @@ void EnginePhysic::processEventHeroAdded(const EventHeroAdded& eventHeroAdded) {
     PhysicEntity *physicEntity = new PhysicEntity(eventHeroAdded.GetHero());
     physicEntity->SetMass(1.5);
     physicEntities.push_back(physicEntity);
-
+    std::cout<<"EnginePhysic::processEventHeroAdded "<<physicEntity<<" Movable "<<physicEntity->GetMovable()->GetName()<<" "<<physicEntity->GetMovable()<<std::endl;
     dynamicsWorld->addRigidBody(physicEntity->GetRigidBody());
 }
 
@@ -100,19 +100,20 @@ void EnginePhysic::processEventProjectileAdded(const EventProjectileAdded& event
     PhysicEntity *physicEntity = new PhysicEntity(eventProjectileAdded.GetProjectile());
     physicEntity->SetMass(1000.1);
     physicEntities.push_back(physicEntity);
-
+    std::cout<<"EnginePhysic::processEventProjectileAdded "<<physicEntity<<" Movable "<<physicEntity->GetMovable()->GetName()<<" "<<physicEntity->GetMovable()<<std::endl;
     dynamicsWorld->addRigidBody(physicEntity->GetRigidBody());
 }
 
 void EnginePhysic::processEventKill(const EventKill& event) {
-    std::list<PhysicEntity *>::const_iterator it;
+    std::list<PhysicEntity *>::iterator it;
     for (it = physicEntities.begin(); it != physicEntities.end(); ++it) {
         PhysicEntity *physicEntity = *it;
         if(physicEntity->GetMovable() == event.GetVictim()) {
-            std::cout<<"EnginePhysic::processEventKill "<<physicEntity<<std::endl;
+            std::cout<<"EnginePhysic::processEventKill "<<physicEntity<<" Movable "<<physicEntity->GetMovable()->GetName()<<" "<<physicEntity->GetMovable()<<std::endl;
             dynamicsWorld->removeRigidBody(physicEntity->GetRigidBody());
-            physicEntities.remove(physicEntity);
-            break;
+            it = physicEntities.erase(it);
+            delete physicEntity;
+            //break;
         }
     }
 }

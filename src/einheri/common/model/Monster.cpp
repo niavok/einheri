@@ -11,7 +11,7 @@ namespace ein {
 
 Monster::Monster() {
     SetName("Unnamed monster");
-
+    std::cout<<"Monster::Monster "<<this<<std::endl;
 }
 
 Monster::~Monster() {
