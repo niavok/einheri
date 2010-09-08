@@ -16,7 +16,29 @@ Model::Model() {
 }
 
 Model::~Model() {
-    // TODO Auto-generated destructor stub
+    while (!monsters.empty()) {
+        Movable *movable = monsters.front();
+        delete movable;
+        monsters.pop_front();
+    }
+
+    while (!heroes.empty()) {
+        Movable *movable = heroes.front();
+        delete movable;
+        heroes.pop_front();
+    }
+
+    while (!buildings.empty()) {
+        Movable *movable = buildings.front();
+        delete movable;
+        buildings.pop_front();
+    }
+
+    while (!projectiles.empty()) {
+        Movable *movable = projectiles.front();
+        delete movable;
+        projectiles.pop_front();
+    }
 }
 
 class RemoveVisitor: public einUtils::Visitor<const Movable> {

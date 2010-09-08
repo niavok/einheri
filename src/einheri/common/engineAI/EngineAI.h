@@ -12,6 +12,7 @@
 #include <einheri/common/event/EventMonsterAdded.h>
 #include <list>
 #include "MonsterAI.h"
+#include <einheri/common/event/EventKill.h>
 
 namespace ein {
 
@@ -28,6 +29,7 @@ public:
 private:
     void frame(EinValue frameTime);
     void processEventMonsterAdded(const EventMonsterAdded& eventMonsterAdded);
+    void processEventKill(const EventKill& event);
 
 private:
     std::list<MonsterAI *> monsterAIs;

@@ -19,6 +19,11 @@ EngineAI::EngineAI(GameManager* manager) : FramerateEngine(manager){
 }
 
 EngineAI::~EngineAI() {
+    while (!monsterAIs.empty()) {
+        MonsterAI* ia = monsterAIs.front();
+        delete ia;
+        monsterAIs.pop_front();
+    }
 }
 
 void EngineAI::Apply(const Event& event) {
@@ -30,6 +35,10 @@ void EngineAI::Apply(const Event& event) {
 
             void Visit(const EventMonsterAdded& eventMonsterAdded) {
                 engine->processEventMonsterAdded(eventMonsterAdded);
+            }
+
+            void Visit(const EventKill& event) {
+                engine->processEventKill(event);
             }
 
         private:
@@ -54,6 +63,15 @@ void EngineAI::processEventMonsterAdded(const EventMonsterAdded& eventMonsterAdd
     //WanderingMonsterAI *wanderingMonsterAI = new WanderingMonsterAI(eventMonsterAdded.GetMonster());
     EatTheHeroMonsterAI *monsterAI = new EatTheHeroMonsterAI(manager, eventMonsterAdded.GetMonster());
     monsterAIs.push_back(monsterAI);
+}
+
+void EngineAI::processEventKill(const EventKill& event) {
+    std::list<MonsterAI *>::iterator it;
+    for(it = monsterAIs.begin(); it != monsterAIs.end(); ++it) {
+        if(event.GetVictim() == (*it)->GetMonster()) {
+            it = monsterAIs.erase(it);
+        }
+    }
 }
 
 }

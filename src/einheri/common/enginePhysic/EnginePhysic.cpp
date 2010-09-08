@@ -23,6 +23,13 @@ EnginePhysic::EnginePhysic(GameManager* manager) :
 }
 
 EnginePhysic::~EnginePhysic() {
+    while(!physicEntities.empty()) {
+        PhysicEntity *physicEntity = physicEntities.front();
+        dynamicsWorld->removeRigidBody(physicEntity->GetRigidBody());
+        delete physicEntity;
+        physicEntities.pop_front();
+    }
+
     delete dynamicsWorld;
     delete solver;
     delete dispatcher;

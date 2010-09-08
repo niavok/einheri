@@ -13,6 +13,7 @@ Player::Player() {
     name = "Unamed player";
     isLocal = true;
     hero = NULL;
+    wantMove = false;
 
 }
 

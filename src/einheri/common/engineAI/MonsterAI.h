@@ -19,6 +19,8 @@ public:
 
     virtual void Compute() = 0;
 
+    Monster *GetMonster() { return monster; }
+
 protected:
     Monster *monster;
     GameManager *manager;
