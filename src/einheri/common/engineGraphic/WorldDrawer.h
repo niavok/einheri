@@ -38,7 +38,8 @@ private:
     GameManager *manager;
     int monsterListIndex;
     Vector windowSize;
-
+    uint groundTextureId;
+    uint marineTextureId;
 };
 
 }
