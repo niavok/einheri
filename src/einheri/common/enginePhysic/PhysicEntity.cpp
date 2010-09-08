@@ -14,7 +14,7 @@ namespace ein {
 PhysicEntity::PhysicEntity(Movable *movable) :
     movable(movable) {
 
-    sphereShape = new btSphereShape(0.4);
+    sphereShape = new btSphereShape(movable->GetRadius());
 
     motionState = new KinematicMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)), movable);
 

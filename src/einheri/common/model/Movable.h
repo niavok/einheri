@@ -15,20 +15,18 @@
 namespace ein {
 class CollisionVisitor;
 
-class Movable : public einUtils::VisitableBase<Movable> {
+class Movable: public einUtils::VisitableBase<Movable> {
 public:
     EIN_DEFINE_VISITABLE()
 public:
     Movable();
     virtual ~Movable();
 
-    std::string GetName() const
-    {
+    std::string GetName() const {
         return name;
     }
 
-    void SetName(std::string name)
-    {
+    void SetName(std::string name) {
         this->name = name;
     }
 
@@ -84,6 +82,13 @@ public:
         this->alive = alive;
     }
 
+    EinValue GetRadius() const {
+        return radius;
+    }
+    void SetRadius(EinValue newRadius) {
+        radius = newRadius;
+    }
+
 private:
     EinId id;
 
@@ -91,6 +96,7 @@ private:
     Vector speed;
     Vector targetedSpeed;
     EinValue angle;
+    EinValue radius;
     bool needReportingCollision;
     std::string name;
     bool alive;

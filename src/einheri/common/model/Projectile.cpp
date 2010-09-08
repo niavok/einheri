@@ -12,6 +12,7 @@ namespace ein {
 Projectile::Projectile() {
     SetName("Unnamed projectile");
     SetNeedReportingCollision(true);
+    SetRadius(0.05);
 }
 
 Projectile::~Projectile() {

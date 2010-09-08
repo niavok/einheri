@@ -49,7 +49,7 @@ private:
 };
 
 bool PlasmaBallController::processCollision(Projectile* projectile, Movable* collider) {
-
+    std::cout<<" PlasmaBallController::processCollision "<<projectile->GetName()<<" collide "<<collider->GetName()<<std::endl;
 
     CollisionPlasmaBallVisitor visitor(this, collider);
 

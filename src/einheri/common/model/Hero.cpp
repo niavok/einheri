@@ -12,6 +12,7 @@ namespace ein {
 Hero::Hero() {
     SetName("Unnamed hero");
     SetNeedReportingCollision(true);
+    SetRadius(0.4);
 }
 
 Hero::~Hero() {
