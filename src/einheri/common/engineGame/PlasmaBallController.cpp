@@ -20,18 +20,20 @@ PlasmaBallController::~PlasmaBallController() {
 
 }
 
-class CollisionVisitor: public einUtils::Visitor<const Movable, bool> {
+class CollisionPlasmaBallVisitor: public einUtils::Visitor<Movable, bool> {
 public:
-    CollisionVisitor(PlasmaBallController* controller, Movable *collider) :
+    CollisionPlasmaBallVisitor(PlasmaBallController* controller, Movable *collider) :
         controller(controller), collider(collider) {
         Visit(*this, einUtils::Seq<Movable, PlasmaBall>::Type(), CollisionInvoker());
     }
-    virtual ~CollisionVisitor() {
+    virtual ~CollisionPlasmaBallVisitor() {
     }
 
 protected:
-    virtual bool Process(const Movable& ) {
+    virtual bool Process(Movable& projectile) {
+	std::cout<<"No PlasmaBall !"<< typeid(projectile).name()<<std::endl;
         return false;
+
     }
 
     virtual bool Process(PlasmaBall& ball) {
@@ -50,25 +52,27 @@ private:
 
 bool PlasmaBallController::processCollision(Projectile* projectile, Movable* collider) {
 
-    /*std::cout<<" PlasmaBallController::processCollision 1"<<std::endl;
+    std::cout<<" PlasmaBallController::processCollision 1"<<std::endl;
 
-    CollisionVisitor visitor(this, collider);
+    CollisionPlasmaBallVisitor visitor(this, collider);
 
     bool result = visitor(*projectile);
 
     std::cout<<" PlasmaBallController::processCollision 2"<<result<<std::endl;
 
-    return result;*/
-    std::cout<<" PlasmaBallController::processCollision 1"<<std::endl;
+    return result;
+    /*std::cout<<" PlasmaBallController::processCollision 1"<<std::endl;
     manager->AddEvent(new EventKill(projectile));
         manager->AddEvent(new EventKill(collider));
         std::cout<<" PlasmaBallController::processCollision 2"<<std::endl;
-    return true;
+    return true;*/
 }
 
 void PlasmaBallController::Process(PlasmaBall* plasmaBall, Movable* collider) {
-    manager->AddEvent(new EventKill(plasmaBall));
-    manager->AddEvent(new EventKill(collider));
+    if(plasmaBall->GetShooter() != collider) {
+        manager->AddEvent(new EventKill(plasmaBall));
+        manager->AddEvent(new EventKill(collider));
+    }
 }
 
 }

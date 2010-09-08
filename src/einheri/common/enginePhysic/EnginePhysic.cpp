@@ -145,7 +145,7 @@ void EnginePhysic::processCollision() {
             PhysicEntity *objectB = (PhysicEntity*) obB->getUserPointer();
 
             if(objectA->GetMovable()->IsNeedReportingCollision() || objectB->GetMovable()->IsNeedReportingCollision()) {
-                std::cout<<"EnginePhysic::processCollision"<<std::endl;
+                //std::cout<<"EnginePhysic::processCollision"<<std::endl;
                 manager->AddEvent(new EventObjectCollision(objectA->GetMovable(), objectB->GetMovable()));
             }
 

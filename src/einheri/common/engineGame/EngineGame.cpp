@@ -129,14 +129,15 @@ void EngineGame::processEventPrimaryActionBegin(const EventPrimaryActionBegin& e
     Player * player = event.GetPlayer();
     Hero * hero = player->getHero();
 
-    EinValue dist = 2.0;
+    EinValue dist = 0.3;
 
-    Projectile *projectile = new Projectile();
+    Projectile *projectile = new PlasmaBall();
     projectile->SetPosition(Vector(hero->GetPosition().getX() + dist * cos(hero->GetAngle()), hero->GetPosition().getY() + dist * sin(hero->GetAngle())));
     projectile->SetAngle(hero->GetAngle());
     projectile->SetSpeed(Vector(10 * cos(hero->GetAngle()), 10 * sin(hero->GetAngle())));
     projectile->SetTargetedSpeed(projectile->GetSpeed());
     projectile->SetName("Plasma ball");
+    projectile->SetShooter(hero);
     manager->GetModel()->AddProjectile(projectile);
 
     manager->AddEvent(new EventProjectileAdded(projectile));
@@ -145,26 +146,26 @@ void EngineGame::processEventPrimaryActionBegin(const EventPrimaryActionBegin& e
 
 class CollisionVisitor: public einUtils::Visitor<const Movable> {
 public:
-	CollisionVisitor(EngineGame* engine, Movable *collider):engine(engine), collider(collider) {
-        Visit(*this, einUtils::Seq<Hero, Projectile, Monster>::Type(), CollisionInvoker());
-    }
-    virtual ~CollisionVisitor() {
-    }
+       CollisionVisitor(EngineGame* engine, Movable *collider):engine(engine), collider(collider) {
+       Visit(*this, einUtils::Seq<Hero, Projectile, Monster, PlasmaBall>::Type(), CollisionInvoker());
+   }
+   virtual ~CollisionVisitor() {
+   }
 
 protected:
-    virtual void ProcessEvent(const Movable&) {
+   virtual void ProcessEvent(const Movable& movable) {
+	std::cout << "Collision with movable detected " << typeid(movable).name()<< std::endl;
+   }
 
-    }
+   virtual void ProcessEvent(const Monster&) {
 
-    virtual void ProcessEvent(const Monster&) {
+   }
 
-    }
+   virtual void ProcessEvent(const Hero&) {
 
-    virtual void ProcessEvent(const Hero&) {
-
-    }
-    virtual void ProcessEvent(const Projectile& projectile) {
-        std::cout << "Collision with projectile detected" << std::endl;
+   }
+   virtual void ProcessEvent(const Projectile& projectile) {
+       std::cout << "Collision with projectile detected " << typeid(projectile).name()<< std::endl;
         std::list<ProjectileController *>::iterator it;
         for (it = engine->GetProjectileControllers().begin(); it != engine->GetProjectileControllers().end(); it++) {
             ProjectileController* controller = *it;
@@ -173,15 +174,15 @@ protected:
             }
 
         }
-        std::cout << "Collision with projectile end" << std::endl;
+       std::cout << "Collision with projectile end" << std::endl;
 
-    }
+   }
 
 private:
-    // Here you can change the name of the Visit method.
-    typedef EIN_VISIT_INVOKER( ProcessEvent ) CollisionInvoker;
-    EngineGame* engine;
-    Movable* collider;
+   // Here you can change the name of the Visit method.
+   typedef EIN_VISIT_INVOKER( ProcessEvent ) CollisionInvoker;
+   EngineGame* engine;
+   Movable* collider;
 };
 
 void EngineGame::processEventObjectCollision(const EventObjectCollision& event) {

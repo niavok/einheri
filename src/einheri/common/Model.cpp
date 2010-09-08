@@ -6,6 +6,7 @@
  */
 
 #include "Model.h"
+#include <einheri/common/model/PlasmaBall.h>
 
 namespace ein {
 
@@ -22,7 +23,7 @@ class RemoveVisitor: public einUtils::Visitor<const Movable> {
 public:
     RemoveVisitor(Model* model) :
         model(model) {
-        Visit(*this, einUtils::Seq<Hero, Projectile, Monster, Building>::Type(), CollisionInvoker());
+        Visit(*this, einUtils::Seq<Hero, Projectile, Monster, Building, PlasmaBall>::Type(), CollisionInvoker());
     }
     virtual ~RemoveVisitor() {
     }
@@ -58,24 +59,24 @@ void Model::Remove(Movable *movable) {
     std::cout<<"Model::Remove "<<movable<<std::endl;
     RemoveVisitor visitor(this);
     visitor(*movable);
-
+    std::cout<<"Model::Remove fuite mémoire"<<movable<<std::endl;
 }
 
 void Model::RemoveMonster(Monster *monster) {
     monsters.remove(monster);
-    delete monster;
+    //delete monster;
 }
 void Model::RemoveHero(Hero *hero) {
     heroes.remove(hero);
-    delete hero;
+    //delete hero;
 }
 void Model::RemoveProjectile(Projectile *projectile) {
     projectiles.remove(projectile);
-    delete projectile;
+    //delete projectile;
 }
 void Model::RemoveBuilding(Building *building) {
     buildings.remove(building);
-    delete building;
+    //delete building;
 }
 
 }

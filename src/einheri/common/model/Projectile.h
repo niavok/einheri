@@ -18,6 +18,12 @@ public:
 public:
     Projectile();
     virtual ~Projectile();
+
+    void SetShooter(Movable* shooter) {this->shooter = shooter; }
+    Movable* GetShooter() { return shooter; }
+
+private:
+    Movable* shooter;
 };
 
 }
