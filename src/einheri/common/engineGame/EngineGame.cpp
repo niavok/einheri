@@ -130,12 +130,12 @@ void EngineGame::processEventPrimaryActionBegin(const EventPrimaryActionBegin& e
     Hero * hero = player->getHero();
 
     EinValue dist = 1.2;
-    EinValue dist2 = -0.3;
+    EinValue dist2 = -0.2;
 
     Projectile *projectile = new PlasmaBall();
     projectile->SetPosition(Vector(
-            hero->GetPosition().getX() + dist2 * cos(hero->GetAngle()+0.83)+ dist * cos(hero->GetAngle()) ,
-            hero->GetPosition().getY() + dist2 * sin(hero->GetAngle()+0.83)+ dist * sin(hero->GetAngle())));
+            hero->GetPosition().getX() + dist2 * cos(hero->GetAngle()+0.52)+ dist * cos(hero->GetAngle()) ,
+            hero->GetPosition().getY() + dist2 * sin(hero->GetAngle()+0.52)+ dist * sin(hero->GetAngle())));
     projectile->SetAngle(hero->GetAngle());
     projectile->SetSpeed(Vector(10 * cos(hero->GetAngle()), 10 * sin(hero->GetAngle())));
     projectile->SetTargetedSpeed(projectile->GetSpeed());

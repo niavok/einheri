@@ -194,8 +194,8 @@ void WorldDrawer::paintHeroes() {
         glPushMatrix();
         Hero *hero = *it;
         glTranslatef(hero->GetPosition().getX(), hero->GetPosition().getY(), 0);
-        glRotatef(47+hero->GetAngle() * 180 / M_PI, 0, 0, 1);
-        glTranslatef(0.0, -0.3, 0);
+        glRotatef(30+hero->GetAngle() * 180 / M_PI, 0, 0, 1);
+        glTranslatef(0.0, -0.1, 0);
         float size = 0.5;
         float texOffset = 1;
 
@@ -205,13 +205,13 @@ void WorldDrawer::paintHeroes() {
 
             glBegin(GL_QUADS);
             glColor3f(1, 1, 1);
-            glTexCoord2f(texOffset,0+0.05);
+            glTexCoord2f(texOffset,0);
             glVertex3f(-size, -size, 0.f);
-            glTexCoord2f(0,0+0.05);
+            glTexCoord2f(0,0);
             glVertex3f(size, -size, 0.f);
-            glTexCoord2f(0,texOffset+0.05);
+            glTexCoord2f(0,texOffset);
             glVertex3f(size, size, 0.f);
-            glTexCoord2f(texOffset,texOffset+0.05);
+            glTexCoord2f(texOffset,texOffset);
             glVertex3f(-size, size, 0.f);
 
 

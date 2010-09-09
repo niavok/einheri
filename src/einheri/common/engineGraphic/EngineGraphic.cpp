@@ -67,7 +67,7 @@ void EngineGraphic::initWindow() {
     Settings.DepthBits = 24; // Request a 24 bits depth buffer
     Settings.StencilBits = 8; // Request a 8 bits stencil buffer
     Settings.AntialiasingLevel = 8; // Request 2 levels of antialiasing
-    renderWindow = new sf::RenderWindow(sf::VideoMode(1650, 1080, 32), "Einheri", sf::Style::Close | sf::Style::Resize, Settings);
+    renderWindow = new sf::RenderWindow(sf::VideoMode(1280, 1024, 32), "Einheri", sf::Style::Close | sf::Style::Resize, Settings);
     renderWindow->ShowMouseCursor(false);
     renderWindow->PreserveOpenGLStates(true);
     manager->GetCameraModel()->SetWindowSize(Vector(renderWindow->GetWidth(), renderWindow->GetHeight()));
