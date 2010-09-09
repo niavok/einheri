@@ -5,8 +5,8 @@
  *      Author: fred
  */
 
-#ifndef TIMER_H_
-#define TIMER_H_
+#ifndef EIN_TIMER_H_
+#define EIN_TIMER_H_
 
 #include <einheri/utils/Singleton.h>
 #include <einheri/common/Vect2.h>
@@ -44,4 +44,4 @@ private:
 
 }
 
-#endif /* TIMER_H_ */
+#endif /* EIN_TIMER_H_ */

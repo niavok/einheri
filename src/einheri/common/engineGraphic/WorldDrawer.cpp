@@ -78,6 +78,8 @@ void WorldDrawer::Init() {
     glAlphaFunc(GL_GREATER, 0.5f);
     glShadeModel(GL_SMOOTH);
     //glBlendFunc(GL_ONE_MINUS_DST_ALPHA,GL_DST_ALPHA);
+
+    bloodRenderer.Init();
 }
 
 void WorldDrawer::Draw() {
@@ -87,9 +89,8 @@ void WorldDrawer::Draw() {
     configureCamera();
 
     paintGround();
-
-    paintCorpses();
     paintDecorations();
+    paintCorpses();
     paintProjectiles();
     paintMonsters();
     paintHeroes();
@@ -164,7 +165,12 @@ void WorldDrawer::paintCorpses() {
 
 }
 void WorldDrawer::paintDecorations() {
+    std::list<Decoration *>::const_iterator it;
 
+        for (it = manager->GetDecorationModel()->GetDecorations().begin(); it != manager->GetDecorationModel()->GetDecorations().end(); ++it) {
+            Decoration *decoration = *it;
+            bloodRenderer.Render(decoration);
+        }
 }
 
 void WorldDrawer::paintMonsters() {

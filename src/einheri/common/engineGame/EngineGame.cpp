@@ -156,7 +156,7 @@ public:
    }
 
 protected:
-   virtual void ProcessEvent(const Movable& movable) {
+   virtual void ProcessEvent(const Movable& ) {
    }
 
    virtual void ProcessEvent(const Monster&) {

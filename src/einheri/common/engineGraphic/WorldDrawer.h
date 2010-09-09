@@ -8,6 +8,7 @@
 #ifndef EIN_WORLDDRAWER_H_
 #define EIN_WORLDDRAWER_H_
 #include <einheri/common/GameManager.h>
+#include "BloodRenderer.h"
 
 namespace ein {
 
@@ -40,6 +41,8 @@ private:
     Vector windowSize;
     uint groundTextureId;
     uint marineTextureId;
+
+    BloodRenderer bloodRenderer;
 };
 
 }

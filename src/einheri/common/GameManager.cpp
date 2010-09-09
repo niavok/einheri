@@ -21,6 +21,7 @@ GameManager::GameManager() :
     inputModel = new InputModel();
     cameraModel = new CameraModel();
     gameModel = new GameModel();
+    decorationModel = new DecorationModel();
 }
 
 GameManager::~GameManager() {

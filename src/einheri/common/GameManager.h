@@ -18,6 +18,7 @@
 #include <einheri/common/InputModel.h>
 #include <einheri/common/CameraModel.h>
 #include <einheri/common/GameModel.h>
+#include <einheri/common/DecorationModel.h>
 
 namespace ein {
 
@@ -38,6 +39,7 @@ public:
     InputModel* GetInputModel() { return inputModel; }
     CameraModel* GetCameraModel() { return cameraModel; }
     GameModel* GetGameModel() { return gameModel; }
+    DecorationModel* GetDecorationModel() { return decorationModel; }
 
 private:
     bool running;
@@ -47,6 +49,7 @@ private:
     InputModel* inputModel;
     CameraModel* cameraModel;
     GameModel* gameModel;
+    DecorationModel* decorationModel;
 };
 
 }

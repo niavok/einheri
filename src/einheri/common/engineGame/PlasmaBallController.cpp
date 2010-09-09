@@ -30,7 +30,7 @@ public:
     }
 
 protected:
-    virtual bool Process(Movable& projectile) {
+    virtual bool Process(Movable&) {
 	    return false;
 
     }

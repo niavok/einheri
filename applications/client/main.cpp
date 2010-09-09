@@ -9,6 +9,7 @@
 #include <einheri/common/engineScenario/EngineScenario.h>
 #include <einheri/common/engineAI/EngineAI.h>
 #include <einheri/common/engineCamera/EngineCamera.h>
+#include <einheri/common/engineDecoration/EngineDecoration.h>
 
 int main()
 {
@@ -23,6 +24,7 @@ int main()
     gameManager.AddEngine(new ein::EngineScenario(&gameManager));
     gameManager.AddEngine(new ein::EngineAI(&gameManager));
     gameManager.AddEngine(new ein::EngineCamera(&gameManager));
+    gameManager.AddEngine(new ein::EngineDecoration(&gameManager));
 
     gameManager.Run();
 

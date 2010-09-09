@@ -31,7 +31,7 @@ void EngineScenario::Frame() {
     //std::cout << "Real " << Timer::get().GetRealTime() << std::endl;
     //
     if (Timer::get().GetGameTime() > newMonsterWave) {
-        newMonsterWave += 1;
+        newMonsterWave += 2.5;
         Monster *monster1 = new Monster();
         monster1->SetPosition(Vector(4, 4));
         monster1->SetAngle(M_PI / 4.f);

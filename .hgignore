@@ -13,3 +13,4 @@ src/server/einheri-server
 log*
 gmon.out
 include/einheri/utils/FileFinder.h
+CMakeModules/cmake_uninstall.cmake
