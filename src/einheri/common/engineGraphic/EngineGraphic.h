@@ -11,7 +11,7 @@
 #include <einheri/common/Engine.h>
 #include "einheri/common/FramerateEngine.h"
 #include <SFML/Graphics.hpp>
-#include "WorldDrawer.h"
+#include "GenericWorldDrawer.h"
 
 namespace ein {
 
@@ -23,6 +23,13 @@ public:
     virtual ~EngineGraphic();
 
     void Apply(const Event& event);
+
+    /**
+     * Configure the graphic engine to use a debug renderer working on very slow
+     * gpu drivers (as open source drivers)
+     */
+    void UseFastRender(bool fastRender);
+
 private:
     void frame(EinValue frameTime);
 
@@ -34,7 +41,7 @@ private:
 private :
 
     sf::RenderWindow *renderWindow;
-    WorldDrawer * worldDrawer;
+    GenericWorldDrawer * worldDrawer;
 
     sf::Clock framerateClock;
     sf::String title;

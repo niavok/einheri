@@ -13,6 +13,8 @@
 #include <sstream>
 #include "einheri/common/event/EventWindowCreated.h"
 #include <einheri/common/event/EventVisitor.h>
+#include "WorldDrawer.h"
+#include "FastWorldDrawer.h"
 
 using einUtils::FileFinder;
 
@@ -46,6 +48,16 @@ void EngineGraphic::Apply(const Event& event) {
     };
     EngineGraphicVisitor visitor(this);
     event.accept(visitor);
+}
+
+void EngineGraphic::UseFastRender(bool fastRender){
+    delete worldDrawer;
+
+    if(fastRender) {
+        worldDrawer = new FastWorldDrawer(manager);
+    } else {
+        worldDrawer = new WorldDrawer(manager);
+    }
 }
 
 void EngineGraphic::frame(EinValue) {

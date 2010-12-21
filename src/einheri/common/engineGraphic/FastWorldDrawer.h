@@ -5,18 +5,18 @@
  *      Author: fred
  */
 
-#ifndef EIN_WORLDDRAWER_H_
-#define EIN_WORLDDRAWER_H_
+#ifndef EIN_FASTWORLDDRAWER_H_
+#define EIN_FASTWORLDDRAWER_H_
 #include <einheri/common/GameManager.h>
 #include "GenericWorldDrawer.h"
 #include "BloodRenderer.h"
 
 namespace ein {
 
-class WorldDrawer : public GenericWorldDrawer {
+class FastWorldDrawer : public GenericWorldDrawer{
 public:
-    WorldDrawer(GameManager * manager);
-    virtual ~WorldDrawer();
+    FastWorldDrawer(GameManager * manager);
+    virtual ~FastWorldDrawer();
 
     void Init();
     void Draw();
@@ -40,7 +40,6 @@ private:
     GameManager *manager;
     int monsterListIndex;
     Vector windowSize;
-    uint groundTextureId;
     uint marineTextureId;
 
     BloodRenderer bloodRenderer;
@@ -48,4 +47,4 @@ private:
 
 }
 
-#endif /* EIN_WORLDDRAWER_H_ */
+#endif /* EIN_FASTWORLDDRAWER_H_ */

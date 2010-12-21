@@ -16,7 +16,12 @@ int main()
 
     ein::GameManager gameManager;
     gameManager.AddEngine(new ein::EngineGame(&gameManager));
-    gameManager.AddEngine(new ein::EngineGraphic(&gameManager));
+
+    // Configure graphic engine
+    ein::EngineGraphic* graphicEngine = new ein::EngineGraphic(&gameManager);
+    graphicEngine->UseFastRender(true);
+    gameManager.AddEngine(graphicEngine);
+
     gameManager.AddEngine(new ein::EngineSound(&gameManager));
     gameManager.AddEngine(new ein::EngineInput(&gameManager));
     gameManager.AddEngine(new ein::EnginePlayer(&gameManager));
