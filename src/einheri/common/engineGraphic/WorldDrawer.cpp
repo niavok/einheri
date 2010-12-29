@@ -55,6 +55,10 @@ void WorldDrawer::Init() {
         if (!marineImage.LoadFromFile(FileFinder::get().file("share/marine.png")))
             return;
 
+    sf::Image ghostImage;
+        if (!ghostImage.LoadFromFile(FileFinder::get().file("share/ghost.png")))
+            return;
+
     glGenTextures(1, &groundTextureId);
     glBindTexture(GL_TEXTURE_2D, groundTextureId);
     gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, groundImage.GetWidth(), groundImage.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, groundImage.GetPixelsPtr());
@@ -66,6 +70,14 @@ void WorldDrawer::Init() {
     gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, marineImage.GetWidth(), marineImage.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, marineImage.GetPixelsPtr());
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+    glGenTextures(1, &ghostTextureId);
+    glBindTexture(GL_TEXTURE_2D, ghostTextureId);
+    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, ghostImage.GetWidth(), ghostImage.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, ghostImage.GetPixelsPtr());
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+
 
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
@@ -183,9 +195,30 @@ void WorldDrawer::paintMonsters() {
         Monster *monster = *it;
         glTranslatef(monster->GetPosition().getX(), monster->GetPosition().getY(), 0);
 
-        glRotatef(monster->GetAngle() * 180 / M_PI, 0, 0, 1);
+        glRotatef( monster->GetAngle() * 180 / M_PI - 90, 0, 0, 1);
 
-        glCallList(monsterListIndex);
+        float size = 0.5;
+        float texOffset = 1;
+
+        glBindTexture( GL_TEXTURE_2D, ghostTextureId );
+        glEnable(GL_TEXTURE_2D);
+
+
+        glBegin(GL_QUADS);
+        glColor3f(1, 1, 1);
+        glTexCoord2f(texOffset,0);
+        glVertex3f(-size, -size, 0.f);
+        glTexCoord2f(0,0);
+        glVertex3f(size, -size, 0.f);
+        glTexCoord2f(0,texOffset);
+        glVertex3f(size, size, 0.f);
+        glTexCoord2f(texOffset,texOffset);
+        glVertex3f(-size, size, 0.f);
+
+
+        glEnd();
+
+        glDisable(GL_TEXTURE_2D);
 
         glPopMatrix();
     }
@@ -205,25 +238,25 @@ void WorldDrawer::paintHeroes() {
         float size = 0.5;
         float texOffset = 1;
 
-            glBindTexture( GL_TEXTURE_2D, marineTextureId );
-            glEnable(GL_TEXTURE_2D);
+        glBindTexture( GL_TEXTURE_2D, marineTextureId );
+        glEnable(GL_TEXTURE_2D);
 
 
-            glBegin(GL_QUADS);
-            glColor3f(1, 1, 1);
-            glTexCoord2f(texOffset,0);
-            glVertex3f(-size, -size, 0.f);
-            glTexCoord2f(0,0);
-            glVertex3f(size, -size, 0.f);
-            glTexCoord2f(0,texOffset);
-            glVertex3f(size, size, 0.f);
-            glTexCoord2f(texOffset,texOffset);
-            glVertex3f(-size, size, 0.f);
+        glBegin(GL_QUADS);
+        glColor3f(1, 1, 1);
+        glTexCoord2f(texOffset,0);
+        glVertex3f(-size, -size, 0.f);
+        glTexCoord2f(0,0);
+        glVertex3f(size, -size, 0.f);
+        glTexCoord2f(0,texOffset);
+        glVertex3f(size, size, 0.f);
+        glTexCoord2f(texOffset,texOffset);
+        glVertex3f(-size, size, 0.f);
 
 
-            glEnd();
+        glEnd();
 
-            glDisable(GL_TEXTURE_2D);
+        glDisable(GL_TEXTURE_2D);
         glPopMatrix();
     }
 

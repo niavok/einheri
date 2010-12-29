@@ -42,6 +42,7 @@ private:
     Vector windowSize;
     uint groundTextureId;
     uint marineTextureId;
+    uint ghostTextureId;
 
     BloodRenderer bloodRenderer;
 };

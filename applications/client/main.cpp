@@ -19,7 +19,7 @@ int main()
 
     // Configure graphic engine
     ein::EngineGraphic* graphicEngine = new ein::EngineGraphic(&gameManager);
-    graphicEngine->UseFastRender(true);
+    graphicEngine->UseFastRender(false);
     gameManager.AddEngine(graphicEngine);
 
     gameManager.AddEngine(new ein::EngineSound(&gameManager));
