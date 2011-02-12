@@ -9,10 +9,10 @@
 #define EHR_COMMON_ENGINEGRAPHIC_H_
 
 #include <einheri/common/Engine.h>
-#include "einheri/common/FramerateEngine.h"
+#include <einheri/common/FramerateEngine.h>
 #include <SFML/Graphics.hpp>
 #include "GenericWorldDrawer.h"
-#include <einheri/common/ClientGameManager.h>
+#include <einheri/client/ClientGameManager.h>
 
 namespace ein {
 

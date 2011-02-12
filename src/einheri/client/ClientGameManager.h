@@ -1,7 +1,7 @@
 #ifndef EIN_CLIENTGAMEMANAGER_H
 #define EIN_CLIENTGAMEMANAGER_H
 
-#include "GameManager.h"
+#include <einheri/common/GameManager.h>
 
 namespace ein {
 

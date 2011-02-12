@@ -10,9 +10,9 @@
 
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
-#include <einheri/common/engineNetwork/messages/NetworkMessage.h>
+#include <einheri/common/network/messages/NetworkMessage.h>
 #include <einheri/common/Player.h>
-#include <einheri/common/engineNetwork/NetworkDistantNode.h>
+#include <einheri/common/network/NetworkDistantNode.h>
 
 namespace ein {
 

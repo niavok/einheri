@@ -10,7 +10,7 @@
 
 #include <einheri/common/Engine.h>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <einheri/common/ClientGameManager.h>
+#include <einheri/client/ClientGameManager.h>
 
 namespace ein {
 

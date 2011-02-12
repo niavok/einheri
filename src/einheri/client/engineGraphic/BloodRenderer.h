@@ -7,7 +7,7 @@
 
 #ifndef EIN_BLOODRENDERER_H_
 #define EIN_BLOODRENDERER_H_
-#include <einheri/common/Decoration.h>
+#include <einheri/client/Decoration.h>
 #include <cstdlib>
 
 namespace ein {

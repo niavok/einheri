@@ -15,10 +15,10 @@
 #include <einheri/common/Engine.h>
 #include <einheri/common/Event.h>
 #include <einheri/common/Model.h>
-#include <einheri/common/InputModel.h>
-#include <einheri/common/CameraModel.h>
+#include <einheri/client/InputModel.h>
+#include <einheri/client/CameraModel.h>
 #include <einheri/common/GameModel.h>
-#include <einheri/common/DecorationModel.h>
+#include <einheri/client/DecorationModel.h>
 
 namespace ein {
 

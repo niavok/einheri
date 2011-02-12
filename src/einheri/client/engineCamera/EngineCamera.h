@@ -9,7 +9,7 @@
 #define EIN_ENGINECAMERA_H_
 
 #include <einheri/common/FramerateEngine.h>
-#include <einheri/common/ClientGameManager.h>
+#include <einheri/client/ClientGameManager.h>
 
 namespace ein {
 

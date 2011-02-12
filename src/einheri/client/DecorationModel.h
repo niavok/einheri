@@ -9,7 +9,7 @@
 #define EIN_DECORATION_MODEL_H_
 
 #include <einheri/common/Vect2.h>
-#include <einheri/common/Decoration.h>
+#include <einheri/client/Decoration.h>
 #include <list>
 
 namespace ein {

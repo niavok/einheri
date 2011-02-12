@@ -7,7 +7,7 @@
 
 #ifndef EIN_WORLDDRAWER_H_
 #define EIN_WORLDDRAWER_H_
-#include <einheri/common/ClientGameManager.h>
+#include <einheri/client/ClientGameManager.h>
 #include "GenericWorldDrawer.h"
 #include "BloodRenderer.h"
 

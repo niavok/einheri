@@ -13,7 +13,7 @@
 #include <einheri/common/event/EventKeyReleased.h>
 #include <einheri/common/event/EventMouseButtonReleased.h>
 #include <einheri/common/event/EventMouseButtonPressed.h>
-#include <einheri/common/ClientGameManager.h>
+#include <einheri/client/ClientGameManager.h>
 
 namespace ein {
 

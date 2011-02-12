@@ -1,15 +1,15 @@
 
-#include <einheri/common/ClientGameManager.h>
+#include <einheri/client/ClientGameManager.h>
 #include <einheri/common/engineGame/EngineGame.h>
-#include <einheri/common/engineGraphic/EngineGraphic.h>
-#include <einheri/common/engineSound/EngineSound.h>
-#include <einheri/common/engineInput/EngineInput.h>
+#include <einheri/client/engineGraphic/EngineGraphic.h>
+#include <einheri/client/engineSound/EngineSound.h>
+#include <einheri/client/engineInput/EngineInput.h>
 #include <einheri/common/enginePlayer/EnginePlayer.h>
 #include <einheri/common/enginePhysic/EnginePhysic.h>
 #include <einheri/common/engineScenario/EngineScenario.h>
 #include <einheri/common/engineAI/EngineAI.h>
-#include <einheri/common/engineCamera/EngineCamera.h>
-#include <einheri/common/engineDecoration/EngineDecoration.h>
+#include <einheri/client/engineCamera/EngineCamera.h>
+#include <einheri/client/engineDecoration/EngineDecoration.h>
 
 int main()
 {

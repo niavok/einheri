@@ -10,7 +10,7 @@
 
 #include <einheri/common/FramerateEngine.h>
 #include <einheri/common/event/EventKill.h>
-#include <einheri/common/ClientGameManager.h>
+#include <einheri/client/ClientGameManager.h>
 
 namespace ein {
 
