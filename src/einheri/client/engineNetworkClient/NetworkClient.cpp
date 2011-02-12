@@ -5,6 +5,8 @@
 
 #include "NetworkClient.h"
 #include <SFML/Network.hpp>
+#include <einheri/common/network/messages/NetworkMessage.h>
+#include <einheri/common/network/messages/ServerHelloMessage.h>
 
 namespace ein {
 
@@ -62,7 +64,31 @@ void NetworkClient::Run(){
 
 void NetworkClient::Dispatch ( sf::Packet packet)
 {
+    NetworkMessage::MessageType messageType = NetworkMessage::ParseMessageType(&packet);
+    
+    
+    
+    switch(messageType) {
+     
+        case NetworkMessage::SERVER_HELLO:
+            processServerHelloMessage(&packet);
+            break;
+        default:
+            std::cout << "Protocol failure: invalid message type: "<< messageType << std::endl;
+             break;
+    }
+    
+}
 
+
+void NetworkClient::processServerHelloMessage(sf::Packet* packet)
+{
+    ServerHelloMessage message;
+    message.Parse(packet);
+
+    std::cout << "SERVER_HELLO received" << std::endl;
+    std::cout << "protocol version: " << message.majorProtocolVersion << "."<< message.minorProtocolVersion <<std::endl;
+    std::cout << "server description: " << message.description <<std::endl;    
 }
 
 

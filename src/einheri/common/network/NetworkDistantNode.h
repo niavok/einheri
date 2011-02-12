@@ -9,6 +9,7 @@
 #define EIN_COMMON_NETWORKDISTANTNODE_H_
 
 #include <SFML/Network.hpp>
+#include "messages/NetworkMessage.h"
 
 namespace ein {
 
@@ -20,7 +21,7 @@ public:
     virtual ~NetworkDistantNode();
 
 
-    void Send(sf::Packet &packet);
+    void Send(NetworkMessage *message);
     void SetSocket(sf::SocketTCP socket);
 
 private:

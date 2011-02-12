@@ -10,10 +10,32 @@
 
 namespace ein {
 
-NetworkMessage::NetworkMessage(){
+NetworkMessage::NetworkMessage(MessageType type){
+    this->type = type;
 }
 
 NetworkMessage::~NetworkMessage() {
+}
+
+void NetworkMessage::Generate(sf::Packet* packet)
+{
+    p = packet;
+    (*p)<<type;
+    doGenerate();
+}
+
+void NetworkMessage::Parse(sf::Packet* packet)
+{
+    p = packet;
+    doParse();
+}
+
+NetworkMessage::MessageType NetworkMessage::ParseMessageType(sf::Packet* packet)
+{
+    int commandTypeInt;
+    (*packet) >> commandTypeInt;
+
+    return (NetworkMessage::MessageType) commandTypeInt;   
 }
 
 

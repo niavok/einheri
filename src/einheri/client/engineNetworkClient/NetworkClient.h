@@ -29,6 +29,7 @@ public:
 private:
     virtual void Run();
     void Dispatch ( sf::Packet packet);
+    void processServerHelloMessage(sf::Packet* arg1);
     bool running;
     sf::SocketTCP clientSocket;
 

@@ -5,6 +5,7 @@
 
 #include "NetworkServer.h"
 #include <SFML/Network.hpp>
+#include <einheri/common/network/messages/ServerHelloMessage.h>
 
 namespace ein {
 
@@ -61,6 +62,8 @@ void NetworkServer::Run(){
                     clients[clientSocket] = client;
                     // On l'ajoute au sélecteur
                     selector.Add(clientSocket);
+                    
+                    client->Send(new ServerHelloMessage());
                 }
                 else
                 {
