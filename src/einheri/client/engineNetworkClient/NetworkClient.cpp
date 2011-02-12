@@ -7,6 +7,7 @@
 #include <SFML/Network.hpp>
 #include <einheri/common/network/messages/NetworkMessage.h>
 #include <einheri/common/network/messages/ServerHelloMessage.h>
+#include <einheri/common/network/messages/ClientHelloMessage.h>
 
 namespace ein {
 
@@ -18,11 +19,13 @@ NetworkClient::~NetworkClient() {
 
 void NetworkClient::Start(){
     running = true;
+    clientSender.Start();
     Launch();
 }
 
 void NetworkClient::Stop(){
     running = false;
+    clientSender.Stop();
     Wait();
 }
 
@@ -39,6 +42,7 @@ void NetworkClient::Run(){
     std::cout << "NetworkEngine connected to 127.0.0.1 port 5959" << std::endl;
 
     selector.Add(clientSocket);
+    clientSender.SetSocket(clientSocket);
 
     while (running) {
         unsigned int nbSockets = selector.Wait(1);
@@ -88,7 +92,16 @@ void NetworkClient::processServerHelloMessage(sf::Packet* packet)
 
     std::cout << "SERVER_HELLO received" << std::endl;
     std::cout << "protocol version: " << message.majorProtocolVersion << "."<< message.minorProtocolVersion <<std::endl;
-    std::cout << "server description: " << message.description <<std::endl;    
+    std::cout << "server description: " << message.description <<std::endl;
+    
+    Send(new ClientHelloMessage());
+    
+}
+
+
+void NetworkClient::Send(NetworkMessage* message)
+{
+    clientSender.Send(message);
 }
 
 

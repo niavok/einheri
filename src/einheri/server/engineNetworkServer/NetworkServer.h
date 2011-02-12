@@ -13,6 +13,7 @@
 #include <einheri/common/network/messages/NetworkMessage.h>
 #include <einheri/common/Player.h>
 #include <einheri/common/network/NetworkDistantNode.h>
+#include "NetworkServerSender.h"
 
 namespace ein {
 
@@ -28,12 +29,15 @@ public:
     void SendMessageToPlayer(NetworkMessage* message, Player* player);
     void SendMessageToNetworkClient(NetworkMessage* message, Player* player);
 
+    
+    
 private:
     virtual void Run();
     void Dispatch ( sf::Packet packet, NetworkDistantNode* sender);
+    void Send(NetworkDistantNode* sender, NetworkMessage* message);
     bool running;
     std::map<sf::SocketTCP, NetworkDistantNode *> clients;
-
+    NetworkServerSender serverSender;
 
 
 

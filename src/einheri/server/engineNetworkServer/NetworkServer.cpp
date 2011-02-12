@@ -17,11 +17,13 @@ NetworkServer::~NetworkServer() {
 
 void NetworkServer::Start(){
     running = true;
+    serverSender.Start();
     Launch();
 }
 
 void NetworkServer::Stop(){
     running = false;
+    serverSender.Stop();
     Wait();
 }
 
@@ -42,6 +44,8 @@ void NetworkServer::Run(){
 
 
     while(running) {
+        std::cout<<"wait"<<std::endl;
+    
         unsigned int nbSockets = selector.Wait(1);
 
         for (unsigned int i = 0; i < nbSockets; ++i)
@@ -63,7 +67,7 @@ void NetworkServer::Run(){
                     // On l'ajoute au sélecteur
                     selector.Add(clientSocket);
                     
-                    client->Send(new ServerHelloMessage());
+                    Send(client, new ServerHelloMessage());
                 }
                 else
                 {
@@ -74,7 +78,7 @@ void NetworkServer::Run(){
                     if (socket.Receive(packet) == sf::Socket::Done)
                     {
                         NetworkDistantNode *client = clients[socket];
-                        //std::cout << "Packet received" << std::endl;
+                        std::cout << "Packet received" << std::endl;
                         Dispatch(packet, client);
                     }
                     else
@@ -97,9 +101,41 @@ void NetworkServer::Run(){
     std::cout<<"NetworkServer stopped"<<std::endl;
 }
 
+
+
+void NetworkServer::Send(NetworkDistantNode* sender, NetworkMessage* message)
+{
+    serverSender.Send(sender, message);
+}
+
+
+static void processClientHelloMessage(sf::Packet* packet, NetworkDistantNode* sender)
+{
+    ServerHelloMessage message;
+    message.Parse(packet);
+
+    std::cout << "CLIENT_HELLO received from client"<< sender << std::endl;
+    std::cout << "protocol version: " << message.majorProtocolVersion << "."<< message.minorProtocolVersion <<std::endl;
+    std::cout << "client description: " << message.description <<std::endl;
+    
+}
+
+
+
 void NetworkServer::Dispatch ( sf::Packet packet, NetworkDistantNode* sender )
 {
-
+    NetworkMessage::MessageType messageType = NetworkMessage::ParseMessageType(&packet);
+    
+    switch(messageType) {
+     
+        case NetworkMessage::CLIENT_HELLO:
+            processClientHelloMessage(&packet, sender);
+            break;
+        default:
+            std::cout << "Protocol failure: invalid message type: "<< messageType << std::endl;
+             break;
+    }
+    
 }
 
 

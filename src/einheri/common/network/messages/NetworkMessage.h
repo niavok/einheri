@@ -22,7 +22,9 @@ public:
     
     
     enum MessageType {
-        SERVER_HELLO
+        SERVER_HELLO = 0,
+        
+        CLIENT_HELLO = 1000000000
     };
     
     NetworkMessage(MessageType type);

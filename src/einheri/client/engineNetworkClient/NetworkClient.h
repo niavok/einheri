@@ -13,6 +13,7 @@
 #include <einheri/common/network/messages/NetworkMessage.h>
 #include <einheri/common/Player.h>
 #include <einheri/common/network/NetworkDistantNode.h>
+#include "NetworkClientSender.h"
 
 namespace ein {
 
@@ -32,7 +33,7 @@ private:
     void processServerHelloMessage(sf::Packet* arg1);
     bool running;
     sf::SocketTCP clientSocket;
-
+    NetworkClientSender clientSender;
 
 
 
