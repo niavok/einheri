@@ -7,7 +7,7 @@
 
 #ifndef EIN_FASTWORLDDRAWER_H_
 #define EIN_FASTWORLDDRAWER_H_
-#include <einheri/common/GameManager.h>
+#include <einheri/common/ClientGameManager.h>
 #include "GenericWorldDrawer.h"
 #include "BloodRenderer.h"
 
@@ -15,7 +15,7 @@ namespace ein {
 
 class FastWorldDrawer : public GenericWorldDrawer{
 public:
-    FastWorldDrawer(GameManager * manager);
+    FastWorldDrawer(ClientGameManager * manager);
     virtual ~FastWorldDrawer();
 
     void Init();
@@ -37,7 +37,7 @@ private:
     void paintCursor();
 
 private:
-    GameManager *manager;
+    ClientGameManager *manager;
     int monsterListIndex;
     Vector windowSize;
     uint marineTextureId;

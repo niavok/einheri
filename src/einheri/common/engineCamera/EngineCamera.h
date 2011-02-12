@@ -9,6 +9,7 @@
 #define EIN_ENGINECAMERA_H_
 
 #include <einheri/common/FramerateEngine.h>
+#include <einheri/common/ClientGameManager.h>
 
 namespace ein {
 
@@ -16,11 +17,12 @@ class Event;
 
 class EngineCamera : public FramerateEngine{
 public:
-    EngineCamera(GameManager* manager);
+    EngineCamera(ClientGameManager* manager);
     virtual ~EngineCamera();
 
     void Apply(const Event& event);
 private:
+    ClientGameManager* clientManager;
     void frame(EinValue framerate);
 
 

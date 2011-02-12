@@ -108,9 +108,9 @@ void EngineGame::Frame() {
         } else {
             hero->SetTargetedSpeed(Vector(0, 0));
         }
-
-        Vector cursor = manager->GetCameraModel()->Pick(manager->GetInputModel()->GetMouse());
-
+        
+        Vector cursor = hero->GetFocusPosition();
+        
         double heroX = hero->GetPosition().getX();
         double heroY = hero->GetPosition().getY();
 

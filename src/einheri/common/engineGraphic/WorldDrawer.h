@@ -7,7 +7,7 @@
 
 #ifndef EIN_WORLDDRAWER_H_
 #define EIN_WORLDDRAWER_H_
-#include <einheri/common/GameManager.h>
+#include <einheri/common/ClientGameManager.h>
 #include "GenericWorldDrawer.h"
 #include "BloodRenderer.h"
 
@@ -15,7 +15,7 @@ namespace ein {
 
 class WorldDrawer : public GenericWorldDrawer {
 public:
-    WorldDrawer(GameManager * manager);
+    WorldDrawer(ClientGameManager * manager);
     virtual ~WorldDrawer();
 
     void Init();
@@ -37,7 +37,7 @@ private:
     void paintCursor();
 
 private:
-    GameManager *manager;
+    ClientGameManager *manager;
     int monsterListIndex;
     Vector windowSize;
     uint groundTextureId;

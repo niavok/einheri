@@ -1,5 +1,5 @@
 FOREACH(FOLDER
-		#server
+		server
 		client
     )
   ADD_SUBDIRECTORY(${FOLDER})	

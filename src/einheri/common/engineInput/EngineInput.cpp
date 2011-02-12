@@ -14,8 +14,9 @@
 
 namespace ein {
 
-EngineInput::EngineInput(GameManager* manager) :
+EngineInput::EngineInput(ClientGameManager* manager) :
     Engine(manager) {
+    clientManager = manager;
     renderWindow = NULL;
 }
 
@@ -32,7 +33,7 @@ void EngineInput::Apply(const Event& event) {
         void Visit(const EventWindowCreated& evenWindowCreated) {
             engine->renderWindow = evenWindowCreated.getWindow();
             engine->input = &(engine->renderWindow->GetInput());
-            engine->manager->GetInputModel()->SetInput(engine->input);
+            engine->clientManager->GetInputModel()->SetInput(engine->input);
         }
     private:
         EngineInput* engine;
@@ -51,7 +52,7 @@ void EngineInput::Frame() {
                 renderWindow->Close();
 
             if (event.Type == sf::Event::Resized) {
-                manager->GetCameraModel()->SetWindowSize(Vector(event.Size.Width, event.Size.Height));
+                clientManager->GetCameraModel()->SetWindowSize(Vector(event.Size.Width, event.Size.Height));
                 manager->AddEvent(new EventWindowResized(Vector(event.Size.Width, event.Size.Height)));
             }
 

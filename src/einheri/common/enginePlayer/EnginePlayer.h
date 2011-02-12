@@ -13,6 +13,7 @@
 #include <einheri/common/event/EventKeyReleased.h>
 #include <einheri/common/event/EventMouseButtonReleased.h>
 #include <einheri/common/event/EventMouseButtonPressed.h>
+#include <einheri/common/ClientGameManager.h>
 
 namespace ein {
 
@@ -20,14 +21,14 @@ class Event;
 
 class EnginePlayer : public Engine{
 public:
-    EnginePlayer(GameManager* manager);
+    EnginePlayer(ClientGameManager* manager);
     virtual ~EnginePlayer();
 
     void Apply(const Event& event);
     void Frame();
 
 private:
-
+    ClientGameManager* clientManager;
     void refleshPlayersAction();
 
     void processEventKeyPressed(const EventKeyPressed& event);

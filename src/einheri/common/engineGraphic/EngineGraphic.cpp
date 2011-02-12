@@ -20,8 +20,9 @@ using einUtils::FileFinder;
 
 namespace ein {
 
-EngineGraphic::EngineGraphic(GameManager* manager) :
+EngineGraphic::EngineGraphic(ClientGameManager* manager) :
     FramerateEngine(manager) {
+    clientManager = manager;
     renderWindow = NULL;
     UseGameTime(false);
 
@@ -54,9 +55,9 @@ void EngineGraphic::UseFastRender(bool fastRender){
     delete worldDrawer;
 
     if(fastRender) {
-        worldDrawer = new FastWorldDrawer(manager);
+        worldDrawer = new FastWorldDrawer(clientManager);
     } else {
-        worldDrawer = new WorldDrawer(manager);
+        worldDrawer = new WorldDrawer(clientManager);
     }
 }
 
@@ -82,7 +83,7 @@ void EngineGraphic::initWindow() {
     renderWindow = new sf::RenderWindow(sf::VideoMode(1280, 1024, 32), "Einheri", sf::Style::Close | sf::Style::Resize, Settings);
     renderWindow->ShowMouseCursor(false);
     renderWindow->PreserveOpenGLStates(true);
-    manager->GetCameraModel()->SetWindowSize(Vector(renderWindow->GetWidth(), renderWindow->GetHeight()));
+    clientManager->GetCameraModel()->SetWindowSize(Vector(renderWindow->GetWidth(), renderWindow->GetHeight()));
 
     // Create a graphical string to display
     if (!font.LoadFromFile(FileFinder::get().file("share/DejaVuSans.ttf")))

@@ -36,20 +36,15 @@ public:
     void Frame(){}
 
     Model* GetModel() { return model; }
-    InputModel* GetInputModel() { return inputModel; }
-    CameraModel* GetCameraModel() { return cameraModel; }
     GameModel* GetGameModel() { return gameModel; }
-    DecorationModel* GetDecorationModel() { return decorationModel; }
-
+    
 private:
     bool running;
     std::queue<Event*> events;
     std::vector<Engine*> engines;
     Model* model;
-    InputModel* inputModel;
-    CameraModel* cameraModel;
     GameModel* gameModel;
-    DecorationModel* decorationModel;
+    
 };
 
 }

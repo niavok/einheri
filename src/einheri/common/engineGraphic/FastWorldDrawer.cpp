@@ -15,7 +15,7 @@ using einUtils::FileFinder;
 
 namespace ein {
 
-FastWorldDrawer::FastWorldDrawer(GameManager *manager) :
+FastWorldDrawer::FastWorldDrawer(ClientGameManager *manager) :
     manager(manager) {
 
 }

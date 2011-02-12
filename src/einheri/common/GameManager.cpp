@@ -18,16 +18,14 @@ GameManager::GameManager() :
     Engine(this) {
     running = true;
     model = new Model();
-    inputModel = new InputModel();
-    cameraModel = new CameraModel();
+    
     gameModel = new GameModel();
-    decorationModel = new DecorationModel();
+    
 }
 
 GameManager::~GameManager() {
     delete gameModel;
-    delete cameraModel;
-    delete inputModel;
+   
     delete model;
 
     while (!events.empty()) {

@@ -12,6 +12,7 @@
 #include "einheri/common/FramerateEngine.h"
 #include <SFML/Graphics.hpp>
 #include "GenericWorldDrawer.h"
+#include <einheri/common/ClientGameManager.h>
 
 namespace ein {
 
@@ -19,7 +20,7 @@ class Event;
 
 class EngineGraphic : public FramerateEngine {
 public:
-    EngineGraphic(GameManager* manager);
+    EngineGraphic(ClientGameManager* manager);
     virtual ~EngineGraphic();
 
     void Apply(const Event& event);
@@ -39,7 +40,7 @@ private:
     void paint();
 
 private :
-
+    ClientGameManager* clientManager;
     sf::RenderWindow *renderWindow;
     GenericWorldDrawer * worldDrawer;
 

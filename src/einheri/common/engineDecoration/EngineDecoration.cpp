@@ -14,8 +14,9 @@
 
 namespace ein {
 
-EngineDecoration::EngineDecoration(GameManager* manager) :
+EngineDecoration::EngineDecoration(ClientGameManager* manager) :
     FramerateEngine(manager) {
+    clientManager = manager;
 }
 
 EngineDecoration::~EngineDecoration() {
@@ -46,10 +47,10 @@ void EngineDecoration::Apply(const Event& event) {
 void EngineDecoration::frame(EinValue /*framerate*/) {
     std::list<Decoration *>::iterator it;
 
-    for (it = manager->GetDecorationModel()->GetDecorations().begin(); it != manager->GetDecorationModel()->GetDecorations().end(); ++it) {
+    for (it = clientManager->GetDecorationModel()->GetDecorations().begin(); it != clientManager->GetDecorationModel()->GetDecorations().end(); ++it) {
         Decoration *decoration = *it;
         if(Timer::get().GetGameTime() > decoration->GetEndTime()) {
-            it  = manager->GetDecorationModel()->RemoveDecoration(it);
+            it  = clientManager->GetDecorationModel()->RemoveDecoration(it);
         }
     }
 }
@@ -68,7 +69,7 @@ void EngineDecoration::processEventKill(const EventKill& event) {
         decoration->SetBeginTime(time);
         decoration->SetEndTime(time + 60);
 
-        manager->GetDecorationModel()->AddDecoration(decoration);
+        clientManager->GetDecorationModel()->AddDecoration(decoration);
     }
 }
 

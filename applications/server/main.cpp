@@ -1,26 +1,28 @@
-#include <server/Application.h>
 
-#include <iostream>
-
-#include "signal.h"
-
-void sigPipeHandler(int signum)
-{
-    std::cerr << "SIGPIPE " <<signum<< std::endl;
-}
+#include <einheri/common/GameManager.h>
+#include <einheri/common/engineGame/EngineGame.h>
+#include <einheri/common/enginePhysic/EnginePhysic.h>
+#include <einheri/common/engineScenario/EngineScenario.h>
+#include <einheri/common/engineAI/EngineAI.h>
+#include <einheri/common/engineNetwork/EngineNetworkServer.h>
 
 int main()
 {
-    if (signal(SIGPIPE, sigPipeHandler) == SIG_ERR)
-    {
-        std::cerr << "Fail to handler SIGPIPE" << std::endl;
-    }
 
-    einheriServer::Application application;
+    ein::GameManager gameManager;
+    //gameManager.AddEngine(new ein::EngineGame(&gameManager));
 
-    application.Run();
+    
+    //gameManager.AddEngine(new ein::EngineNetworkServer(&gameManager));
+    //gameManager.AddEngine(new ein::EnginePhysic(&gameManager));
+    //gameManager.AddEngine(new ein::EngineScenario(&gameManager));
+    //gameManager.AddEngine(new ein::EngineAI(&gameManager));
+    
+    gameManager.Run();
 
-    return EXIT_SUCCESS;
 
+
+
+    return 0;
 }
 

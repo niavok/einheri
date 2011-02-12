@@ -14,8 +14,9 @@
 
 namespace ein {
 
-EngineCamera::EngineCamera(GameManager* manager) :
+EngineCamera::EngineCamera(ClientGameManager* manager) :
     FramerateEngine(manager) {
+    clientManager = manager;
     UseGameTime(true);
     UseSoftFrameRate(true);
 
@@ -38,7 +39,7 @@ void EngineCamera::frame(EinValue) {
                      Player * player = manager->GetGameModel()->GetPlayers().front();
             Hero * hero = player->getHero();
 
-            manager->GetCameraModel()->SetPosition(hero->GetPosition());
+            clientManager->GetCameraModel()->SetPosition(hero->GetPosition());
     }
 }
 

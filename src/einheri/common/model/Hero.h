@@ -18,6 +18,17 @@ public:
 public:
     Hero();
     virtual ~Hero();
+    
+    Vector GetFocusPosition() const {
+        return focusPosition;
+    }
+    
+    void SetFocusPosition(Vector newFocusPosition) {
+        focusPosition = newFocusPosition;
+    }
+    
+private:
+    Vector focusPosition;
 };
 
 }

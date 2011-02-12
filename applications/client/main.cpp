@@ -1,5 +1,5 @@
 
-#include <einheri/common/GameManager.h>
+#include <einheri/common/ClientGameManager.h>
 #include <einheri/common/engineGame/EngineGame.h>
 #include <einheri/common/engineGraphic/EngineGraphic.h>
 #include <einheri/common/engineSound/EngineSound.h>
@@ -14,7 +14,7 @@
 int main()
 {
 
-    ein::GameManager gameManager;
+    ein::ClientGameManager gameManager;
     gameManager.AddEngine(new ein::EngineGame(&gameManager));
 
     // Configure graphic engine

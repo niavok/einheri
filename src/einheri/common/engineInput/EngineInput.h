@@ -10,6 +10,7 @@
 
 #include <einheri/common/Engine.h>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <einheri/common/ClientGameManager.h>
 
 namespace ein {
 
@@ -17,13 +18,14 @@ class Event;
 
 class EngineInput : public Engine{
 public:
-    EngineInput(GameManager* manager);
+    EngineInput(ClientGameManager* manager);
     virtual ~EngineInput();
 
     void Apply(const Event& event);
     void Frame();
 
 private:
+    ClientGameManager* clientManager;
     sf::RenderWindow *renderWindow;
     const sf::Input *input;
 };

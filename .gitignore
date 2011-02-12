@@ -1,0 +1,17 @@
+*.cpp~
+*.h~
+*.txt~
+.cproject
+.kdev4/
+.project
+CMakeLists.txt.user
+CMakeModules/cmake_uninstall.cmake
+build/
+include/einheri/utils/FileFinder.h
+einheri.kdev4
+doc/*.html
+doc/*.png
+doc/doxygen.css
+doc/installdox
+doc/search/
+doc/tabs.css

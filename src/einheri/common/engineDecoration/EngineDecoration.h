@@ -10,6 +10,7 @@
 
 #include <einheri/common/FramerateEngine.h>
 #include <einheri/common/event/EventKill.h>
+#include <einheri/common/ClientGameManager.h>
 
 namespace ein {
 
@@ -17,7 +18,7 @@ class Event;
 
 class EngineDecoration : public FramerateEngine{
 public:
-    EngineDecoration(GameManager* manager);
+    EngineDecoration(ClientGameManager* manager);
     virtual ~EngineDecoration();
 
     void Apply(const Event& event);
@@ -25,7 +26,7 @@ public:
     void processEventKill(const EventKill& event);
 
 private:
-
+    ClientGameManager* clientManager;
     void frame(EinValue framerate);
 
 

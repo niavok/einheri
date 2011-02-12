@@ -20,8 +20,9 @@
 
 namespace ein {
 
-EnginePlayer::EnginePlayer(GameManager* manager) :
+EnginePlayer::EnginePlayer(ClientGameManager* manager) :
     Engine(manager) {
+    clientManager = manager;
 }
 
 EnginePlayer::~EnginePlayer() {
@@ -61,6 +62,19 @@ void EnginePlayer::Apply(const Event& event) {
 }
 
 void EnginePlayer::Frame() {
+    
+    std::list<Player *>::const_iterator it;
+    
+    const std::list<Player *>& players = manager->GetGameModel()->GetPlayers();
+    
+    for (it = players.begin(); it != players.end(); ++it) {
+        Player * player = *it;
+        if (!player->getIsLocal()) {
+            continue;
+        }
+        
+        player->getHero()->SetFocusPosition(clientManager->GetCameraModel()->Pick(clientManager->GetInputModel()->GetMouse()));
+    }
 }
 
 //private
@@ -77,10 +91,10 @@ void EnginePlayer::refleshPlayersAction() {
             continue;
         }
 
-        bool left = manager->GetInputModel()->GetKeyState(sf::Key::Q);
-        bool right = manager->GetInputModel()->GetKeyState(sf::Key::D);
-        bool up = manager->GetInputModel()->GetKeyState(sf::Key::Z);
-        bool down = manager->GetInputModel()->GetKeyState(sf::Key::S);
+        bool left = clientManager->GetInputModel()->GetKeyState(sf::Key::Q);
+        bool right = clientManager->GetInputModel()->GetKeyState(sf::Key::D);
+        bool up = clientManager->GetInputModel()->GetKeyState(sf::Key::Z);
+        bool down = clientManager->GetInputModel()->GetKeyState(sf::Key::S);
 
         double angle = 0;
         bool move = left || right || up || down;
