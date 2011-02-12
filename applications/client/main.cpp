@@ -10,6 +10,7 @@
 #include <einheri/common/engineAI/EngineAI.h>
 #include <einheri/client/engineCamera/EngineCamera.h>
 #include <einheri/client/engineDecoration/EngineDecoration.h>
+#include <einheri/client/engineNetworkClient/EngineNetworkClient.h>
 
 int main()
 {
@@ -21,7 +22,7 @@ int main()
     ein::EngineGraphic* graphicEngine = new ein::EngineGraphic(&gameManager);
     graphicEngine->UseFastRender(false);
     gameManager.AddEngine(graphicEngine);
-
+    gameManager.AddEngine(new ein::EngineNetworkClient(&gameManager));
     gameManager.AddEngine(new ein::EngineSound(&gameManager));
     gameManager.AddEngine(new ein::EngineInput(&gameManager));
     gameManager.AddEngine(new ein::EnginePlayer(&gameManager));

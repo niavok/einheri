@@ -54,7 +54,7 @@ void EngineScenario::Frame() {
         monster4->SetName("Troll");
         manager->GetModel()->AddMonster(monster4);
 
-        std::cout << "The monster arrived ! Fly, you fools!" << std::endl;
+        //std::cout << "The monster arrived ! Fly, you fools!" << std::endl;
         manager->AddEvent(new EventMonsterAdded(monster1));
         manager->AddEvent(new EventMonsterAdded(monster2));
         manager->AddEvent(new EventMonsterAdded(monster3));
