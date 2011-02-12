@@ -71,7 +71,7 @@ void EngineInput::Frame() {
             if (event.Type == sf::Event::MouseButtonReleased) {
                 manager->AddEvent(new EventMouseButtonReleased(event.MouseButton.Button));
             }
-
+            
         }
 
     }

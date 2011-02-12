@@ -17,6 +17,7 @@
 #include <einheri/common/GameManager.h>
 #include <einheri/utils/Log.h>
 #include <einheri/common/event/EventPrimaryActionBegin.h>
+#include <einheri/common/event/EventQuitGame.h>
 
 namespace ein {
 
@@ -140,7 +141,10 @@ void EnginePlayer::refleshPlayersAction() {
 
 }
 
-void EnginePlayer::processEventKeyPressed(const EventKeyPressed& /*event*/) {
+void EnginePlayer::processEventKeyPressed(const EventKeyPressed& event) {
+    if (event.getKeyCode()  == sf::Key::Escape) {
+        manager->AddEvent(new EventQuitGame());
+    }
 
 }
 void EnginePlayer::processEventKeyReleased(const EventKeyReleased& /*event*/) {

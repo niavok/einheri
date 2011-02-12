@@ -24,6 +24,7 @@
 #include <einheri/common/event/EventObjectCollision.h>
 #include <einheri/common/event/EventKill.h>
 #include <einheri/common/event/EventKilled.h>
+#include <einheri/common/event/EventQuitGame.h>
 
 namespace ein {
 
@@ -45,6 +46,7 @@ public:
     virtual void Visit(const EventObjectCollision&){}
     virtual void Visit(const EventKill&){}
     virtual void Visit(const EventKilled&){}
+    virtual void Visit(const EventQuitGame&){}
 
 };
 

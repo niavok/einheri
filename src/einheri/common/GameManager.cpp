@@ -11,6 +11,7 @@
 
 #include "GameManager.h"
 #include <SFML/System.hpp>
+#include <einheri/common/event/EventQuitGame.h>
 
 namespace ein {
 
@@ -53,6 +54,11 @@ void GameManager::Apply(const Event& event) {
         void Visit(const EventWindowClose&) {
             manager->running = false;
         }
+        
+        void Visit(const EventQuitGame&) {
+            manager->running = false;
+        }
+        
     private:
         GameManager* manager;
     };
@@ -88,11 +94,11 @@ void GameManager::Run() {
 
     LOG("GameManager stopped ! ");
     BOOST_FOREACH(Engine * engine, engines)
-                {
-                    if (engine != this) {
-                        delete engine;
-                    }
-                }
+    {
+        if (engine != this) {
+            delete engine;
+        }
+    }
 
 }
 
