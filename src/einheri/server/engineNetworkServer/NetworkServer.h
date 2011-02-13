@@ -13,7 +13,7 @@
 #include <einheri/common/network/messages/NetworkMessage.h>
 #include <einheri/common/Player.h>
 #include <einheri/common/network/NetworkDistantNode.h>
-#include "NetworkServerSender.h"
+#include <einheri/server/engineNetworkServer/NetworkServerSender.h>
 
 
 namespace ein {
@@ -24,29 +24,32 @@ class NetworkServer : private sf::Thread {
 public:
     NetworkServer(EngineNetworkServer *engine);
     virtual ~NetworkServer();
-
+    
     void Start();
     void Stop();
 
     void SendMessageToAll(NetworkMessage* message);
     void SendMessageToPlayer(NetworkMessage* message, Player* player);
-    void SendMessageToNetworkClient(NetworkMessage* message, Player* player);
-
+    void SendMessageToClient(NetworkDistantNode* sender, NetworkMessage* message);
+    void SendMessageToAllElseOneClient(NetworkDistantNode* sender, NetworkMessage* message);
+    
     void ProcessMessages();
+    
+    std::map<sf::SocketTCP, NetworkDistantNode *> clients;
     
 private:
     virtual void Run();
     void Dispatch ( sf::Packet packet, NetworkDistantNode* sender);
-    void Send(NetworkDistantNode* sender, NetworkMessage* message);
+    
     bool running;
-    std::map<sf::SocketTCP, NetworkDistantNode *> clients;
+    
     NetworkServerSender serverSender;
     
     //Recevied message and sender queue
     sf::Mutex queueMutex;
     std::queue<NetworkMessage*> messageQueue;
     std::queue<NetworkDistantNode*> clientQueue;
-
+    
     //Parent engine
     EngineNetworkServer *engine;
 

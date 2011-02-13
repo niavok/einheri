@@ -7,10 +7,16 @@
 #include <SFML/Network.hpp>
 #include <einheri/common/network/messages/ServerHelloMessage.h>
 #include <einheri/common/network/messages/ClientHelloMessage.h>
+#include <einheri/common/network/messages/ClientCreatePlayerMessage.h>
+#include <einheri/common/network/messages/ClientPullWorldMessage.h>
 #include <einheri/server/engineNetworkServer/EngineNetworkServer.h>
+
 namespace ein {
 
-NetworkServer::NetworkServer(EngineNetworkServer *parentEngine): engine(parentEngine) {
+NetworkServer::NetworkServer(EngineNetworkServer *parentEngine):
+serverSender(this),
+engine(parentEngine)
+{
 }
 
 NetworkServer::~NetworkServer() {
@@ -66,7 +72,7 @@ void NetworkServer::Run(){
                     // On l'ajoute au sélecteur
                     selector.Add(clientSocket);
                     
-                    Send(client, new ServerHelloMessage());
+                    SendMessageToClient(client, new ServerHelloMessage());
                 }
                 else
                 {
@@ -102,9 +108,14 @@ void NetworkServer::Run(){
 
 
 
-void NetworkServer::Send(NetworkDistantNode* sender, NetworkMessage* message)
+void NetworkServer::SendMessageToClient(NetworkDistantNode* sender, NetworkMessage* message)
 {
     serverSender.Send(sender, message);
+}
+
+void NetworkServer::SendMessageToAllElseOneClient(NetworkDistantNode* sender, NetworkMessage* message)
+{
+    serverSender.SendAllElseOne(sender, message);
 }
 
 void NetworkServer::Dispatch ( sf::Packet packet, NetworkDistantNode* sender )
@@ -116,11 +127,26 @@ void NetworkServer::Dispatch ( sf::Packet packet, NetworkDistantNode* sender )
     switch(messageType) {
      
         case NetworkMessage::CLIENT_HELLO:
-            {
-                ClientHelloMessage* message = new ClientHelloMessage();
-                message->Parse(&packet);
-                genericMessage = message;
-            }
+        {
+            ClientHelloMessage* message = new ClientHelloMessage();
+            message->Parse(&packet);
+            genericMessage = message;
+        }
+            break;
+        case NetworkMessage::CLIENT_PULL_WORLD:
+        {
+            ClientPullWorldMessage* message = new ClientPullWorldMessage();
+            message->Parse(&packet);
+            genericMessage = message;
+        }
+            break;
+        case NetworkMessage::CLIENT_CREATE_PLAYER:
+        {
+
+            ClientCreatePlayerMessage* message = new ClientCreatePlayerMessage();
+            message->Parse(&packet);
+            genericMessage = message;
+        }
             break;
         default:
             std::cout << "Protocol failure: invalid message type: "<< messageType << std::endl;

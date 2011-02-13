@@ -9,6 +9,8 @@
 #include <einheri/common/network/messages/ServerHelloMessage.h>
 #include <einheri/common/network/messages/ClientHelloMessage.h>
 #include <einheri/client/engineNetworkClient/EngineNetworkClient.h>
+#include <einheri/common/network/messages/ServerWorldPulled.h>
+#include <einheri/common/network/messages/ServerAddPlayerMessage.h>
 
 namespace ein {
 
@@ -85,11 +87,25 @@ void NetworkClient::Dispatch (sf::Packet packet)
     switch(messageType) {
      
         case NetworkMessage::SERVER_HELLO:
-            {
-                ServerHelloMessage* message = new ServerHelloMessage();
-                message->Parse(&packet);
-                genericMessage = message;
-            }
+        {
+            ServerHelloMessage* message = new ServerHelloMessage();
+            message->Parse(&packet);
+            genericMessage = message;
+        }
+            break;
+        case NetworkMessage::SERVER_WORLD_PULLED:
+        {
+            ServerWorldPulledMessage* message = new ServerWorldPulledMessage();
+            message->Parse(&packet);
+            genericMessage = message;
+        }
+            break;
+        case NetworkMessage::SERVER_ADD_PLAYER:
+        {
+            ServerAddPlayerMessage* message = new ServerAddPlayerMessage();
+            message->Parse(&packet);
+            genericMessage = message;
+        }
             break;
         default:
             std::cout << "Protocol failure: invalid message type: "<< messageType << std::endl;

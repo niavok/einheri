@@ -70,7 +70,7 @@ void EnginePlayer::Frame() {
     
     for (it = players.begin(); it != players.end(); ++it) {
         Player * player = *it;
-        if (!player->getIsLocal()) {
+        if (!player->getIsLocal() || player->getHero() == NULL) {
             continue;
         }
         

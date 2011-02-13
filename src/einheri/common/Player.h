@@ -17,6 +17,11 @@ public:
     Player();
     virtual ~Player();
 
+    
+    EinId getId() const {
+        return id;
+    }
+    
     Hero *getHero() const {
         return hero;
     }
@@ -41,6 +46,10 @@ public:
         return wantedSpeed;
     }
 
+    void setId(EinId id) {
+        this->id = id;
+    }
+    
     void setHero(Hero *hero) {
         this->hero = hero;
     }
@@ -66,6 +75,7 @@ public:
     }
 
 private:
+    EinId id;
     std::string name;
     bool isLocal;
     Hero *hero;

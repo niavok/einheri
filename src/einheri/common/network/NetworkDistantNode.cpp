@@ -21,7 +21,6 @@ void NetworkDistantNode::Send(NetworkMessage* message) {
     sf::Packet packet;
     message->Generate(&packet);
     socket.Send(packet);
-    delete message;
 }
 
 

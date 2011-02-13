@@ -23,8 +23,20 @@ public:
     
     enum MessageType {
         SERVER_HELLO = 0,
+        SERVER_ADD_HERO,
+        SERVER_ADD_HEROES,
+        SERVER_ADD_MONSTER,
+        SERVER_ADD_MONSTERS,
+        SERVER_UPDATE_HERO,
+        SERVER_UPDATE_HEROES,
+        SERVER_UPDATE_MONSTER,
+        SERVER_UPDATE_MONSTERS,
+        SERVER_ADD_PLAYER,
+        SERVER_WORLD_PULLED,
         
-        CLIENT_HELLO = 1000000000
+        CLIENT_HELLO = 1000000000,
+        CLIENT_PULL_WORLD,
+        CLIENT_CREATE_PLAYER
     };
     
     NetworkMessage(MessageType type);
