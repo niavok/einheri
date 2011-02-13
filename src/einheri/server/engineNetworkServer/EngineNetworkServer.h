@@ -9,7 +9,7 @@
 #define EIN_COMMON_ENGINENETWORKSERVER_H_
 
 #include <einheri/common/Engine.h>
-#include "NetworkServer.h"
+#include <einheri/server/engineNetworkServer/NetworkServer.h>
 
 namespace ein {
 
@@ -22,6 +22,7 @@ public:
 
     void Apply(const Event& event);
     void Frame();
+    void ProcessMessage(ein::NetworkMessage* message, ein::NetworkDistantNode* sender);
 
 private:
     NetworkServer* networkServer;

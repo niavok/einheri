@@ -15,17 +15,22 @@
 #include <einheri/common/network/NetworkDistantNode.h>
 #include "NetworkClientSender.h"
 
+
 namespace ein {
 
+class EngineNetworkClient;
+    
 class NetworkClient: private sf::Thread {
 public:
-    NetworkClient();
+    NetworkClient(EngineNetworkClient *engine);
     virtual ~NetworkClient();
 
     void Start();
     void Stop();
 
     void Send(NetworkMessage* message);
+    void ProcessMessages();
+    
     
 private:
     virtual void Run();
@@ -35,7 +40,12 @@ private:
     sf::SocketTCP clientSocket;
     NetworkClientSender clientSender;
 
-
+    //Recevied message and sender queue
+    sf::Mutex queueMutex;
+    std::queue<NetworkMessage*> messageQueue;
+    
+    //Parent engine
+    EngineNetworkClient *engine;
 
 };
 

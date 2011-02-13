@@ -8,10 +8,11 @@
 #include <einheri/common/network/messages/NetworkMessage.h>
 #include <einheri/common/network/messages/ServerHelloMessage.h>
 #include <einheri/common/network/messages/ClientHelloMessage.h>
+#include <einheri/client/engineNetworkClient/EngineNetworkClient.h>
 
 namespace ein {
 
-NetworkClient::NetworkClient() {
+NetworkClient::NetworkClient(EngineNetworkClient *parentEngine):engine(parentEngine) {
 }
 
 NetworkClient::~NetworkClient() {
@@ -66,42 +67,59 @@ void NetworkClient::Run(){
     std::cout << "NetworkClient stopping" << std::endl;
 }
 
-void NetworkClient::Dispatch ( sf::Packet packet)
+
+void NetworkClient::Send(NetworkMessage* message)
 {
-    NetworkMessage::MessageType messageType = NetworkMessage::ParseMessageType(&packet);
+    clientSender.Send(message);
+}
+
+
+
+void NetworkClient::Dispatch (sf::Packet packet)
+{
     
+     NetworkMessage::MessageType messageType = NetworkMessage::ParseMessageType(&packet);
     
+    NetworkMessage *genericMessage;
     
     switch(messageType) {
      
         case NetworkMessage::SERVER_HELLO:
-            processServerHelloMessage(&packet);
+            {
+                ServerHelloMessage* message = new ServerHelloMessage();
+                message->Parse(&packet);
+                genericMessage = message;
+            }
             break;
         default:
             std::cout << "Protocol failure: invalid message type: "<< messageType << std::endl;
              break;
     }
+   
+    queueMutex.Lock();
+    messageQueue.push(genericMessage);
+    queueMutex.Unlock();
+    
     
 }
 
 
-void NetworkClient::processServerHelloMessage(sf::Packet* packet)
-{
-    ServerHelloMessage message;
-    message.Parse(packet);
-
-    std::cout << "SERVER_HELLO received" << std::endl;
-    std::cout << "protocol version: " << message.majorProtocolVersion << "."<< message.minorProtocolVersion <<std::endl;
-    std::cout << "server description: " << message.description <<std::endl;
-    
-    Send(new ClientHelloMessage());
-    
-}
-
-
-void NetworkClient::Send(NetworkMessage* message)
-{
-    clientSender.Send(message);
+void NetworkClient::ProcessMessages() {
+   queueMutex.Lock(); 
+   
+   while(!messageQueue.empty()) {
+       
+       NetworkMessage* message = messageQueue.front();
+       
+       messageQueue.pop();
+       
+       
+       engine->ProcessMessage(message);
+       
+       delete message;
+   }
+   queueMutex.Unlock();
+   
 }
 
 

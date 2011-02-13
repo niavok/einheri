@@ -14,7 +14,7 @@ public:
     std::string description;
 
     ClientHelloMessage():NetworkMessage(NetworkMessage::CLIENT_HELLO) {};
-    
+    ~ClientHelloMessage() {};
 protected:
     virtual void doGenerate() {
         majorProtocolVersion = NetworkMessage::MAJOR_PROTOCOL_VERSION;

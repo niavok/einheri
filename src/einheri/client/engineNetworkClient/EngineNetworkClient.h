@@ -9,7 +9,7 @@
 #define EIN_COMMON_ENGINENETWORKCLIENT_H_
 
 #include <einheri/common/Engine.h>
-#include "NetworkClient.h"
+#include <einheri/client/engineNetworkClient/NetworkClient.h>
 
 namespace ein {
 
@@ -22,6 +22,7 @@ public:
 
     void Apply(const Event& event);
     void Frame();
+    void ProcessMessage(ein::NetworkMessage* message);
 
 private:
     NetworkClient* networkClient;

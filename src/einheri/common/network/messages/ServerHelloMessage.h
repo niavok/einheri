@@ -14,6 +14,7 @@ public:
     std::string description;
 
     ServerHelloMessage():NetworkMessage(NetworkMessage::SERVER_HELLO) {};
+    ~ServerHelloMessage() {};
     
 protected:
     virtual void doGenerate() {

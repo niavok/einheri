@@ -28,9 +28,7 @@ public:
     };
     
     NetworkMessage(MessageType type);
-    
-    //No virtual destructor, don't make new in messages !
-    ~NetworkMessage();
+    virtual ~NetworkMessage();
     
     
     
@@ -40,9 +38,11 @@ public:
     
     static MessageType ParseMessageType(sf::Packet* packet);
     
+    MessageType type;
+    
 protected:
     
-    MessageType type;
+    
     sf::Packet* p;
 
     virtual void doGenerate() = 0;

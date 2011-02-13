@@ -6,10 +6,11 @@
 #include "NetworkServer.h"
 #include <SFML/Network.hpp>
 #include <einheri/common/network/messages/ServerHelloMessage.h>
-
+#include <einheri/common/network/messages/ClientHelloMessage.h>
+#include <einheri/server/engineNetworkServer/EngineNetworkServer.h>
 namespace ein {
 
-NetworkServer::NetworkServer() {
+NetworkServer::NetworkServer(EngineNetworkServer *parentEngine): engine(parentEngine) {
 }
 
 NetworkServer::~NetworkServer() {
@@ -44,8 +45,6 @@ void NetworkServer::Run(){
 
 
     while(running) {
-        std::cout<<"wait"<<std::endl;
-    
         unsigned int nbSockets = selector.Wait(1);
 
         for (unsigned int i = 0; i < nbSockets; ++i)
@@ -78,7 +77,7 @@ void NetworkServer::Run(){
                     if (socket.Receive(packet) == sf::Socket::Done)
                     {
                         NetworkDistantNode *client = clients[socket];
-                        std::cout << "Packet received" << std::endl;
+                        //std::cout << "Packet received" << std::endl;
                         Dispatch(packet, client);
                     }
                     else
@@ -108,35 +107,51 @@ void NetworkServer::Send(NetworkDistantNode* sender, NetworkMessage* message)
     serverSender.Send(sender, message);
 }
 
-
-static void processClientHelloMessage(sf::Packet* packet, NetworkDistantNode* sender)
-{
-    ServerHelloMessage message;
-    message.Parse(packet);
-
-    std::cout << "CLIENT_HELLO received from client"<< sender << std::endl;
-    std::cout << "protocol version: " << message.majorProtocolVersion << "."<< message.minorProtocolVersion <<std::endl;
-    std::cout << "client description: " << message.description <<std::endl;
-    
-}
-
-
-
 void NetworkServer::Dispatch ( sf::Packet packet, NetworkDistantNode* sender )
 {
     NetworkMessage::MessageType messageType = NetworkMessage::ParseMessageType(&packet);
     
+    NetworkMessage *genericMessage;
+    
     switch(messageType) {
      
         case NetworkMessage::CLIENT_HELLO:
-            processClientHelloMessage(&packet, sender);
+            {
+                ClientHelloMessage* message = new ClientHelloMessage();
+                message->Parse(&packet);
+                genericMessage = message;
+            }
             break;
         default:
             std::cout << "Protocol failure: invalid message type: "<< messageType << std::endl;
              break;
     }
     
+    queueMutex.Lock();
+    messageQueue.push(genericMessage);
+    clientQueue.push(sender);
+    queueMutex.Unlock();
+    
+    
 }
 
+
+void NetworkServer::ProcessMessages() {
+    queueMutex.Lock(); 
+   
+   while(!messageQueue.empty()) {
+       
+       NetworkMessage* message = messageQueue.front();
+       NetworkDistantNode* sender = clientQueue.front();
+       
+       messageQueue.pop();
+       clientQueue.pop();
+       
+       
+       engine->ProcessMessage(message, sender);
+   }
+   queueMutex.Unlock();
+   
+}
 
 }
