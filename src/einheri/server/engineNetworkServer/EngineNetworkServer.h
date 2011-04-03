@@ -10,6 +10,8 @@
 
 #include <einheri/common/Engine.h>
 #include <einheri/server/engineNetworkServer/NetworkServer.h>
+#include <einheri/common/event/EventMonsterAdded.h>
+#include <einheri/common/event/EventMonsterUpdated.h>
 
 namespace ein {
 
@@ -23,6 +25,8 @@ public:
     void Apply(const Event& event);
     void Frame();
     void ProcessMessage(ein::NetworkMessage* message, ein::NetworkDistantNode* sender);
+    void processEventMonsterAdded(const EventMonsterAdded& event);
+    void processEventMonsterUpdated(const ein::EventMonsterUpdated& event);
 
 private:
     NetworkServer* networkServer;

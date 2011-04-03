@@ -26,6 +26,8 @@ public:
 
 private:
     NetworkClient* networkClient;
+    bool worldPulledState;
+    
     
 };
 

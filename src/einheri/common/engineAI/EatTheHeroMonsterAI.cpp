@@ -10,6 +10,7 @@
 #include "einheri/common/Timer.h"
 #include <SFML/System.hpp>
 #include <iostream>
+#include <einheri/common/event/EventMonsterUpdated.h>
 
 namespace ein {
 
@@ -34,9 +35,11 @@ void EatTheHeroMonsterAI::Compute() {
             monster->SetAngle(meatAngle);
             monster->SetTargetedSpeed(Vector(cos(meatAngle), sin(meatAngle)));
 
+            
+            manager->AddEvent(new EventMonsterUpdated(monster));
         }
 
-        nextComputeTime += 0.1;
+        nextComputeTime += 1.0;
 
     }
 }

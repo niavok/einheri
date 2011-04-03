@@ -11,6 +11,10 @@
 #include <einheri/common/network/messages/ClientCreatePlayerMessage.h>
 #include <einheri/common/network/messages/ServerWorldPulled.h>
 #include <einheri/common/network/messages/ServerAddPlayerMessage.h>
+#include <einheri/common/network/messages/ServerAddMonsterMessage.h>
+#include <einheri/common/network/messages/ServerUpdateMonsterMessage.h>
+
+#include <einheri/common/event/EventVisitor.h>
 #include <einheri/common/GameManager.h>
 namespace ein {
 
@@ -24,7 +28,26 @@ EngineNetworkServer::~EngineNetworkServer() {
     delete networkServer;
 }
 
-void EngineNetworkServer::Apply(const Event& /*event*/) {
+void EngineNetworkServer::Apply(const Event& event) {
+    class EngineNetworkServerVisitor: public EventVisitor {
+    public:
+        EngineNetworkServerVisitor(EngineNetworkServer* engine) :
+            engine(engine) {
+        }
+
+        void Visit(const EventMonsterAdded& event) {
+            engine->processEventMonsterAdded(event);
+        }
+        
+        void Visit(const EventMonsterUpdated& event) {
+            engine->processEventMonsterUpdated(event);
+        }
+
+    private:
+        EngineNetworkServer* engine;
+    };
+    EngineNetworkServerVisitor visitor(this);
+    event.accept(visitor);
 }
 
 void EngineNetworkServer::Frame() {
@@ -52,6 +75,17 @@ void EngineNetworkServer::ProcessMessage(NetworkMessage* message, NetworkDistant
 
                 std::cout << "CLIENT_PULL_WORLD received from client"<< sender << std::endl;
 
+                
+                
+                std::list<Monster *>::const_iterator it;
+                std::list<Monster *> monsterList = manager->GetModel()->GetMonsters();
+                
+                for(it = monsterList.begin(); it != monsterList.end(); it++) {
+                    networkServer->SendMessageToClient(sender, new ServerAddMonsterMessage(*it));
+                }
+                
+                
+                
                 networkServer->SendMessageToClient(sender, new ServerWorldPulledMessage());
             }
             break;
@@ -80,4 +114,13 @@ void EngineNetworkServer::ProcessMessage(NetworkMessage* message, NetworkDistant
 }
 
 
+void EngineNetworkServer::processEventMonsterAdded(const EventMonsterAdded& event) {
+     networkServer->SendMessageToAll(new ServerAddMonsterMessage(event.GetMonster()));
 }
+
+void EngineNetworkServer::processEventMonsterUpdated(const EventMonsterUpdated& event) {
+     networkServer->SendMessageToAll(new ServerUpdateMonsterMessage(event.GetMonster()));
+}
+
+}
+

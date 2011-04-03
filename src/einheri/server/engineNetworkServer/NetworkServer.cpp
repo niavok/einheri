@@ -113,6 +113,11 @@ void NetworkServer::SendMessageToClient(NetworkDistantNode* sender, NetworkMessa
     serverSender.Send(sender, message);
 }
 
+void NetworkServer::SendMessageToAll(NetworkMessage* message)
+{
+    serverSender.SendAll(message);
+}
+
 void NetworkServer::SendMessageToAllElseOneClient(NetworkDistantNode* sender, NetworkMessage* message)
 {
     serverSender.SendAllElseOne(sender, message);

@@ -9,6 +9,7 @@
 #define EHR_COMMON_MODEL_H_
 
 #include <list>
+#include <map>
 #include <einheri/common/model/Building.h>
 #include <einheri/common/model/Hero.h>
 #include <einheri/common/model/Monster.h>
@@ -32,6 +33,10 @@ public:
     const std::list<Monster*>& GetMonsters() const {
         return monsters;
     }
+    
+    Monster* GetMonster(EinId id) const {
+        return monsterIdCache.at(id);
+    }
 
     const std::list<Projectile*>& GetProjectiles() const {
         return projectiles;
@@ -39,6 +44,7 @@ public:
 
     void AddMonster(Monster *monster) {
         monsters.push_back(monster);
+        monsterIdCache.insert(std::pair<EinId, Monster*>(monster->GetId(), monster));
     }
 
     void AddHero(Hero *hero) {
@@ -65,6 +71,7 @@ private:
     std::list<Projectile *> projectiles;
     std::list<Hero *> heroes;
     std::list<Monster *> monsters;
+    std::map<EinId, Monster *> monsterIdCache;
     std::list<Building *> buildings;
 
 

@@ -44,6 +44,7 @@ private:
     sf::Mutex queueMutex;
     std::queue<NetworkMessage*> messageQueue;
     
+    
     //Parent engine
     EngineNetworkClient *engine;
 

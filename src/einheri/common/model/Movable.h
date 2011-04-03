@@ -33,6 +33,10 @@ public:
     EinId GetId() const {
         return id;
     }
+    
+    void SetId(EinId id) {
+        this->id = id;
+    }
 
     Vector GetPosition() const {
         return position;

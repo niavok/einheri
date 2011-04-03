@@ -14,11 +14,16 @@
 #include <einheri/common/network/messages/ClientPullWorldMessage.h>
 #include <einheri/common/network/messages/ClientCreatePlayerMessage.h>
 #include <einheri/common/network/messages/ServerAddPlayerMessage.h>
+#include <einheri/common/network/messages/ServerAddMonsterMessage.h>
+#include <einheri/common/network/messages/ServerUpdateMonsterMessage.h>
+#include <einheri/common/event/EventMonsterAdded.h>
+#include <einheri/common/event/EventMonsterUpdated.h>
 
 
 namespace ein {
 
 EngineNetworkClient::EngineNetworkClient(GameManager* manager) : Engine(manager){
+    worldPulledState = false;
     networkClient = new NetworkClient(this);
     networkClient->Start();
 }
@@ -55,7 +60,8 @@ void EngineNetworkClient::ProcessMessage(NetworkMessage* message)
             {
                 //ServerWorldPulledMessage* m = (ServerWorldPulledMessage*) message;
                 std::cout << "SERVER_WORLD_PULLED received" << std::endl;
-                    
+                worldPulledState = true;
+    
                 networkClient->Send(new ClientCreatePlayerMessage("Fred"));
             }
             break;
@@ -70,6 +76,43 @@ void EngineNetworkClient::ProcessMessage(NetworkMessage* message)
                 player->setIsLocal(m->isLocal);
                 
                 manager->GetGameModel()->AddPlayer(player);
+            }
+            break;
+        case NetworkMessage::SERVER_ADD_MONSTER:
+            {
+                ServerAddMonsterMessage* m = (ServerAddMonsterMessage*) message;
+                std::cout << "SERVER_ADD_MONSTER received" << std::endl;
+                    
+                Monster *monster = new Monster();
+                monster->SetId(m->monsterId);
+                monster->SetName(m->monsterName);
+                monster->SetAngle(m->angle);
+                monster->SetPosition(m->position);
+                monster->SetRadius(m->radius);
+                monster->SetSpeed(m->speed);
+                monster->SetTargetedSpeed(m->targetedSpeed);
+                //TODO transmit alive parameter
+                
+                
+                manager->GetModel()->AddMonster(monster);
+                manager->AddEvent(new EventMonsterAdded(monster));
+            }
+            break;
+        case NetworkMessage::SERVER_UPDATE_MONSTER:
+            {
+                ServerUpdateMonsterMessage* m = (ServerUpdateMonsterMessage*) message;
+                std::cout << "SERVER_UPDATE_MONSTER received" << std::endl;
+                
+                if(worldPulledState) {
+                    Monster *monster = manager->GetModel()->GetMonster(m->monsterId);
+                    
+                    monster->SetAngle(m->angle);
+                    monster->SetPosition(m->position);
+                    monster->SetSpeed(m->speed);
+                    monster->SetTargetedSpeed(m->targetedSpeed);
+                    
+                    manager->AddEvent(new EventMonsterUpdated(monster));
+                }
             }
             break;
         default:

@@ -26,5 +26,4 @@ Movable::~Movable() {
 }
 
 
-
 }

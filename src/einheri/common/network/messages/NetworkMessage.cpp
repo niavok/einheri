@@ -38,5 +38,19 @@ NetworkMessage::MessageType NetworkMessage::ParseMessageType(sf::Packet* packet)
     return (NetworkMessage::MessageType) commandTypeInt;   
 }
 
+//Type conversion
+sf::Packet& operator <<(sf::Packet& Packet, const Vector& C)
+{
+    return Packet << C.x << C.y;
+}
+
+sf::Packet& operator >>(sf::Packet& Packet, Vector& C)
+{
+    return Packet >> C.x >> C.y;
+}
+
+
+
+
 
 }

@@ -25,7 +25,7 @@ EngineScenario::~EngineScenario() {
 
 void EngineScenario::Apply(const Event& /*event*/) {
 }
-
+EinId nextId = 0;
 double newMonsterWave = 1;
 void EngineScenario::Frame() {
     //std::cout << "Real " << Timer::get().GetRealTime() << std::endl;
@@ -33,22 +33,27 @@ void EngineScenario::Frame() {
     if (Timer::get().GetGameTime() > newMonsterWave) {
         newMonsterWave += 2.5;
         Monster *monster1 = new Monster();
+        monster1->SetId(nextId++);
         monster1->SetPosition(Vector(4, 4));
         monster1->SetAngle(M_PI / 4.f);
         monster1->SetName("Balrog");
         manager->GetModel()->AddMonster(monster1);
 
         Monster *monster2 = new Monster();
+        monster2->SetId(nextId++);
         monster2->SetPosition(Vector(4, -4));
         monster2->SetAngle(-M_PI / 4.f);
         monster2->SetName("Gobelin");
         manager->GetModel()->AddMonster(monster2);
+        
         Monster *monster3 = new Monster();
+        monster3->SetId(nextId++);
         monster3->SetPosition(Vector(-4, 4));
         monster3->SetAngle(3. * M_PI / 4.);
         monster3->SetName("Orc");
         manager->GetModel()->AddMonster(monster3);
         Monster *monster4 = new Monster();
+        monster4->SetId(nextId++);
         monster4->SetPosition(Vector(-4, -4));
         monster4->SetAngle(-3. * M_PI / 4.);
         monster4->SetName("Troll");

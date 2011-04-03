@@ -26,7 +26,7 @@ int main()
     gameManager.AddEngine(new ein::EngineInput(&gameManager));
     gameManager.AddEngine(new ein::EnginePlayer(&gameManager));
     gameManager.AddEngine(new ein::EnginePhysic(&gameManager));
-    gameManager.AddEngine(new ein::EngineAI(&gameManager));
+    //gameManager.AddEngine(new ein::EngineAI(&gameManager));
     gameManager.AddEngine(new ein::EngineCamera(&gameManager));
     gameManager.AddEngine(new ein::EngineDecoration(&gameManager));
 

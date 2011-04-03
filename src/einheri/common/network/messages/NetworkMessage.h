@@ -9,7 +9,7 @@
 #define EIN_COMMON_NETWORKMESSAGE_H_
 #include <string>
 #include <SFML/Network.hpp>
-
+#include <einheri/common/Vect2.h>
 namespace ein {
 
 class Event;
@@ -59,7 +59,21 @@ protected:
 
     virtual void doGenerate() = 0;
     virtual void doParse() = 0;
+    
+  
 };
+
+    //Type conversion
+    sf::Packet& operator <<(sf::Packet& Packet, const Vector& C);
+    /*{
+        return Packet << C.x << C.y;
+    }*/
+
+    sf::Packet& operator >>(sf::Packet& Packet, Vector& C);
+    /*{
+        return Packet >> C.x >> C.y;
+    }*/
+
 
 }
 
