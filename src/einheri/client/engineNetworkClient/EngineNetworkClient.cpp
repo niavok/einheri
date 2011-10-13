@@ -14,10 +14,11 @@
 #include <einheri/common/network/messages/ClientPullWorldMessage.h>
 #include <einheri/common/network/messages/ClientCreatePlayerMessage.h>
 #include <einheri/common/network/messages/ServerAddPlayerMessage.h>
-#include <einheri/common/network/messages/ServerAddMonsterMessage.h>
-#include <einheri/common/network/messages/ServerUpdateMonsterMessage.h>
+#include <einheri/common/network/messages/ServerAddMovableMessage.h>
+#include <einheri/common/network/messages/ServerUpdateMovableMessage.h>
 #include <einheri/common/event/EventMonsterAdded.h>
 #include <einheri/common/event/EventMonsterUpdated.h>
+#include <einheri/common/model/Movable.h>
 
 
 namespace ein {
@@ -78,14 +79,14 @@ void EngineNetworkClient::ProcessMessage(NetworkMessage* message)
                 manager->GetGameModel()->AddPlayer(player);
             }
             break;
-        case NetworkMessage::SERVER_ADD_MONSTER:
+        case NetworkMessage::SERVER_ADD_MOVABLE:
             {
-                ServerAddMonsterMessage* m = (ServerAddMonsterMessage*) message;
-                std::cout << "SERVER_ADD_MONSTER received" << std::endl;
+                ServerAddMovableMessage* m = (ServerAddMovableMessage*) message;
+                std::cout << "SERVER_ADD_MOVABLE received" << std::endl;
                     
                 Monster *monster = new Monster();
-                monster->SetId(m->monsterId);
-                monster->SetName(m->monsterName);
+                monster->SetId(m->movableId);
+                monster->SetName(m->movableName);
                 monster->SetAngle(m->angle);
                 monster->SetPosition(m->position);
                 monster->SetRadius(m->radius);
@@ -98,20 +99,22 @@ void EngineNetworkClient::ProcessMessage(NetworkMessage* message)
                 manager->AddEvent(new EventMonsterAdded(monster));
             }
             break;
-        case NetworkMessage::SERVER_UPDATE_MONSTER:
+        case NetworkMessage::SERVER_UPDATE_MOVABLE:
             {
-                ServerUpdateMonsterMessage* m = (ServerUpdateMonsterMessage*) message;
-                std::cout << "SERVER_UPDATE_MONSTER received" << std::endl;
+                ServerUpdateMovableMessage* m = (ServerUpdateMovableMessage*) message;
+                std::cout << "SERVER_UPDATE_MOVABLE received" << std::endl;
                 
                 if(worldPulledState) {
-                    Monster *monster = manager->GetModel()->GetMonster(m->monsterId);
+                    Movable *movable = manager->GetModel()->GetMovable(m->movableId);
                     
-                    monster->SetAngle(m->angle);
-                    monster->SetPosition(m->position);
-                    monster->SetSpeed(m->speed);
-                    monster->SetTargetedSpeed(m->targetedSpeed);
+                    movable->SetAngle(m->angle);
+                    movable->SetPosition(m->position);
+                    movable->SetSpeed(m->speed);
+                    movable->SetTargetedSpeed(m->targetedSpeed);
                     
-                    manager->AddEvent(new EventMonsterUpdated(monster));
+					if(movable->GetType() == Movable::MONSTER) {
+						manager->AddEvent(new EventMonsterUpdated((Monster*) movable));
+					}
                 }
             }
             break;

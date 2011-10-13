@@ -18,6 +18,13 @@ class CollisionVisitor;
 class Movable: public einUtils::VisitableBase<Movable> {
 public:
     EIN_DEFINE_VISITABLE()
+	
+	
+	enum MovableType {
+		HERO,
+		MONSTER
+	};
+	
 public:
     Movable();
     virtual ~Movable();
@@ -90,8 +97,16 @@ public:
         return radius;
     }
     void SetRadius(EinValue newRadius) {
-        radius = newRadius;
+        this->radius = newRadius;
     }
+    
+    EinValue GetType() const {
+        return type;
+    }
+    
+    void SetType(MovableType type) {
+		this->type = type;
+	}
 
 private:
     EinId id;
@@ -103,6 +118,7 @@ private:
     EinValue radius;
     bool needReportingCollision;
     std::string name;
+	MovableType type;
     bool alive;
 };
 

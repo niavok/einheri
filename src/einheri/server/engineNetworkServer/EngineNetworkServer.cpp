@@ -11,8 +11,8 @@
 #include <einheri/common/network/messages/ClientCreatePlayerMessage.h>
 #include <einheri/common/network/messages/ServerWorldPulled.h>
 #include <einheri/common/network/messages/ServerAddPlayerMessage.h>
-#include <einheri/common/network/messages/ServerAddMonsterMessage.h>
-#include <einheri/common/network/messages/ServerUpdateMonsterMessage.h>
+#include <einheri/common/network/messages/ServerAddMovableMessage.h>
+#include <einheri/common/network/messages/ServerUpdateMovableMessage.h>
 
 #include <einheri/common/event/EventVisitor.h>
 #include <einheri/common/GameManager.h>
@@ -81,7 +81,7 @@ void EngineNetworkServer::ProcessMessage(NetworkMessage* message, NetworkDistant
                 std::list<Monster *> monsterList = manager->GetModel()->GetMonsters();
                 
                 for(it = monsterList.begin(); it != monsterList.end(); it++) {
-                    networkServer->SendMessageToClient(sender, new ServerAddMonsterMessage(*it));
+                    networkServer->SendMessageToClient(sender, new ServerAddMovableMessage(*it));
                 }
                 
                 
@@ -115,11 +115,11 @@ void EngineNetworkServer::ProcessMessage(NetworkMessage* message, NetworkDistant
 
 
 void EngineNetworkServer::processEventMonsterAdded(const EventMonsterAdded& event) {
-     networkServer->SendMessageToAll(new ServerAddMonsterMessage(event.GetMonster()));
+     networkServer->SendMessageToAll(new ServerAddMovableMessage(event.GetMonster()));
 }
 
 void EngineNetworkServer::processEventMonsterUpdated(const EventMonsterUpdated& event) {
-     networkServer->SendMessageToAll(new ServerUpdateMonsterMessage(event.GetMonster()));
+     networkServer->SendMessageToAll(new ServerUpdateMovableMessage(event.GetMonster()));
 }
 
 }

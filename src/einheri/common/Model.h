@@ -37,6 +37,14 @@ public:
     Monster* GetMonster(EinId id) const {
         return monsterIdCache.at(id);
     }
+    
+    Hero* GetHero(EinId id) const {
+        return heroIdCache.at(id);
+    }
+    
+    Movable* GetMovable(EinId id) const {
+        return movableIdCache.at(id);
+    }
 
     const std::list<Projectile*>& GetProjectiles() const {
         return projectiles;
@@ -45,10 +53,13 @@ public:
     void AddMonster(Monster *monster) {
         monsters.push_back(monster);
         monsterIdCache.insert(std::pair<EinId, Monster*>(monster->GetId(), monster));
+		movableIdCache.insert(std::pair<EinId, Movable*>(monster->GetId(), monster));
     }
 
     void AddHero(Hero *hero) {
         heroes.push_back(hero);
+		heroIdCache.insert(std::pair<EinId, Hero*>(hero->GetId(), hero));
+		movableIdCache.insert(std::pair<EinId, Movable*>(hero->GetId(), hero));
     }
 
     void AddProjectile(Projectile *projectile) {
@@ -65,6 +76,7 @@ public:
     void RemoveHero(Hero *hero);
     void RemoveProjectile(Projectile *projectile);
     void RemoveBuilding(Building *building);
+    
 
 
 private:
@@ -72,6 +84,8 @@ private:
     std::list<Hero *> heroes;
     std::list<Monster *> monsters;
     std::map<EinId, Monster *> monsterIdCache;
+	std::map<EinId, Hero *> heroIdCache;
+	std::map<EinId, Movable *> movableIdCache;
     std::list<Building *> buildings;
 
 

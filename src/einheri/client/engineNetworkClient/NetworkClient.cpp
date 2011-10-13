@@ -11,8 +11,8 @@
 #include <einheri/client/engineNetworkClient/EngineNetworkClient.h>
 #include <einheri/common/network/messages/ServerWorldPulled.h>
 #include <einheri/common/network/messages/ServerAddPlayerMessage.h>
-#include <einheri/common/network/messages/ServerAddMonsterMessage.h>
-#include <einheri/common/network/messages/ServerUpdateMonsterMessage.h>
+#include <einheri/common/network/messages/ServerAddMovableMessage.h>
+#include <einheri/common/network/messages/ServerUpdateMovableMessage.h>
 
 namespace ein {
 
@@ -108,16 +108,16 @@ void NetworkClient::Dispatch (sf::Packet packet)
             message->Parse(&packet);
             genericMessage = message;
         }
-        case NetworkMessage::SERVER_ADD_MONSTER:
+        case NetworkMessage::SERVER_ADD_MOVABLE:
         {
-            ServerAddMonsterMessage* message = new ServerAddMonsterMessage();
+            ServerAddMovableMessage* message = new ServerAddMovableMessage();
             message->Parse(&packet);
             genericMessage = message;
         }
             break;
-        case NetworkMessage::SERVER_UPDATE_MONSTER:
+        case NetworkMessage::SERVER_UPDATE_MOVABLE:
         {
-            ServerUpdateMonsterMessage* message = new ServerUpdateMonsterMessage();
+            ServerUpdateMovableMessage* message = new ServerUpdateMovableMessage();
             message->Parse(&packet);
             genericMessage = message;
         }

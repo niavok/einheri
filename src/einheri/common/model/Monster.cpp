@@ -12,6 +12,7 @@ namespace ein {
 Monster::Monster() {
     SetName("Unnamed monster");
     SetRadius(0.3);
+	SetType(MONSTER);
 }
 
 Monster::~Monster() {

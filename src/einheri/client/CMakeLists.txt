@@ -2,6 +2,7 @@
 SET(LIBNAME einheri-client)
 
 REQUIRE_LIB(SFML)
+FIND_PACKAGE(OpenGL)
 INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIRS})
 
 ### Configure the src

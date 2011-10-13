@@ -13,6 +13,7 @@ Hero::Hero() {
     SetName("Unnamed hero");
     SetNeedReportingCollision(true);
     SetRadius(0.4);
+	SetType(HERO);
 }
 
 Hero::~Hero() {
